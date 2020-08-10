@@ -10,6 +10,34 @@ Vue.config.productionTip = false
 Vue.use(ElementUI);
 
 new Vue({
-  router,
-  render: h => h(App)
+    router,
+    render: h => h(App)
 }).$mount('#app')
+
+export default {
+    data(){
+        return{
+            userid: '',
+        }
+    }
+}
+
+
+//枚举类Access
+class Access {
+    constructor(name) {
+        this.name = name;
+    }
+
+    getName() {
+        return this.name;
+    }
+}
+
+Access.None = new Access('none');
+Access.Read = new Access('read');
+Access.ReadWrite = new Access('readWrite');
+
+Object.freeze(Access);               // 冻结对象，防止修改
+
+export {Access}
