@@ -10,29 +10,9 @@
 
 <script>
   //import Vue from 'vue';
-  import axios from 'axios';
-  export default{
-    created:function(){
-      // document-controller/getDocumentOne
-        axios.get('/api/documents/get-doc-1')
-        .then(function (response){
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        })
 
-      // document-controller/updateDocumentOne
-          axios.post('/api/documents/update-doc-1', {
-            "data": "customTestStr"
-          })
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-    }
+  export default{
+
   }
 
 </script>
