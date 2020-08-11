@@ -5,7 +5,8 @@
       <router-link to="/about">About</router-link> |
       <router-link to="/createFile">CreateFile</router-link> |
       <router-link to="/editFile">EditFile</router-link> |
-      <router-link to="/myFiles">MyFiles</router-link>
+      <router-link to="/myFiles">MyFiles</router-link> |
+      <router-link to="/readFile">ReadFile</router-link>
     </div>
     <router-view/>
   </div>
