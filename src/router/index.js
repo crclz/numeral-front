@@ -48,6 +48,7 @@ const routes = [
         name: 'ReadFile',
         component: ReadFile
     },
+
 ]
 
 const router = new VueRouter({

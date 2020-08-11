@@ -4,7 +4,7 @@
         <div>标题</div><el-input v-model="newFile.title" placeholder="请输入标题"></el-input>
         <div>文档基础信息</div><el-input v-model="newFile.description" placeholder="请输入对该文档的描述"></el-input>
         <div>文档内容</div>
-        <editor ref="thisEditor"></editor>
+        <editor ref="thisEditor" @change="change"></editor>
         <el-button type="success" @click="onSubmit">保存文件</el-button>
     </div>
 </template>
