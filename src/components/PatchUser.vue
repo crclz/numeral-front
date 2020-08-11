@@ -1,5 +1,6 @@
 <template>
   <div class="PatchUser_container">
+    <h2 class="PatchUser_title">修改个人信息</h2>
     <div class="PatchUser_box">
       <!-- 修改个人信息表单区域 -->
       <el-form
@@ -40,6 +41,36 @@
 export default {
   name: "PatchUser",
   data() {
+    // 后面主要是进行一个表单的验证
+
+    var checkDescpt = (rule, value, callback) => {
+      // 或许还应该完善
+      if (value.length > 100) {
+        callback(new Error("字数超出限制"));
+      } else {
+        callback();
+      }
+    };
+    var validatePass = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入密码"));
+      } else {
+        if (this.PatchUserForm.checkPass !== "") {
+          this.$refs.PatchUserFormRef.validateField("checkPass");
+        }
+        callback();
+      }
+    };
+    var validatePass2 = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请再次输入密码"));
+      } else if (value !== this.PatchUserForm.password) {
+        callback(new Error("两次输入密码不一致!"));
+      } else {
+        callback();
+      }
+    };
+
     return {
       // 这是登录表单的数据绑定对象
       PatchUserForm: {
@@ -52,9 +83,11 @@ export default {
       PatchUserFormRules: {
         //验证密码是否合法
         password: [
-          { required: true, message: "请输入密码", trigger: "blur" },
+          { validator: validatePass, trigger: "blur" },
           { min: 6, max: 16, message: "密码格式错误", trigger: "blur" },
         ],
+        checkPass: [{ validator: validatePass2, trigger: "blur" }],
+        description: [{ validator: checkDescpt, trigger: "blur" }],
       },
     };
   },
@@ -80,6 +113,7 @@ export default {
         })
         .catch(function (error) {
           // window.err3 = error;
+          console.log("错误提示！");
           console.log(error);
           alert(error.response.data.message);
         });
@@ -90,7 +124,6 @@ export default {
 
 <style lang="less" scoped>
 .PatchUser_container {
-  background-color: skyblue;
   height: 100%;
 }
 .PatchUser_form {
