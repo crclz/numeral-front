@@ -4,7 +4,7 @@
         <div>标题</div><el-input v-model="newFile.title" placeholder="请输入标题"></el-input>
         <div>文档基础信息</div><el-input v-model="newFile.description" placeholder="请输入对该文档的描述"></el-input>
         <div>文档内容</div>
-        <editor @passtofather="editorOnChange"></editor>
+        <editor ref="thisEditor"></editor>
         <el-button type="success" @click="onSubmit">保存文件</el-button>
     </div>
 </template>
@@ -28,10 +28,13 @@
             }
         },
         methods: {
-            editorOnChange(value){
-                this.newFile.data = value;
+            change(val){
+                this.newFile.data = val;
+                // alert(val);
             },
             onSubmit(){
+                // this.newFile.data = this.$refs.thisEditor.getEditorContent;
+                // this.newFile.data = '123';
                 axios.post('/api/documents/', {
                             "data": this.newFile.data,
                             "description": this.newFile.description,

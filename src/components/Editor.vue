@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div ref="editor" style="text-align:left" @change="onChange"></div>
+        <div ref="editor" style="text-align:left"></div>
         <!--<button v-on:click="getContent">提交</button>-->
     </div>
 </template>
@@ -10,6 +10,9 @@
 
     export default {
         name: 'editor',
+        model: {
+            event: "change",
+        },
         props:['passvalue'],
         data () {
             return {
@@ -31,16 +34,18 @@
             //             console.log(error);
             //         });
             // },
-            onChange(){
-                this.$emit('passtofather', this.editorContent);
-            }
+            // getEditorContent(){
+            //     return this.editorContent;
+            // }
         },
         created(){
         },
         mounted() {
-            var editor = new E(this.$refs.editor)
+            var editor = new E(this.$refs.editor);
             editor.customConfig.onchange = (html) => {
-              this.editorContent = html
+                this.editorContent = html;
+                this.$emit('change', this.editorContent); // 将内容同步到父组件中
+                // alert("1");
             }
             editor.create()
             // 初始化文本编辑器内容
