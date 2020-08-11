@@ -62,10 +62,7 @@
         },
         methods: {
             checkFavorite() {
-                axios.get('/api/favorites/find-by-documentId',
-                    {params: {
-                        documentId: this.currentFile.id
-                    }})
+                axios.get('/api/favorites/find-by-documentId/'+this.documentId)
                     .then(function (response) {
                         console.log(response);
                         if(response.data != null){ // 收藏过
@@ -79,9 +76,7 @@
             },
             favoriteFile() { // 收藏操作
                 if (this.favorite.favorited == false) { // 未收藏过，执行收藏
-                    axios.post('/api/favorites/', {
-                        documentId: this.currentFile.id
-                    })
+                    axios.post('/api/favorites/'+this.currentFile.id)
                         .then(function (response) {
                             console.log(response);
                             // 变更状态为已收藏
@@ -94,9 +89,7 @@
 
                 }
                 else { // 已收藏过，取消收藏
-                    axios.post('/api/favorites/'+this.currentFile.id, {
-                        id: this.currentFile.id
-                    })
+                    axios.delete('/api/favorites/'+this.currentFile.id)
                         .then(function (response) {
                             console.log(response);
                             // 变更状态为未收藏

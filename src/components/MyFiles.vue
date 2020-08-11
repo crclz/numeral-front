@@ -4,7 +4,7 @@
             <el-col :span="6" v-for="item in items" :key="item.id"><div class="grid-content bg-purple">
                 <el-card class="box-card">
                     <div slot="header" class="clearfix">
-                        <span  @click="openDocument(item.id)">{{item.title}}</span>
+                        <span  @click="openDocument(item.id)">{{item.title}}</span><div @click="readDocument(item.id)">读</div>
                         <el-button style="float: right; padding: 3px 0" type="icon" icon="el-icon-delete" @click="abandonDocument(item)"></el-button>
                     </div>
                     <div class="text item"  @click="openDocument(item.id)">
@@ -66,6 +66,9 @@
                 // 结合router
                 // alert(documentId);
                 this.$router.push({path: '/editFile/'+documentId});
+            },
+            readDocument(documentId){
+                this.$router.push({path: '/readFile/'+documentId});
             }
         }
     }
