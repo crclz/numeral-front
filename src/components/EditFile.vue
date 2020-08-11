@@ -46,7 +46,7 @@
                 this.currentFile.data = value;
             },
             onSubmit(){
-                axios.post('/api/documents', {
+                axios.post('/api/documents/'+this.documentId, {
                     "title": this.currentFile.title,
                     "description": this.currentFile.description,
                     "data": this.currentFile.data,

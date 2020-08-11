@@ -29,7 +29,12 @@
                 .then(function (response) {
                     console.log(response);
                     if(response.status == 200){
-                        this.items = response.data;
+                        this.items = new Array();
+                        for(let item in response.data){
+                            if(item.isAbandoned == false){
+                                this.items.push(item);
+                            }
+                        }
                     }
                 })
                 .catch(function (error) {
@@ -59,6 +64,10 @@
                         console.log(error);
                         alert("删除失败");
                     });
+            },
+            openFile(fileId){
+                // 结合router
+                alert(fileId);
             }
         }
     }
