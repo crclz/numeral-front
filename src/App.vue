@@ -1,26 +1,36 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/createFile">CreateFile</router-link> |
-      <router-link to="/editFile">EditFile</router-link> |
-      <router-link to="/myFiles">MyFiles</router-link> |
-      <router-link to="/readFile">ReadFile</router-link> |
-      <router-link to="/login">Login</router-link>
-
+    <div v-if="this.meReturned">
+      <div id="nav">
+        <router-link to="/">Home</router-link>|
+        <router-link to="/about">About</router-link>|
+        <router-link to="/createFile">CreateFile</router-link>|
+        <router-link to="/editFile">EditFile</router-link>|
+        <router-link to="/myFiles">MyFiles</router-link>|
+        <router-link to="/readFile">ReadFile</router-link>|
+        <router-link to="/login">Login</router-link>
+      </div>
+      <router-view />
     </div>
-    <router-view/>
   </div>
 </template>
 
 <script>
-  //import Vue from 'vue';
+//import Vue from 'vue';
 
-  export default{
-
-  }
-
+export default {
+  data() {
+    return {
+      meReturned: false,
+    };
+  },
+  created() {
+    this.axios.get("/api/access/me").then((res) => {
+      this.meReturned = true;
+      this.global.me = res.data;
+    });
+  },
+};
 </script>
 
 <style>
