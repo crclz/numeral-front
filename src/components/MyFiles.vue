@@ -2,19 +2,16 @@
     <div>
         <el-row :gutter="20">
             <el-col :span="6" v-for="item in items" :key="item.id"><div class="grid-content bg-purple">
-                <el-card class="box-card" @click="openFile(item.id)">
+                <el-card class="box-card">
                     <div slot="header" class="clearfix">
-                        <span>{{item.title}}</span>
-                        <el-button style="float: right; padding: 3px 0" type="icon" icon="el-icon-delete" @click="abandonFile(item)"></el-button>
+                        <span  @click="openDocument(item.id)">{{item.title}}</span>
+                        <el-button style="float: right; padding: 3px 0" type="icon" icon="el-icon-delete" @click="abandonDocument(item)"></el-button>
                     </div>
-                    <div class="text item">
+                    <div class="text item"  @click="openDocument(item.id)">
                         {{item.description}}
                     </div>
                 </el-card>
             </div></el-col>
-            <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-            <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-            <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
         </el-row>
     </div>
 </template>
@@ -51,9 +48,9 @@
             }
         },
         methods: {
-            abandonFile(file){
-                file.isAbandoned = true;
-                axios.post('/api/documents/'+file.id, {
+            abandonDocument(document){
+                document.isAbandoned = true;
+                axios.patch('/api/documents/'+document.id, {
                     "isAbandoned": true
                 })
                     .then(function (response) {
@@ -65,9 +62,10 @@
                         alert("删除失败");
                     });
             },
-            openFile(fileId){
+            openDocument(documentId){
                 // 结合router
-                alert(fileId);
+                // alert(documentId);
+                this.$router.push({path: '/editFile/'+documentId});
             }
         }
     }

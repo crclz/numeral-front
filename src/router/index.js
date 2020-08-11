@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import CreateFile from "../components/CreateFile";
 import EditFile from "../components/EditFile";
 import MyFiles from "../components/MyFiles"
+import ReadFile from "../components/ReadFile";
 
 Vue.use(VueRouter)
 
@@ -27,7 +28,7 @@ const routes = [
         component: CreateFile
     },
     {
-        path: '/editFile',
+        path: '/editFile/:id',
         name: 'EditFile',
         component: EditFile
     },
@@ -35,6 +36,11 @@ const routes = [
         path: '/myFiles',
         name: 'MyFiles',
         component: MyFiles
+    },
+    {
+        path: '/readFile/:id',
+        name: 'ReadFile',
+        component: ReadFile
     },
 ]
 
