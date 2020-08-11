@@ -32,6 +32,7 @@
 
 <script>
 export default {
+  name: "Login",
   data() {
     return {
       // 这是登录表单的数据绑定对象
