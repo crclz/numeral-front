@@ -4,7 +4,7 @@
         <div>{{currentFile.title}}</div>
         <div>{{currentFile.creatorId}}</div>
         <div>{{currentFile.teamId}}</div>
-        <div>{{currentFile.createdAt}}</div>
+        <div>{{currentFile.createdAt | moment}}</div>
         <div>{{currentFile.modifyCount}}</div>
         <div>{{currentFile.updatedAt}}</div>
         <div>{{currentFile.lastModifierId}}</div>
