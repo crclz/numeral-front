@@ -7,7 +7,7 @@ import MyFiles from "../components/MyFiles";
 import Login from '../views/Login.vue'
 
 Vue.use(VueRouter)
-
+// asdsadsadsa
 const routes = [
     {
         path: '/',
