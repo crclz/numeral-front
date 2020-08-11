@@ -5,42 +5,30 @@
       <el-form
         ref="PatchUserFormRef"
         :model="PatchUserForm"
+        status-icon
         :rules="PatchUserFormRules"
+        label-width="100px"
         class="PatchUser_form"
       >
         <!-- 更换头像 -->
 
         <!-- 密码 -->
         <el-form-item label="密码" prop="password">
-          <el-input
-            v-model="PatchUserForm.password"
-            placeholder="请输入密码"
-            prefix-icon="el-icon-view"
-            type="password"
-          ></el-input>
+          <el-input type="password" v-model="PatchUserForm.password" autocomplete="off"></el-input>
         </el-form-item>
-        <!-- 再次输入密码 -->
-        <el-form-item label="再次输入密码" prop="password">
-          <el-input
-            v-model="PatchUserForm.password"
-            placeholder="请再次输入密码"
-            prefix-icon="el-icon-view"
-            type="password"
-          ></el-input>
+        <!-- 确认密码 -->
+        <el-form-item label="确认密码" prop="checkPass">
+          <el-input type="password" v-model="PatchUserForm.checkPass" autocomplete="off"></el-input>
         </el-form-item>
+
         <!-- 描述信息 -->
-        <el-form-item label="个人简介" prop="username">
-          <el-input
-            type="textarea"
-            v-model="PatchUser.description"
-            placeholder="请输入个人简介"
-            prefix-icon="el-icon-user"
-          ></el-input>
+        <el-form-item label="个人简介" prop="description">
+          <el-input type="textarea" v-model="PatchUserForm.description" placeholder="请输入个人简介"></el-input>
         </el-form-item>
 
         <!-- 按钮区域 -->
         <el-form-item class="btns">
-          <el-button type="primary" @click="PatchUser">保存</el-button>
+          <el-button type="primary" @click="submitForm('PatchUserForm')">保存</el-button>
           <el-button type="info" @click="resetPatchUserForm">重置</el-button>
         </el-form-item>
       </el-form>
@@ -58,15 +46,10 @@ export default {
         avatarUrl: "",
         description: "",
         password: "",
+        checkPass: "",
       },
       // 这是表单验证规则对象
       PatchUserFormRules: {
-        // 验证用户名是否合法
-        username: [
-          { required: true, message: "请输入账号", trigger: "blur" },
-          // { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" },
-        ],
-
         //验证密码是否合法
         password: [
           { required: true, message: "请输入密码", trigger: "blur" },
@@ -80,21 +63,20 @@ export default {
     resetPatchUserForm() {
       this.$refs.PatchUserFormRef.resetFields();
     },
-    PatchUser() {
+    submitForm(PatchUserForm) {
       this.$axios
         .post("/api/users/{id}", {
-          password: this.PatchUserForm.password,
+          avatarUrl: PatchUserForm.avatarUrl,
+          description: PatchUserForm.description,
+          password: PatchUserForm.password,
         })
-        .then(function (response) {
+        .then((response) => {
           console.log(response);
-          alert("登录成功");
+          alert("修改成功");
           console.log("开始测试");
           console.log(response);
           console.log("测试again");
           console.log(response.data);
-          // 页面跳转，好像有问题
-          // window.sessionStorage.setItem("token", res.data.token);
-          // this.$router.push("/home");
         })
         .catch(function (error) {
           // window.err3 = error;
@@ -133,23 +115,5 @@ export default {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  .avatar_box {
-    height: 130px;
-    width: 130px;
-    padding: 10px;
-    box-shadow: 0 0 10px #ddd;
-    border: 1px solid #b2b2b2;
-    border-radius: 50%;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    img {
-      height: 100%;
-      width: 100%;
-      border-radius: 50%;
-      background-color: #eee;
-    }
-  }
 }
 </style>
