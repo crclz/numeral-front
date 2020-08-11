@@ -3,7 +3,8 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import CreateFile from "../components/CreateFile";
 import EditFile from "../components/EditFile";
-import MyFiles from "../components/MyFiles"
+import MyFiles from "../components/MyFiles";
+import Login from '../views/Login.vue'
 import ReadFile from "../components/ReadFile";
 
 Vue.use(VueRouter)
@@ -21,6 +22,11 @@ const routes = [
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    },
+    {
+        path: '/login',
+        name: 'Login',
+        component: Login
     },
     {
         path: '/createFile',
