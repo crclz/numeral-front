@@ -20,9 +20,10 @@
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
         >
-          <img v-if="avatarUrl" :src="avatarUrl" class="avatar" />
+          <img v-if="PatchUserForm.avatarUrl" :src="PatchUserForm.avatarUrl" class="avatar" />
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
+
         <!-- 密码 -->
         <el-form-item label="密码" prop="password">
           <el-input type="password" v-model="PatchUserForm.password" autocomplete="off"></el-input>
@@ -50,6 +51,9 @@
 <script>
 export default {
   name: "PatchUser",
+  created() {
+    this.UserId = this.global.me.id;
+  },
   data() {
     // 后面主要是进行一个表单的验证
 
@@ -82,6 +86,7 @@ export default {
     };
 
     return {
+      UserId: "",
       // 这是登录表单的数据绑定对象
       PatchUserForm: {
         avatarUrl: "",
@@ -105,20 +110,25 @@ export default {
     // 上传头像的限制
     handleAvatarSuccess(res, file) {
       //应该post上去一个东西，然后获得返回值
+      console.log("这里是res");
+      console.log(res);
+      console.log("这里是file");
+      console.log(file);
+
       this.PatchUserForm.avatarUrl = URL.createObjectURL(file.raw);
     },
     beforeAvatarUpload(file) {
       console.log(file);
-      // const isJPG = file.type === 'image/jpeg';
-      // const isLt2M = file.size / 1024 / 1024 < 2;
+      const isJPG = file.type === "image/jpeg";
+      const isLt2M = file.size / 1024 / 1024 < 2;
 
-      // if (!isJPG) {
-      //   this.$message.error('上传头像图片只能是 JPG 格式!');
-      // }
-      // if (!isLt2M) {
-      //   this.$message.error('上传头像图片大小不能超过 2MB!');
-      // }
-      // return isJPG && isLt2M;
+      if (!isJPG) {
+        this.$message.error("上传头像图片只能是 JPG 格式!");
+      }
+      if (!isLt2M) {
+        this.$message.error("上传头像图片大小不能超过 2MB!");
+      }
+      return isJPG && isLt2M;
     },
 
     // 点击重置按钮，重置登录表单
@@ -127,7 +137,7 @@ export default {
     },
     submitForm(PatchUserForm) {
       this.$axios
-        .post("/api/users/{id}", {
+        .post("/api/users/" + this.UserId, {
           avatarUrl: PatchUserForm.avatarUrl,
           description: PatchUserForm.description,
           password: PatchUserForm.password,
@@ -135,15 +145,13 @@ export default {
         .then((response) => {
           console.log(response);
           alert("修改成功");
-          console.log("开始测试");
-          console.log(response);
-          console.log("测试again");
+          console.log("正确提示！");
           console.log(response.data);
         })
         .catch(function (error) {
           // window.err3 = error;
           console.log("错误提示！");
-          console.log(error);
+          console.log(error.response.data);
           alert(error.response.data.message);
         });
     },
@@ -181,7 +189,7 @@ export default {
 
 // element ui 中对头像上传的修饰css代码
 .avatar-uploader .el-upload {
-  border: 1px dashed #d9d9d9;
+  border: 1px dashed #000000;
   border-radius: 6px;
   cursor: pointer;
   position: relative;
