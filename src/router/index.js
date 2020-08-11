@@ -7,6 +7,7 @@ import MyFiles from "../components/MyFiles";
 import Login from '../views/Login.vue'
 import ReadFile from "../components/ReadFile";
 import Logout from '../components/Logout.vue'
+import PatchUser from '../components/PatchUser.vue'
 
 Vue.use(VueRouter)
     // asdsadsadsa
@@ -29,7 +30,16 @@ const routes = [{
         name: 'Login',
         component: Login
     },
-    { path: '/logout', name: 'Logout', component: Logout },
+    {
+        path: '/logout',
+        name: 'Logout',
+        component: Logout
+    },
+    {
+        path: '/PatchUser',
+        name: 'PatchUser',
+        component: PatchUser
+    },
     {
         path: '/createFile',
         name: 'CreateFile',
