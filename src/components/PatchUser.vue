@@ -1,8 +1,9 @@
 <template>
   <div class="PatchUser_container">
-    <h2 class="PatchUser_title">修改个人信息</h2>
+    <div class="PatchUser_title">修改个人信息</div>
     <div class="PatchUser_box">
       <!-- 修改个人信息表单区域 -->
+
       <el-form
         ref="PatchUserFormRef"
         :model="PatchUserForm"
@@ -11,8 +12,17 @@
         label-width="100px"
         class="PatchUser_form"
       >
-        <!-- 更换头像 -->
-
+        <!-- 上传头像 -->
+        <el-upload
+          class="avatar-uploader"
+          action="http://47.95.230.65:8086/api/blobs"
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload"
+        >
+          <img v-if="avatarUrl" :src="avatarUrl" class="avatar" />
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
         <!-- 密码 -->
         <el-form-item label="密码" prop="password">
           <el-input type="password" v-model="PatchUserForm.password" autocomplete="off"></el-input>
@@ -92,6 +102,25 @@ export default {
     };
   },
   methods: {
+    // 上传头像的限制
+    handleAvatarSuccess(res, file) {
+      //应该post上去一个东西，然后获得返回值
+      this.PatchUserForm.avatarUrl = URL.createObjectURL(file.raw);
+    },
+    beforeAvatarUpload(file) {
+      console.log(file);
+      // const isJPG = file.type === 'image/jpeg';
+      // const isLt2M = file.size / 1024 / 1024 < 2;
+
+      // if (!isJPG) {
+      //   this.$message.error('上传头像图片只能是 JPG 格式!');
+      // }
+      // if (!isLt2M) {
+      //   this.$message.error('上传头像图片大小不能超过 2MB!');
+      // }
+      // return isJPG && isLt2M;
+    },
+
     // 点击重置按钮，重置登录表单
     resetPatchUserForm() {
       this.$refs.PatchUserFormRef.resetFields();
@@ -148,5 +177,30 @@ export default {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+
+// element ui 中对头像上传的修饰css代码
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409eff;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
 }
 </style>
