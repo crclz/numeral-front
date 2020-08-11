@@ -7,13 +7,13 @@
 
 <script>
     import E from 'wangeditor'
+    import axios from "axios";
 
     export default {
         name: 'editor',
         model: {
             event: "change",
         },
-        props:['passvalue'],
         data () {
             return {
                 editorContent: '',
@@ -42,6 +42,7 @@
         },
         mounted() {
             var editor = new E(this.$refs.editor);
+
             editor.customConfig.onchange = (html) => {
                 this.editorContent = html;
                 this.$emit('change', this.editorContent); // 将内容同步到父组件中
@@ -58,7 +59,26 @@
             //     .catch(function (error) {
             //         console.log(error);
             //     });
-            editor.txt.html(this.passvalue);
+
+            var defaultId = this.$parent.getDocumentId();
+            // alert(defaultId);
+            if(defaultId != null){
+                axios.get('/api/documents/'+defaultId)
+                    .then((response)=>{
+                        // window.console.log(response.data.length);
+                        console.log(response);
+                        if(response.status == 200) {
+                            this.editorContent=response.data.data;
+                            editor.txt.html(this.editorContent);
+                            // alert("jiedaole");
+                        }
+                        // alert("请求成功")
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
+
         }
     }
 </script>

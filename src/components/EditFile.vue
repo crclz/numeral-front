@@ -4,8 +4,9 @@
         <div>标题</div><el-input v-model="currentFile.title" placeholder="请输入标题"></el-input>
         <div>文档基础信息</div><el-input v-model="currentFile.description" placeholder="请输入对该文档的描述"></el-input>
         <div>文档内容</div>
-        <editor :passvalue="defaultData" ref="thisEditor" @change="change"></editor>
+        <editor ref="thisEditor" @change="change"></editor>
         <el-button type="success" @click="onSubmit">保存文件</el-button>
+        {{currentFile.data}}|||||{{this.defaultData}}
     </div>
 </template>
 
@@ -18,14 +19,14 @@
         created() {
             this.documentId=this.$route.params.id;
             axios.get('/api/documents/'+this.documentId)
-                .then(function (response) {
+                .then((response)=>{
+                    // window.console.log(response.data.length);
                     console.log(response);
-                    if(response.status == 200){
+                    if(response.status == 200) {
+                        this.currentFile = response.data;
                         this.defaultData = response.data.data;
-                        this.currentFile.data = this.defaultData;
-                        this.currentFile.title = response.data.title;
-                        this.currentFile.description = response.data.description;
                     }
+                    // alert("请求成功")
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -62,9 +63,12 @@
                     });
             },
             change(val){
-                this.newFile.data = val;
+                this.currentFile.data = val;
                 // alert(val);
             },
+            getDocumentId(){
+                return this.documentId;
+            }
         }
     }
 </script>

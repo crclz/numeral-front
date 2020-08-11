@@ -48,6 +48,9 @@
                                 console.log(error);
                                 alert("保存失败");
                             });
+            },
+            getDocumentId(){
+                return null;
             }
         }
     }

@@ -1,7 +1,8 @@
 <template>
     <div>
+        <!--{{this.global.me.id}}-->
         <el-row :gutter="20">
-            <el-col :span="6" v-for="item in items" :key="item.id"><div class="grid-content bg-purple">
+            <el-col :span="6" v-for="item in documents" :key="item.id"><div class="grid-content bg-purple">
                 <el-card class="box-card">
                     <div slot="header" class="clearfix">
                         <span  @click="openDocument(item.id)">{{item.title}}</span><div @click="readDocument(item.id)">读</div>
@@ -22,29 +23,21 @@
     export default {
         name: "MyFiles",
         created() {
-            axios.get('/api/documents',{params:{creatorId: localStorage.userId}})// 需要将userId存入localStorage
-                .then(function (response) {
-                    console.log(response);
-                    if(response.status == 200){
-                        this.items = new Array();
-                        for(let item in response.data){
-                            if(item.isAbandoned == false){
-                                this.items.push(item);
-                            }
-                        }
-                    }
+            // alert(this.global.me.id);
+            axios.get('/api/documents',{params:{creatorId: this.global.me.id, isAbandoned:false, myfavorite:false}})// 需要将userId存入localStorage
+                .then((response)=>{
+                    // window.console.log(response.data.length);
+                    this.documents = response.data;
+                    // alert("请求成功")
                 })
                 .catch(function (error) {
                     console.log(error);
+                    alert("请求失败")
                 });
         },
         data() {
             return{
-                items: [// 测试用例
-                    {id:'123',title:"345",description:"678",isAbandoned:false},
-                    {id:'123',title:"345",description:"678",isAbandoned:false},
-                    {id:'123',title:"345",description:"678",isAbandoned:false},
-                ]
+                documents: [],
             }
         },
         methods: {
