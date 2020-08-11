@@ -16,14 +16,14 @@ export default {
   },
   created() {
     // 测试基础通信能否建立
-    this.axios
-      .post("/api/access/login", { username: "asd", password: "asdsad" })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    // this.axios
+    //   .post("/api/access/login", { username: "asd", password: "asdsad" })
+    //   .then((res) => {
+    //     console.log(res);
+    //   })
+    //   .catch((err) => {
+    //     console.error(err);
+    //   });
   },
 };
 </script>
