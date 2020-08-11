@@ -36,7 +36,7 @@ const routes = [{
         component: Logout
     },
     {
-        path: '/PatchUser',
+        path: '/PatchUser/:id',
         name: 'PatchUser',
         component: PatchUser
     },
