@@ -1,5 +1,6 @@
 <template>
     <div>
+        <div>收藏状态：{{favorite.favorited}}</div>
         <div>{{currentFile.title}}</div>
         <div>{{currentFile.creatorId}}</div>
         <div>{{currentFile.teamId}}</div>
@@ -21,7 +22,7 @@
         created() {
             this.documentId = this.$route.params.id;
             axios.get('/api/documents/'+this.documentId)
-                .then(function (response) {
+                .then((response) => {
                     console.log(response);
                     if(response.status == 200){
                         this.currentFile = response.data;
@@ -36,6 +37,7 @@
             return {
                 favorite: {
                     favorited: false,
+                    favoriteId: "",
                     favoriteIcon: "el-icon-star-off",
                     icons: ["el-icon-star-off", "el-icon-star-on"] // 未收藏 | 已收藏
                 },
@@ -62,12 +64,18 @@
         },
         methods: {
             checkFavorite() {
-                axios.get('/api/favorites/find-by-documentId/'+this.documentId)
-                    .then(function (response) {
+                axios.get('/api/favorites/find-by-documentId/?documentId='+this.documentId)
+                    .then((response) => {
                         console.log(response);
-                        if(response.data != null){ // 收藏过
+                        if(response.data == ""){
+                            // alert("123444336");
+                            this.favorite.favorited = false;
+                            this.favorite.favoriteIcon = this.favorite.icons[0];
+                        }
+                        else{ // 收藏过
                             this.favorite.favorited = true;
                             this.favorite.favoriteIcon = this.favorite.icons[1];
+                            this.favorite.favoriteId = response.data.id;
                         }
                     })
                     .catch(function (error) {
@@ -76,12 +84,13 @@
             },
             favoriteFile() { // 收藏操作
                 if (this.favorite.favorited == false) { // 未收藏过，执行收藏
-                    axios.post('/api/favorites/'+this.currentFile.id)
-                        .then(function (response) {
+                    axios.post('/api/favorites?documentId='+this.currentFile.id)
+                        .then((response) => {
                             console.log(response);
                             // 变更状态为已收藏
                             this.favorite.favorited = true;
                             this.favorite.favoriteIcon = this.favorite.icons[1];
+                            this.favorite.favoriteId = response.data.id;
                         })
                         .catch(function (error) {
                             console.log(error);
@@ -89,12 +98,13 @@
 
                 }
                 else { // 已收藏过，取消收藏
-                    axios.delete('/api/favorites/'+this.currentFile.id)
-                        .then(function (response) {
+                    axios.delete('/api/favorites/'+this.favorite.favoriteId)
+                        .then((response) => {
                             console.log(response);
                             // 变更状态为未收藏
                             this.favorite.favorited = false;
                             this.favorite.favoriteIcon = this.favorite.icons[0];
+                            this.favorite.favoriteId = '';
                         })
                         .catch(function (error) {
                             console.log(error);
