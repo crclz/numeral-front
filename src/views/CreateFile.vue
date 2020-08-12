@@ -10,7 +10,7 @@
 </template>
 
 <script>
-    import Editor from "./Editor";
+    import Editor from "../components/Editor";
     import axios from "axios";
     export default {
         name: "CreateFile",

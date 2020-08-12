@@ -24,7 +24,7 @@
         name: "MyFiles",
         created() {
             // alert(this.global.me.id);
-            axios.get('/api/documents',{params:{creatorId: this.global.me.id, isAbandoned:false, myfavorite:false}})// 需要将userId存入localStorage
+            axios.get('/api/documents',{params:{creatorId: this.global.me.id, isAbandoned:false}})
                 .then((response)=>{
                     // window.console.log(response.data.length);
                     this.documents = response.data;
@@ -49,6 +49,7 @@
                     .then(function (response) {
                         console.log(response);
                         alert("删除成功");
+                        window.location.reload();
                     })
                     .catch(function (error) {
                         console.log(error);

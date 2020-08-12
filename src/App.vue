@@ -7,8 +7,12 @@
         <router-link to="/createFile">CreateFile</router-link>|
         <router-link to="/editFile">EditFile</router-link>|
         <router-link to="/myFiles">MyFiles</router-link>|
+        <router-link to="/favoriteFiles">FavoriteFiles</router-link>|
+        <router-link to="/recycleFiles">RecycleFiles</router-link>|
         <router-link to="/readFile">ReadFile</router-link>|
-        <router-link to="/login">Login</router-link>
+        <router-link to="/login">Login</router-link>|
+        <router-link to="/logout">Logout</router-link>|
+        <router-link to="/createFromTemplate">CreateFromTemplate</router-link>
         <i v-if="this.global.me">|</i>
         <router-link :to="'/getuser/'+this.global.me.id" v-if="this.global.me">MyProfile</router-link>
       </div>

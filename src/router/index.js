@@ -1,11 +1,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+
 import Home from '../views/Home.vue'
-import CreateFile from "../components/CreateFile";
-import EditFile from "../components/EditFile";
-import MyFiles from "../components/MyFiles";
+import CreateFile from "../views/CreateFile";
+import EditFile from "../views/EditFile";
+import MyFiles from "../views/MyFiles";
 import Login from '../views/Login.vue'
-import ReadFile from "../components/ReadFile";
+import ReadFile from "../views/ReadFile";
+import CreateFromTemplate from "../views/CreateFromTemplate";
+import FavoriteFiles from "../views/FavoriteFiles";
+import RecycleFiles from "../views/RecycleFiles";
+
 import Logout from '../components/Logout.vue'
 import PatchUser from '../components/PatchUser.vue'
 import GetUser from '../views/GetUser.vue'
@@ -62,9 +67,24 @@ const routes = [{
         component: MyFiles
     },
     {
+        path: '/favoriteFiles',
+        name: 'FavoriteFiles',
+        component: FavoriteFiles
+    },
+    {
+        path: '/recycleFiles',
+        name: 'RecycleFiles',
+        component: RecycleFiles
+    },
+    {
         path: '/readFile/:id',
         name: 'ReadFile',
         component: ReadFile
+    },
+    {
+        path: '/createFromTemplate/:id',
+        name: 'CreateFromTemplate',
+        component: CreateFromTemplate
     },
 
 ]

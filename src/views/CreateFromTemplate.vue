@@ -6,15 +6,14 @@
         <div>文档内容</div>
         <editor ref="thisEditor" @change="change"></editor>
         <el-button type="success" @click="onSubmit">保存文件</el-button>
-        {{currentFile.data}}|||||{{this.defaultData}}
     </div>
 </template>
 
 <script>
-    import Editor from "./Editor";
+    import Editor from "../components/Editor";
     import axios from "axios";
     export default {
-        name: "EditFile",
+        name: "CreateFromTemplate",
         components: {Editor},
         created() {
             this.documentId=this.$route.params.id;
@@ -22,10 +21,9 @@
                 .then((response)=>{
                     // window.console.log(response.data.length);
                     console.log(response);
-                    if(response.status == 200) {
-                        this.currentFile = response.data;
-                        this.defaultData = response.data.data;
-                    }
+                    this.currentFile = response.data;
+                    this.defaultData = response.data.data;
+
                     // alert("请求成功")
                 })
                 .catch(function (error) {
@@ -48,10 +46,10 @@
                 this.currentFile.data = value;
             },
             onSubmit(){
-                axios.patch('/api/documents/'+this.documentId, {
-                    "title": this.currentFile.title,
-                    "description": this.currentFile.description,
+                axios.post('/api/documents/', {
                     "data": this.currentFile.data,
+                    "description": this.currentFile.description,
+                    "title": this.currentFile.title,
                 })
                     .then(function (response) {
                         console.log(response);
