@@ -12,9 +12,10 @@
         <router-link to="/readFile">ReadFile</router-link>|
         <router-link to="/login">Login</router-link>|
         <router-link to="/logout">Logout</router-link>|
-        <router-link to="/createFromTemplate">CreateFromTemplate</router-link>
-        <i v-if="this.global.me">|</i>
-        <router-link :to="'/getuser/'+this.global.me.id" v-if="this.global.me">MyProfile</router-link>
+        <router-link to="/createFromTemplate">CreateFromTemplate</router-link>|
+        <router-link to="/createTeam">CreateTeam</router-link>|
+        <router-link to="/myTeams">MyTeams</router-link>
+        <div v-if="this.global.me">|<router-link :to="'/getuser/'+this.global.me.id" v-if="this.global.me">MyProfile</router-link></div>
       </div>
       <router-view />
     </div>

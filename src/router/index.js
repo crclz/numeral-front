@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Home from '../views/Home.vue'
+import Home from '../views/Home.vue';
+import GetUser from '../views/GetUser.vue';
 import CreateFile from "../views/CreateFile";
 import EditFile from "../views/EditFile";
 import MyFiles from "../views/MyFiles";
@@ -10,10 +11,12 @@ import ReadFile from "../views/ReadFile";
 import CreateFromTemplate from "../views/CreateFromTemplate";
 import FavoriteFiles from "../views/FavoriteFiles";
 import RecycleFiles from "../views/RecycleFiles";
+import CreateTeam from "../views/CreateTeam";
+import MyTeams from "../views/MyTeams";
 
 import Logout from '../components/Logout.vue'
 import PatchUser from '../components/PatchUser.vue'
-import GetUser from '../views/GetUser.vue'
+
 
 Vue.use(VueRouter)
     // asdsadsadsa
@@ -86,7 +89,16 @@ const routes = [{
         name: 'CreateFromTemplate',
         component: CreateFromTemplate
     },
-
+    {
+        path: '/createTeam',
+        name: 'CreateTeam',
+        component: CreateTeam
+    },
+    {
+        path: '/myTeams',
+        name: 'MyTeams',
+        component: MyTeams
+    },
 ]
 
 const router = new VueRouter({

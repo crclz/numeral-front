@@ -13,17 +13,33 @@
         <div>将下方链接复制到浏览器打开 或扫描二维码</div>
         <div>{{shareUrl}}</div>
         <div><ShareQR></ShareQR></div>
+        <div><h1>评论列表</h1></div>
+        <div>
+            <el-row>
+                <div v-for="item in comments" :key="item.id">
+                    <el-col :span="24">
+                        <div class="grid-content bg-purple-dark"><img height="32" width="32" :src="item.user.avatarUrl"/>{{item.user.username}}</div>
+                    </el-col>
+                    <el-col>
+                        <div class="grid-content bg-purple-light" v-html="item.content"></div>
+                    </el-col>
+                </div>
+            </el-row>
+        </div>
+        <create-comment></create-comment>
     </div>
 </template>
 
 <script>
     import axios from "axios";
     import ShareQR from "../components/ShareQR";
+    import CreateComment from "../components/CreateComment";
 
     export default {
         name: "ReadFile",
         components: {
-            ShareQR
+            ShareQR,
+            CreateComment
         },
         created() {
             this.documentId = this.$route.params.id;
@@ -31,13 +47,15 @@
                 .then((response) => {
                     console.log(response);
                     this.currentFile = response.data;
-                    this.ret = true;
+
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
             this.checkFavorite();// 检查是否收藏过，如果收藏过则显示已收藏
+            this.loadComments(); // 加载评论
             this.shareUrl = window.location.href;
+            this.ret = true;
         },
         data() {
             return {
@@ -49,6 +67,7 @@
                 },
                 currentFile: {
                 },
+                comments: [{}],
                 shareUrl: '',
                 ret: false,
             }
@@ -101,11 +120,46 @@
                             console.log(error);
                         });
                 }
+            },
+            loadComments() {
+                axios.get('/api/comments?documentId='+this.documentId)
+                    .then((response) => {
+                        console.log(response);
+                        this.comments = response.data;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
             }
         }
     }
 </script>
 
 <style scoped>
-
+    .el-row {
+        margin-bottom: 20px;
+    &:last-child {
+         margin-bottom: 0;
+     }
+    }
+    .el-col {
+        border-radius: 4px;
+    }
+    .bg-purple-dark {
+        background: #99a9bf;
+    }
+    .bg-purple {
+        background: #d3dce6;
+    }
+    .bg-purple-light {
+        background: #e5e9f2;
+    }
+    .grid-content {
+        border-radius: 4px;
+        min-height: 36px;
+    }
+    .row-bg {
+        padding: 10px 0;
+        background-color: #f9fafc;
+    }
 </style>
