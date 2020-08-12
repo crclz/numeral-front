@@ -44,14 +44,14 @@ export default {
       loginFormRules: {
         // 验证用户名是否合法
         username: [
-          { required: true, message: "请输入账号", trigger: "blur" },
-          // { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "blur" },
+          { required: true, message: "请输入账号", trigger: "change" },
+          // { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "change" },
         ],
 
         //验证密码是否合法
         password: [
-          { required: true, message: "请输入密码", trigger: "blur" },
-          { min: 6, max: 16, message: "密码格式错误", trigger: "blur" },
+          { required: true, message: "请输入密码", trigger: "change" },
+          { min: 6, max: 16, message: "密码格式错误", trigger: "change" },
         ],
       },
     };
@@ -67,11 +67,14 @@ export default {
           password: this.loginForm.password,
           username: this.loginForm.username,
         })
-        .then(function (response) {
+        .then((response) => {
           console.log(response);
           alert("登录成功");
           console.log("开始测试");
           console.log(response);
+
+          // 刷新页面从而起到刷新global.me的作用
+          this.$router.go(0);
         })
         .catch(function (error) {
           // window.err3 = error;

@@ -32,7 +32,10 @@
         <el-form-item label="确认密码" prop="checkPass">
           <el-input type="password" v-model="PatchUserForm.checkPass" autocomplete="off"></el-input>
         </el-form-item>
-
+        <el-form-item class="btns">
+          <el-button type="primary" @click="submitForm_pass('PatchUserForm')">修改密码</el-button>
+          <el-button type="info" @click="resetPatchUserForm">重置</el-button>
+        </el-form-item>
         <!-- 描述信息 -->
         <el-form-item label="个人简介" prop="description">
           <el-input type="textarea" v-model="PatchUserForm.description" placeholder="请输入个人简介"></el-input>
@@ -40,7 +43,7 @@
 
         <!-- 按钮区域 -->
         <el-form-item class="btns">
-          <el-button type="primary" @click="submitForm('PatchUserForm')">保存</el-button>
+          <el-button type="primary" @click="submitForm_description('PatchUserForm')">保存</el-button>
           <el-button type="info" @click="resetPatchUserForm">重置</el-button>
         </el-form-item>
       </el-form>
@@ -52,15 +55,14 @@
 export default {
   name: "PatchUser",
   created() {
-    this.UserId = this.global.me.id;
+    this.UserId = this.$route.params.id;
     console.log(this.UserId);
   },
   data() {
     // 后面主要是进行一个表单的验证
-
     var checkDescpt = (rule, value, callback) => {
       // 或许还应该完善
-      if (value.length > 100) {
+      if (value.length > 32) {
         callback(new Error("字数超出限制"));
       } else {
         callback();
@@ -88,35 +90,53 @@ export default {
 
     return {
       UserId: "",
-      // 这是登录表单的数据绑定对象
+
       PatchUserForm: {
-        avatarUrl: "",
-        description: "",
-        password: "",
-        checkPass: "",
+        avatarUrl: null,
+        description: null,
+        password: null,
+        checkPass: null,
       },
-      // 这是表单验证规则对象
       PatchUserFormRules: {
-        //验证密码是否合法
         password: [
-          { validator: validatePass, trigger: "blur" },
-          { min: 6, max: 16, message: "密码格式错误", trigger: "blur" },
+          { validator: validatePass, trigger: "change" },
+          {
+            min: 6,
+            max: 32,
+            message: "密码长度在 6 到 32 个字符",
+            trigger: "change",
+          },
         ],
-        checkPass: [{ validator: validatePass2, trigger: "blur" }],
-        description: [{ validator: checkDescpt, trigger: "blur" }],
+        checkPass: [{ validator: validatePass2, trigger: "change" }],
+        description: [{ validator: checkDescpt, trigger: "change" }],
       },
     };
   },
   methods: {
     // 上传头像的限制
     handleAvatarSuccess(res, file) {
-      //应该post上去一个东西，然后获得返回值
-      console.log("这里是res");
-      console.log(res);
-      console.log("这里是file");
+      this.PatchUserForm.avatarUrl = res;
+      console.log(this.PatchUserForm.avatarUrl);
       console.log(file);
-
-      this.PatchUserForm.avatarUrl = URL.createObjectURL(file.raw);
+      this.PatchUserForm.description = null;
+      this.PatchUserForm.password = null;
+      this.$axios
+        .patch("/api/users/" + this.UserId, {
+          avatarUrl: this.PatchUserForm.avatarUrl,
+          description: this.PatchUserForm.description,
+          password: this.PatchUserForm.password,
+        })
+        .then((response) => {
+          console.log(response);
+          alert("头像更换成功");
+          console.log("正确提示！");
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log("错误提示！");
+          console.log(this.PatchUserForm);
+          console.log(error.response.data);
+        });
     },
     beforeAvatarUpload(file) {
       console.log(file);
@@ -136,24 +156,48 @@ export default {
     resetPatchUserForm() {
       this.$refs.PatchUserFormRef.resetFields();
     },
-    submitForm(PatchUserForm) {
+    submitForm_pass() {
+      this.PatchUserForm.description = null;
+      this.PatchUserForm.avatarUrl = null;
       this.$axios
-        .post("/api/users/" + this.UserId, {
-          avatarUrl: PatchUserForm.avatarUrl,
-          description: PatchUserForm.description,
-          password: PatchUserForm.password,
+        .patch("/api/users/" + this.UserId, {
+          avatarUrl: this.PatchUserForm.avatarUrl,
+          description: this.PatchUserForm.description,
+          password: this.PatchUserForm.password,
         })
         .then((response) => {
           console.log(response);
           alert("修改成功");
           console.log("正确提示！");
           console.log(response.data);
+          console.log(this.PatchUserForm);
         })
-        .catch(function (error) {
+        .catch((error) => {
+          console.log("错误提示！");
+          console.log(this.PatchUserForm);
+          console.log(error.response.data);
+        });
+    },
+    submitForm_description() {
+      this.PatchUserForm.avatarUrl = null;
+      this.PatchUserForm.password = null;
+      this.$axios
+        .patch("/api/users/" + this.UserId, {
+          avatarUrl: this.PatchUserForm.avatarUrl,
+          description: this.PatchUserForm.description,
+          password: this.PatchUserForm.password,
+        })
+        .then((response) => {
+          alert("修改成功");
+          console.log("正确提示！");
+          console.log(response.data);
+          console.log(this.PatchUserForm);
+        })
+        .catch((error) => {
           // window.err3 = error;
           console.log("错误提示！");
+          console.log(this.PatchUserForm);
           console.log(error.response.data);
-          alert(error.response.data.message);
         });
     },
   },
