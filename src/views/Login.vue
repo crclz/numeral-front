@@ -72,11 +72,6 @@ export default {
           alert("登录成功");
           console.log("开始测试");
           console.log(response);
-          console.log("测试again");
-          console.log(response.data);
-          // 页面跳转，好像有问题
-          // window.sessionStorage.setItem("token", res.data.token);
-          // this.$router.push("/home");
         })
         .catch(function (error) {
           // window.err3 = error;
