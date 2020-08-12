@@ -13,12 +13,12 @@
                     width="180">
             </el-table-column>
             <el-table-column
-                    prop="name"
+                    prop="team.name"
                     label="团队名称"
                     width="180">
             </el-table-column>
             <el-table-column
-                    prop="description"
+                    prop="team.description"
                     label="团队描述">
             </el-table-column>
         </el-table>

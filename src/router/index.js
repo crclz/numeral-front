@@ -13,6 +13,8 @@ import FavoriteFiles from "../views/FavoriteFiles";
 import RecycleFiles from "../views/RecycleFiles";
 import CreateTeam from "../views/CreateTeam";
 import MyTeams from "../views/MyTeams";
+import Team from "../views/Team";
+import ManageApplications from "../views/ManageApplications";
 
 import Logout from '../components/Logout.vue'
 import PatchUser from '../components/PatchUser.vue'
@@ -98,6 +100,16 @@ const routes = [{
         path: '/myTeams',
         name: 'MyTeams',
         component: MyTeams
+    },
+    {
+        path: '/team/:id',
+        name: 'Team',
+        component: Team
+    },
+    {
+        path: '/manageApplications/:id',
+        name: 'ManageApplications',
+        component: ManageApplications
     },
 ]
 
