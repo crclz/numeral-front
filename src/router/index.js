@@ -12,6 +12,8 @@ import FavoriteFiles from "../views/FavoriteFiles";
 import RecycleFiles from "../views/RecycleFiles";
 
 import Logout from '../components/Logout.vue'
+import PatchUser from '../views/PatchUser.vue'
+import GetUser from '../views/GetUser.vue'
 
 Vue.use(VueRouter)
     // asdsadsadsa
@@ -38,6 +40,16 @@ const routes = [{
         path: '/logout',
         name: 'Logout',
         component: Logout
+    },
+    {
+        path: '/getuser/:id',
+        name: 'GetUser',
+        component: GetUser
+    },
+    {
+        path: '/patchUser/:id',
+        name: 'PatchUser',
+        component: PatchUser
     },
     {
         path: '/createFile',
