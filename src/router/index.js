@@ -15,8 +15,7 @@ import CreateTeam from "../views/CreateTeam";
 import MyTeams from "../views/MyTeams";
 
 import Logout from '../components/Logout.vue'
-import PatchUser from '../components/PatchUser.vue'
-
+import PatchUser from '../views/PatchUser.vue'
 
 Vue.use(VueRouter)
     // asdsadsadsa
