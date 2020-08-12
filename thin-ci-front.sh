@@ -1,6 +1,7 @@
 set -e
 
-git pull
+echo 'make sure the code is the newest'
+sleep 2
 
 npm run build
 
