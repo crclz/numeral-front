@@ -49,6 +49,7 @@
                     .then(function (response) {
                         console.log(response);
                         alert("删除成功");
+                        window.location.reload();
                     })
                     .catch(function (error) {
                         console.log(error);

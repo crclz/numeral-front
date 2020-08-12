@@ -1,13 +1,16 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+
 import Home from '../views/Home.vue'
-import CreateFile from "../components/CreateFile";
-import EditFile from "../components/EditFile";
-import MyFiles from "../components/MyFiles";
+import CreateFile from "../views/CreateFile";
+import EditFile from "../views/EditFile";
+import MyFiles from "../views/MyFiles";
 import Login from '../views/Login.vue'
-import ReadFile from "../components/ReadFile";
+import ReadFile from "../views/ReadFile";
+import CreateFromTemplate from "../views/CreateFromTemplate";
+import FavoriteFiles from "../views/FavoriteFiles";
+
 import Logout from '../components/Logout.vue'
-import CreateFromTemplate from "../components/CreateFromTemplate";
 
 Vue.use(VueRouter)
     // asdsadsadsa
@@ -30,7 +33,11 @@ const routes = [{
         name: 'Login',
         component: Login
     },
-    { path: '/logout', name: 'Logout', component: Logout },
+    {
+        path: '/logout',
+        name: 'Logout',
+        component: Logout
+    },
     {
         path: '/createFile',
         name: 'CreateFile',
@@ -45,6 +52,11 @@ const routes = [{
         path: '/myFiles',
         name: 'MyFiles',
         component: MyFiles
+    },
+    {
+        path: '/favoriteFiles',
+        name: 'FavoriteFiles',
+        component: FavoriteFiles
     },
     {
         path: '/readFile/:id',
