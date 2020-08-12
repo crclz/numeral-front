@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="ret">
         <div>{{currentFile.title}}</div>
         <div>{{currentFile.creatorId}}</div>
         <div>{{currentFile.teamId}}</div>
@@ -10,25 +10,34 @@
         <div>{{currentFile.description}}</div>
         <el-button type="warning" :icon="favorite.favoriteIcon" @click="favoriteFile" circle></el-button>
         <div v-html="currentFile.data"></div>
+        <div>将下方链接复制到浏览器打开 或扫描二维码</div>
+        <div>{{shareUrl}}</div>
+        <div><ShareQR></ShareQR></div>
     </div>
 </template>
 
 <script>
     import axios from "axios";
+    import ShareQR from "../components/ShareQR";
 
     export default {
         name: "ReadFile",
+        components: {
+            ShareQR
+        },
         created() {
             this.documentId = this.$route.params.id;
             axios.get('/api/documents/'+this.documentId)
                 .then((response) => {
                     console.log(response);
                     this.currentFile = response.data;
+                    this.ret = true;
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
             this.checkFavorite();// 检查是否收藏过，如果收藏过则显示已收藏
+            this.shareUrl = window.location.href;
         },
         data() {
             return {
@@ -36,27 +45,12 @@
                     favorited: false,
                     favoriteId: "",
                     favoriteIcon: "el-icon-star-off",
-                    icons: ["el-icon-star-off", "el-icon-star-on"] // 未收藏 | 已收藏
+                    icons: ["el-icon-star-off", "el-icon-star-on"], // 未收藏 | 已收藏
                 },
                 currentFile: {
-                    "abandoned": false,
-                    "createdAt": 0,
-                    "creatorId": 0,
-                    "data": "<h1>测试文章内容</h1>",
-                    "description": "测试文章描述",
-                    "id": 0,
-                    "lastModifierId": 0,
-                    "modifyCount": 0,
-                    "publicCanShare": true,
-                    "publicCommentAccess": "None",
-                    "publicDocumentAccess": "None",
-                    "teamCanShare": true,
-                    "teamCommentAccess": "None",
-                    "teamDocumentAccess": "None",
-                    "teamId": 0,
-                    "title": "测试文章标题",
-                    "updatedAt": 0
-                }
+                },
+                shareUrl: '',
+                ret: false,
             }
         },
         methods: {
