@@ -9,6 +9,8 @@
         <router-link to="/myFiles">MyFiles</router-link>|
         <router-link to="/readFile">ReadFile</router-link>|
         <router-link to="/login">Login</router-link>
+        <i v-if="this.global.me">|</i>
+        <router-link :to="'/getuser/'+this.global.me.id" v-if="this.global.me">MyProfile</router-link>
       </div>
       <router-view />
     </div>

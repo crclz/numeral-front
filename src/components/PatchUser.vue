@@ -15,7 +15,7 @@
         <!-- 上传头像 -->
         <el-upload
           class="avatar-uploader"
-          action="http://47.95.230.65:8086/api/blobs"
+          action="/api/blobs"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
@@ -53,6 +53,7 @@ export default {
   name: "PatchUser",
   created() {
     this.UserId = this.global.me.id;
+    console.log(this.UserId);
   },
   data() {
     // 后面主要是进行一个表单的验证

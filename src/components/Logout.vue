@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: "Logout",
+  name: "Login",
   methods: {
     // 点击“退出登录”按钮，接受服务器反馈
     logout_now: function () {

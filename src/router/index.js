@@ -8,6 +8,7 @@ import Login from '../views/Login.vue'
 import ReadFile from "../components/ReadFile";
 import Logout from '../components/Logout.vue'
 import PatchUser from '../components/PatchUser.vue'
+import GetUser from '../views/GetUser.vue'
 
 Vue.use(VueRouter)
     // asdsadsadsa
@@ -36,7 +37,12 @@ const routes = [{
         component: Logout
     },
     {
-        path: '/PatchUser/:id',
+        path: '/getuser/:id',
+        name: 'GetUser',
+        component: GetUser
+    },
+    {
+        path: '/patchUser/:id',
         name: 'PatchUser',
         component: PatchUser
     },
