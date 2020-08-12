@@ -7,6 +7,7 @@ import MyFiles from "../components/MyFiles";
 import Login from '../views/Login.vue'
 import ReadFile from "../components/ReadFile";
 import Logout from '../components/Logout.vue'
+import CreateFromTemplate from "../components/CreateFromTemplate";
 
 Vue.use(VueRouter)
     // asdsadsadsa
@@ -49,6 +50,11 @@ const routes = [{
         path: '/readFile/:id',
         name: 'ReadFile',
         component: ReadFile
+    },
+    {
+        path: '/createFromTemplate/:id',
+        name: 'CreateFromTemplate',
+        component: CreateFromTemplate
     },
 
 ]

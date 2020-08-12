@@ -1,12 +1,11 @@
 <template>
     <div>
-        <div>收藏状态：{{favorite.favorited}}</div>
         <div>{{currentFile.title}}</div>
         <div>{{currentFile.creatorId}}</div>
         <div>{{currentFile.teamId}}</div>
         <div>{{currentFile.createdAt | moment}}</div>
         <div>{{currentFile.modifyCount}}</div>
-        <div>{{currentFile.updatedAt}}</div>
+        <div>{{currentFile.updatedAt | moment}}</div>
         <div>{{currentFile.lastModifierId}}</div>
         <div>{{currentFile.description}}</div>
         <el-button type="warning" :icon="favorite.favoriteIcon" @click="favoriteFile" circle></el-button>
@@ -24,9 +23,7 @@
             axios.get('/api/documents/'+this.documentId)
                 .then((response) => {
                     console.log(response);
-                    if(response.status == 200){
-                        this.currentFile = response.data;
-                    }
+                    this.currentFile = response.data;
                 })
                 .catch(function (error) {
                     console.log(error);

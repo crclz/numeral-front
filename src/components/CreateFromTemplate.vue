@@ -13,7 +13,7 @@
     import Editor from "./Editor";
     import axios from "axios";
     export default {
-        name: "EditFile",
+        name: "CreateFromTemplate",
         components: {Editor},
         created() {
             this.documentId=this.$route.params.id;
@@ -46,10 +46,10 @@
                 this.currentFile.data = value;
             },
             onSubmit(){
-                axios.patch('/api/documents/'+this.documentId, {
-                    "title": this.currentFile.title,
-                    "description": this.currentFile.description,
+                axios.post('/api/documents/', {
                     "data": this.currentFile.data,
+                    "description": this.currentFile.description,
+                    "title": this.currentFile.title,
                 })
                     .then(function (response) {
                         console.log(response);

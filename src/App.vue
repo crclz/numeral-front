@@ -8,7 +8,8 @@
         <router-link to="/editFile">EditFile</router-link>|
         <router-link to="/myFiles">MyFiles</router-link>|
         <router-link to="/readFile">ReadFile</router-link>|
-        <router-link to="/login">Login</router-link>
+        <router-link to="/login">Login</router-link> |
+        <router-link to="/createFromTemplate">CreateFromTemplate</router-link>
       </div>
       <router-view />
     </div>
