@@ -9,6 +9,7 @@ import Login from '../views/Login.vue'
 import ReadFile from "../views/ReadFile";
 import CreateFromTemplate from "../views/CreateFromTemplate";
 import FavoriteFiles from "../views/FavoriteFiles";
+import RecycleFiles from "../views/RecycleFiles";
 
 import Logout from '../components/Logout.vue'
 
@@ -57,6 +58,11 @@ const routes = [{
         path: '/favoriteFiles',
         name: 'FavoriteFiles',
         component: FavoriteFiles
+    },
+    {
+        path: '/recycleFiles',
+        name: 'RecycleFiles',
+        component: RecycleFiles
     },
     {
         path: '/readFile/:id',

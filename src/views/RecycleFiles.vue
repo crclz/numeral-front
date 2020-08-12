@@ -5,10 +5,10 @@
             <el-col :span="6" v-for="item in documents" :key="item.id"><div class="grid-content bg-purple">
                 <el-card class="box-card">
                     <div slot="header" class="clearfix">
-                        <span  @click="openDocument(item.id)">{{item.title}}</span><div @click="readDocument(item.id)">读</div>
-                        <el-button style="float: right; padding: 3px 0" type="icon" icon="el-icon-delete" @click="abandonDocument(item)"></el-button>
+                        <span >{{item.title}}</span><div @click="readDocument(item.id)">读</div>
+                        <el-button style="float: right; padding: 3px 0" type="icon" icon="el-icon-delete" @click="recycleDocument(item)"></el-button>
                     </div>
-                    <div class="text item"  @click="openDocument(item.id)">
+                    <div class="text item" >
                         {{item.description}}
                     </div>
                 </el-card>
@@ -21,10 +21,10 @@
     import axios from "axios";
 
     export default {
-        name: "MyFiles",
+        name: "RecycleFiles",
         created() {
             // alert(this.global.me.id);
-            axios.get('/api/documents',{params:{creatorId: this.global.me.id, isAbandoned:false}})
+            axios.get('/api/documents',{params:{creatorId: this.global.me.id, isAbandoned:true}})
                 .then((response)=>{
                     // window.console.log(response.data.length);
                     this.documents = response.data;
@@ -41,19 +41,19 @@
             }
         },
         methods: {
-            abandonDocument(document){
+            recycleDocument(document){
                 document.isAbandoned = true;
                 axios.patch('/api/documents/'+document.id, {
-                    "isAbandoned": true
+                    "isAbandoned": false
                 })
                     .then(function (response) {
                         console.log(response);
-                        alert("删除成功");
+                        alert("取消删除成功");
                         window.location.reload();
                     })
                     .catch(function (error) {
                         console.log(error);
-                        alert("删除失败");
+                        alert("取消删除失败");
                     });
             },
             openDocument(documentId){
@@ -71,9 +71,9 @@
 <style scoped>
     .el-row {
         margin-bottom: 20px;
-        &:last-child {
-             margin-bottom: 0;
-         }
+    &:last-child {
+         margin-bottom: 0;
+     }
     }
     .el-col {
         border-radius: 4px;
