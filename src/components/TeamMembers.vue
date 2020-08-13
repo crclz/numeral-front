@@ -7,7 +7,7 @@
             <!-- 这里显示头像-->
             <div class="avatar_box">
               <span @click="openUser(item.user.id)" width="100%">
-                <img :src="item.user.avatarUrl" width="100%" alt="avatar" />
+                <img :src="item.user.avatarUrl" style="width: 50px; height: 50px;" alt="avatar" />
               </span>
             </div>
             <!-- 这里显示用户名-->
