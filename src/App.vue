@@ -37,6 +37,7 @@
       <!-- 重要！防止路由复用！ -->
       <router-view :key="key" />
     </div>
+    </div>
 </template>
 
 <script>
@@ -74,8 +75,6 @@
                 : this.$route + new Date();
             }
         }
-    },
-  },
     };
 </script>
 
