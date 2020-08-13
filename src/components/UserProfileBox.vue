@@ -1,7 +1,6 @@
 
 <template>
   <div class="User">
-<<<<<<< HEAD
     <h2>个人信息</h2>
     <ul>
       <li>用户名：{{user.username}}</li>
@@ -12,8 +11,6 @@
         <el-button type="primary" @click="jumpToPatchUser">修改个人信息</el-button>
       </el-form>
     </div>
-=======
->>>>>>> main/master
     <div>
       <img :src="user.avatarUrl" alt style="width:80px; height:80px;" />
     </div>
