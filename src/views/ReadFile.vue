@@ -43,6 +43,7 @@
                         </div>
                     </el-row>
                 </div>
+                <HR/>
                 <create-comment></create-comment>
             </div>
         </div>
