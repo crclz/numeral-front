@@ -1,46 +1,17 @@
 <template>
-  <div class="SetDucPermission_container">
+  <div class="setTeamDocPermis_container">
     <el-form
-      ref="currentPermissionRef"
-      :model="currentPermission"
+      ref="currentTeamPermisRef"
+      :model="currentTeamPermis"
       status-icon
-      :rules="currentPermissionRules"
+      :rules="currentTeamPermisRules"
       label-width="100px"
-      class="SetDucPermission_form"
+      class="setTeamDocPermis_form"
     >
-      <tr>
-        <td>所有人是否可分享</td>
-        <td>
-          <el-radio-group v-model="currentPermission.publicCanShare">
-            <el-radio :label="true">是</el-radio>
-            <el-radio :label="false">否</el-radio>
-          </el-radio-group>
-        </td>
-      </tr>
-      <tr>
-        <td>所有人对评论权限：</td>
-        <td>
-          <el-radio-group v-model="currentPermission.publicCommentAccess">
-            <el-radio :label="'None'">无权限</el-radio>
-            <el-radio :label="'Read'">只读权限</el-radio>
-            <el-radio :label="'ReadWrite'">读写权限</el-radio>
-          </el-radio-group>
-        </td>
-      </tr>
-      <tr>
-        <td>所有人对文档权限：</td>
-        <td>
-          <el-radio-group v-model="currentPermission.publicDocumentAccess">
-            <el-radio :label="'None'">无权限</el-radio>
-            <el-radio :label="'Read'">只读权限</el-radio>
-            <el-radio :label="'ReadWrite'">读写权限</el-radio>
-          </el-radio-group>
-        </td>
-      </tr>
       <tr>
         <td>团队人员是否可分享：</td>
         <td>
-          <el-radio-group v-model="currentPermission.teamCanShare">
+          <el-radio-group v-model="currentTeamPermis.teamCanShare">
             <el-radio :label="true">是</el-radio>
             <el-radio :label="false">否</el-radio>
           </el-radio-group>
@@ -49,7 +20,7 @@
       <tr>
         <td>团队人员对评论权限：</td>
         <td>
-          <el-radio-group v-model="currentPermission.teamCommentAccess">
+          <el-radio-group v-model="currentTeamPermis.teamCommentAccess">
             <el-radio :label="'None'">无权限</el-radio>
             <el-radio :label="'Read'">只读权限</el-radio>
             <el-radio :label="'ReadWrite'">读写权限</el-radio>
@@ -59,7 +30,7 @@
       <tr>
         <td>团队人员对文档权限：</td>
         <td>
-          <el-radio-group v-model="currentPermission.teamDocumentAccess">
+          <el-radio-group v-model="currentTeamPermis.teamDocumentAccess">
             <el-radio :label="'None'">无权限</el-radio>
             <el-radio :label="'Read'">只读权限</el-radio>
             <el-radio :label="'ReadWrite'">读写权限</el-radio>
@@ -72,7 +43,6 @@
           <!-- 按钮区域 -->
           <el-form-item class="btns">
             <el-button type="primary" @click="submit()">保存</el-button>
-            <!-- <el-button type="info" @click="resetcurrentPermission">重置</el-button> -->
           </el-form-item>
         </td>
       </tr>
@@ -89,10 +59,10 @@ export default {
       .then((response) => {
         // window.console.log(response.data.length);
         console.log(response);
-        this.currentPermission = response.data;
+        this.currentTeamPermis = response.data;
         this.defaultData = response.data.data;
         console.log("当前传入情况");
-        console.log(this.currentPermission);
+        console.log(this.currentTeamPermis);
         // alert("请求成功")
       })
       .catch(function (error) {
@@ -101,10 +71,9 @@ export default {
   },
   data() {
     return {
-      radio: 3,
       documentId: "",
       defaultData: "",
-      currentPermission: {
+      currentTeamPermis: {
         publicCanShare: true,
         publicCommentAccess: "None",
         publicDocumentAccess: "None",
@@ -112,35 +81,28 @@ export default {
         teamCommentAccess: "None",
         teamDocumentAccess: "None",
       },
-      currentPermissionRules: {},
+      currentTeamPermisRules: {},
     };
   },
   mounted() {},
   methods: {
-    // 点击重置按钮，重置登录表单
-    // resetcurrentPermission() {
-    //   this.$refs.currentPermissionRef.resetFields();
-    // },
     submit() {
       this.$axios
         .patch("/api/documents/" + this.documentId, {
-          publicCanShare: this.currentPermission.publicCanShare,
-          publicCommentAccess: this.currentPermission.publicCommentAccess,
-          publicDocumentAccess: this.currentPermission.publicDocumentAccess,
-          teamCanShare: this.currentPermission.teamCanShare,
-          teamCommentAccess: this.currentPermission.teamCommentAccess,
-          teamDocumentAccess: this.currentPermission.teamDocumentAccess,
+          teamCanShare: this.currentTeamPermis.teamCanShare,
+          teamCommentAccess: this.currentTeamPermis.teamCommentAccess,
+          teamDocumentAccess: this.currentTeamPermis.teamDocumentAccess,
         })
         .then((response) => {
           console.log(response);
           alert("修改成功");
           console.log("正确提示！");
           console.log(response.data);
-          console.log(this.currentPermission);
+          console.log(this.currentTeamPermis);
         })
         .catch((error) => {
           console.log("错误提示！");
-          console.log(this.currentPermission);
+          console.log(this.currentTeamPermis);
           console.log(error.response.data);
         });
     },
