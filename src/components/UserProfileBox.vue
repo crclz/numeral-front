@@ -1,13 +1,12 @@
 
 <template>
   <div class="User">
-    <ul>
-      <li>用户名：{{user.username}}</li>
-      <li>个人简介：{{user.description}}</li>
-    </ul>
     <div>
-      <img :src="user.avatarUrl" alt style="width:40px,height:40px" />
+      <img :src="user.avatarUrl" alt style="width:80px; height:80px;" />
     </div>
+
+    <h2>用户名：{{user.username}}</h2>
+    <h2>个人简介：{{user.description}}</h2>
   </div>
 </template>
 
