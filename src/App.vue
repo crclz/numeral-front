@@ -1,6 +1,5 @@
 <template>
   <div id="app" v-if="this.meReturned">
-    <Header></Header>
     <div v-if="this.global.me">
       <el-menu
         :default-active="activeIndex"
@@ -8,12 +7,19 @@
         mode="horizontal"
         @select="handleSelect"
       >
-        <el-menu-item index="/favoriteFiles">我收藏的文档</el-menu-item>
-        <el-menu-item index="/myFiles">我创建的文档</el-menu-item>
-        <el-menu-item index="/createFile">创建新的文档</el-menu-item>
-        <el-menu-item index="/myTeams">我加入的团队</el-menu-item>
-        <el-menu-item index="/createTeam">创建新的团队</el-menu-item>
-        <el-menu-item index="/recycleFiles">回收站</el-menu-item>
+        <div style="display: flex;">
+          <el-menu-item index="/favoriteFiles">我收藏的文档</el-menu-item>
+          <el-menu-item index="/myFiles">我创建的文档</el-menu-item>
+          <el-menu-item index="/createFile">创建新的文档</el-menu-item>
+          <el-menu-item index="/myTeams">我加入的团队</el-menu-item>
+          <el-menu-item index="/createTeam">创建新的团队</el-menu-item>
+          <el-menu-item index="/recycleFiles">回收站</el-menu-item>
+
+          <div style="flex-grow: 1;"></div>
+          <el-menu-item @click="logout_now">退出登录</el-menu-item>
+          <el-menu-item :index="'/getUser/'+this.global.me.id">{{this.global.me.username}}</el-menu-item>
+          <el-avatar :size="40" :src="this.global.me.avatarUrl"></el-avatar>
+        </div>
       </el-menu>
       <div id="nav" v-if="displayOldNav">
         <router-link to="/">Home</router-link>|
@@ -39,6 +45,23 @@
         <router-link to="/createFromTemplate">|CreateFromTemplate</router-link>
       </div>
     </div>
+
+    <!-- 未登录 -->
+    <div v-if="!this.global.me">
+      <el-menu
+        :default-active="activeIndex"
+        class="el-menu-demo"
+        mode="horizontal"
+        @select="handleSelect"
+      >
+        <div style="display: flex;">
+          <div style="flex-grow: 1;"></div>
+          <el-menu-item index="/login">登录</el-menu-item>
+          <el-menu-item index="/register">注册</el-menu-item>
+        </div>
+      </el-menu>
+    </div>
+
     <!-- 重要！防止路由复用！ -->
     <router-view :key="key" />
   </div>
@@ -46,11 +69,11 @@
 
 <script>
 //import Vue from 'vue';
-import Header from "./components/Header";
+// import Header from "./components/Header";
 
 export default {
   components: {
-    Header,
+    // Header,
   },
   data() {
     return {
@@ -69,6 +92,19 @@ export default {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
       this.$router.push({ path: key });
+    },
+    logout_now: function () {
+      this.$axios
+        .post("/api/access/logout", {})
+        .then((response) => {
+          this.$router.push({ path: "/login" });
+          this.$router.go(0)
+          console.log("开始测试");
+          console.log(response);
+        })
+        .catch(function (error) {
+          alert(error.response.data.message);
+        });
     },
   },
   computed: {
