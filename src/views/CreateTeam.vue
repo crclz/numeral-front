@@ -26,9 +26,10 @@
                     "name": this.newTeam.name,
                     "description": this.newTeam.description,
                 })
-                    .then(function (response) {
+                    .then((response) => {
                         console.log(response);
                         alert("创建成功");
+                        this.$router.push({path: '/myTeams'});
                     })
                     .catch(function (error) {
                         console.log(error);

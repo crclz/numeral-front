@@ -32,7 +32,6 @@
       <share-q-r></share-q-r>
     </div>
     <div>
-      团队成员：
       <h3>团队成员</h3>
       <team-members :teamId="teamId"></team-members>
     </div>
