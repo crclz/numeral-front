@@ -16,14 +16,17 @@
         <router-link to="/createTeam">CreateTeam</router-link>|
         <router-link to="/myTeams">MyTeams</router-link>
 
-        <div v-if="this.global.me">|<router-link :to="'/getuser/'+this.global.me.id" v-if="this.global.me">MyProfile</router-link></div>
+        <div v-if="this.global.me">
+          |
+          <router-link :to="'/getuser/'+this.global.me.id" v-if="this.global.me">MyProfile</router-link>
+        </div>
 
         <router-link :to="'/patchuser/' +this.global.me.id" v-if="this.global.me">|PatchUser</router-link>
 
         <router-link to="/createFromTemplate">|CreateFromTemplate</router-link>
-
       </div>
-      <router-view />
+      <!-- 重要！防止路由复用！ -->
+      <router-view :key="key" />
     </div>
   </div>
 </template>
@@ -42,6 +45,14 @@ export default {
       this.meReturned = true;
       this.global.me = res.data;
     });
+  },
+  computed: {
+    // 防止路由复用相关
+    key() {
+      return this.$route.name !== undefined
+        ? this.$route.name + new Date()
+        : this.$route + new Date();
+    },
   },
 };
 </script>

@@ -9,6 +9,9 @@
                 <div v-if="dirty.lockOwner" style="background-color: coral; color: white">请注意，该文档正在被{{this.dirty.lockOwner.username}}编辑，您看到的可能不是该文档的最新版本。</div>
                 <div v-if="dirty.isDirty && !dirty.lockOwner" style="background-color: #42b983; color: white">请注意，{{this.dirty.lastModifierName}}已于{{this.dirty.updatedAt | moment}}提交了该文档的最新版本，刷新页面以获得最新版本内容。</div>
                 <div><h1>{{currentFile.title}}</h1></div>
+
+                <HR style="margin-top:2.5rem; margin-bottom:2.5rem;" />
+
                 <div>创建者：{{currentFile.creatorId}}</div>
                 <div>团队ID：{{currentFile.teamId}}</div>
                 <div>创建时间：{{currentFile.createdAt | moment}}</div>
@@ -16,33 +19,39 @@
                 <div>上次更新时间：{{currentFile.updatedAt | moment}}</div>
                 <div>上次更新者：{{currentFile.lastModifierId}}</div>
                 <div>文件描述：{{currentFile.description}}</div>
+
+                <HR style="margin-top:2.5rem; margin-bottom:2.5rem;" />
+
+
                 <el-button type="warning" :icon="favorite.favoriteIcon" @click="favoriteFile" circle></el-button>
                 <el-button type="primary" :disabled="!userPermissions.document.canWrite" @click="gotoEditFile">编辑文档</el-button>
                 <el-button type="success" :disabled="!userPermissions.document.canShare" @click="toggleShare">分享文档</el-button>
+                <router-link type="primary" :to="'/createFromTemplate/'+this.documentId">基于此模板</router-link>
                 <div id="sharePanel" v-if="displaySwitch.share">
-                    <HR/>
+                    <HR style="margin-top:2.5rem; margin-bottom:2.5rem;" />
                     <div>将下方链接复制到浏览器打开 或扫描二维码</div>
                     <div>{{shareUrl}}</div>
                     <div><ShareQR></ShareQR></div>
-                    <HR/>
                 </div>
-                <HR/>
+                <HR style="margin-top:2.5rem; margin-bottom:2.5rem;" />
                 <h1>文档内容</h1>
                 <div v-html="currentFile.data"></div>
-                <HR/>
+                <HR style="margin-top:2.5rem; margin-bottom:2.5rem;" />
                 <div><h1>评论列表</h1></div>
                 <div>
                     <el-row>
                         <div v-for="item in comments" :key="item.id">
                             <el-col :span="24">
-                                <div class="grid-content bg-purple-dark"><img height="32" width="32" :src="item.user.avatarUrl"/>{{item.user.username}}</div>
+                                <div class="grid-content"><img height="32" width="32" :src="item.user.avatarUrl"/>{{item.user.username}}</div>
                             </el-col>
                             <el-col>
-                                <div class="grid-content bg-purple-light" v-html="item.content"></div>
+                                <div class="grid-content" v-html="item.content"></div>
                             </el-col>
+                            <hr style="width: 555px;">
                         </div>
                     </el-row>
                 </div>
+                <HR/>
                 <create-comment></create-comment>
             </div>
         </div>

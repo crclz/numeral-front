@@ -7,12 +7,13 @@
             <!-- 这里显示头像-->
             <div class="avatar_box">
               <span @click="openUser(item.user.id)" width="100%">
-                <img :src="item.user.avatarUrl" width="100%" alt="avatar" />
+                <img :src="item.user.avatarUrl" style="width: 50px; height: 50px;" alt="avatar" />
               </span>
             </div>
             <!-- 这里显示用户名-->
             <div class="clearfix">
-              <span @click="openUser(item.user.id)">
+              <!-- <span @click="openUser(item.user.id)"> -->
+              <span>
                 <tr>
                   <td>用户名：</td>
                   <td>{{item.user.username}}</td>
@@ -21,7 +22,13 @@
                   <td>简介：</td>
                   <td>{{item.user.description}}</td>
                 </tr>
+                <tr v-if="showKick">
+                  <td>
+                    <el-button type="primary" @click="removeMembership(item.id)">踢出团队</el-button>
+                  </td>
+                </tr>
               </span>
+              <!-- </span> -->
             </div>
             <!-- 这里显示个人简介
             <div class="text item" @click="openUser(item.user.id)">
@@ -37,7 +44,7 @@
 <script>
 export default {
   name: "MyFiles",
-  props: ["teamId"],
+  props: ["teamId", "showKick"],
   mounted() {
     this.$axios
       .get("/api/memberships", {
@@ -62,6 +69,18 @@ export default {
   methods: {
     openUser(userID) {
       this.$router.push({ path: "/getuser/" + userID });
+    },
+    removeMembership(id) {
+      this.$axios
+        .delete("/api/memberships/" + id)
+        .then((res) => {
+          console.log(res);
+          alert("踢出成功！");
+        })
+        .catch((err) => {
+          console.error(err);
+          alert("踢出失败");
+        });
     },
   },
 };
