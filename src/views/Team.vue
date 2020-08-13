@@ -17,7 +17,9 @@
 
     <div v-if="isMember">
       <div v-if="isCreator">
-        <router-link :to="'/team-manage/'+team.id">团队管理页</router-link>
+        <h2>
+          <router-link :to="'/team-manage/'+team.id">团队管理页</router-link>
+        </h2>
       </div>
       <div v-if="!isCreator">
         <el-button type="danger" @click="quitTeam">退出团队</el-button>
@@ -26,13 +28,22 @@
     <div v-if="!isMember">
       <el-button type="primary" @click="applyForTeam" plain>申请加入</el-button>
     </div>
+
+    <hr style="width: 680px; margin-top:2.5rem; margin-bottom: 2.5rem; " />
+
     <div>
+      <el-button type="primary" @click="toggleShare" plain>分享团队</el-button>
+    </div>
+    <div v-if="showShare">
       <h1>分享团队</h1>
       {{this.shareUrl}}
       <share-q-r></share-q-r>
     </div>
+
+    <hr style="width: 680px; margin-top:2.5rem; margin-bottom: 2.5rem; " />
+
     <div>
-      <h3>团队成员</h3>
+      <h3>团队成员列表</h3>
       <team-members :teamId="teamId"></team-members>
     </div>
   </div>
@@ -46,7 +57,7 @@ import TeamMembers from "@/components/TeamMembers.vue";
 
 export default {
   name: "Team",
-  
+
   components: {
     ShareQR,
     TeamMembers,
@@ -114,6 +125,7 @@ export default {
       membershipId: 0,
       isCreator: false,
       shareUrl: "",
+      showShare: false,
     };
   },
   methods: {
@@ -159,6 +171,9 @@ export default {
           console.log(error);
           alert("申请失败");
         });
+    },
+    toggleShare() {
+      this.showShare = !this.showShare;
     },
   },
 };
