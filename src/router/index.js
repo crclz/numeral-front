@@ -122,6 +122,11 @@ const routes = [{
         name: 'ManageApplications',
         component: ManageApplications
     },
+    {
+        path:'/team-manage/:id',
+        name:'TeamManage',
+        component: () =>import ('../views/TeamManage.vue')
+    }
 ]
 
 const router = new VueRouter({
