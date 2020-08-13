@@ -173,6 +173,7 @@
         },
         data() {
             return {
+                documentId:null,
                 favorite: {
                     favorited: false,
                     favoriteId: "",

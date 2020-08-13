@@ -13,11 +13,15 @@
 
     export default {
         name: "CreateComment",
+        props:['documentId'],
         components: {
             Editor
         },
         created() {
-            this.newComment.documentId = this.$parent.currentFile.id;
+            // 这样写比较蠢. commented by crclz
+            // this.newComment.documentId = this.$parent.currentFile.id;
+
+            this.newComment.documentId = this.$parent.documentId;
         },
         data() {
             return {
@@ -36,7 +40,7 @@
                 // this.newFile.data = this.$refs.thisEditor.getEditorContent;
                 // this.newFile.data = '123';
                 axios.post('/api/comments/', {
-                    documentId: this.newComment.documentId,
+                    documentId: this.$parent.documentId,
                     content: this.newComment.content
                 })
                     .then(function (response) {
