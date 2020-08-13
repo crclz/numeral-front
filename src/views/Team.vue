@@ -21,7 +21,8 @@
     </div>
     <div>
       团队成员：
-      <h1>Not yet implemented</h1>
+      <h3>团队成员</h3>
+      <team-members :teamId="teamId"></team-members>
     </div>
     <div>
       <h3>团队文档</h3>
@@ -39,12 +40,14 @@
 import axios from "axios";
 import ShareQR from "../components/ShareQR";
 import TeamFiles from "@/components/TeamFiles.vue";
+import TeamMembers from "@/components/TeamMembers.vue";
 
 export default {
   name: "Team",
   components: {
     ShareQR,
     TeamFiles,
+    TeamMembers,
   },
   created() {
     this.teamId = this.$route.params.id;
