@@ -1,9 +1,8 @@
 <template>
   <div class="PatchUser_container">
-    <div class="PatchUser_title">修改个人信息</div>
+    <h3 class="PatchUser_title">修改个人信息</h3>
     <div class="PatchUser_box">
       <!-- 修改个人信息表单区域 -->
-
       <el-form
         ref="PatchUserFormRef"
         :model="PatchUserForm"
@@ -205,16 +204,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+// element ui 中对头像上传的修饰css代码
 .PatchUser_container {
   height: 100%;
-}
-.PatchUser_form {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  // 文本框向下
-  padding: 0 30px;
-  box-sizing: border-box;
 }
 .btns {
   display: flex;
@@ -231,29 +223,27 @@ export default {
   top: 50%;
   transform: translate(-50%, -50%);
 }
-
-// element ui 中对头像上传的修饰css代码
-.avatar-uploader .el-upload {
-  border: 1px dashed #000000;
+.avatar-uploader {
+  width: 100%;
+}
+.avatar-uploader-icon {
+  border: 1px dashed #d9d9d9;
   border-radius: 6px;
   cursor: pointer;
   position: relative;
   overflow: hidden;
-}
-.avatar-uploader .el-upload:hover {
-  border-color: #409eff;
-}
-.avatar-uploader-icon {
   font-size: 28px;
   color: #8c939d;
-  width: 178px;
-  height: 178px;
-  line-height: 178px;
+  width: 150px;
+  height: 150px;
+  line-height: 150px;
   text-align: center;
 }
+.avatar-uploader-icon:hover {
+  border-color: #409eff;
+}
 .avatar {
-  width: 178px;
-  height: 178px;
+  width: 150px;
   display: block;
 }
 </style>
