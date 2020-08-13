@@ -138,6 +138,11 @@ const routes = [{
         path:'/team-manage/:id',
         name:'TeamManage',
         component: () =>import ('../views/TeamManage.vue')
+    },
+    {
+        path:'/team-files/:id',
+        name:'TeamFiles',
+        component: () =>import ('../components/TeamFiles.vue')
     }
 ]
 
