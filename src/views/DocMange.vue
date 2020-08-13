@@ -16,7 +16,7 @@
         <el-button
           type="primary"
           @click="jumpToSetTeamDocPermis"
-          v-if="this.global.me.id==this.leaderId"
+          v-if="this.global.me.id==this.leaderId && this.global.me.id!=this.creatorId"
         >修改团队人员文档权限</el-button>
       </el-form>
     </div>

@@ -26,7 +26,16 @@
                 <el-button type="warning" :icon="favorite.favoriteIcon" @click="favoriteFile" circle></el-button>
                 <el-button type="primary" :disabled="!userPermissions.document.canWrite" @click="gotoEditFile">编辑文档</el-button>
                 <el-button type="success" :disabled="!userPermissions.document.canShare" @click="toggleShare">分享文档</el-button>
-                <router-link type="primary" :to="'/createFromTemplate/'+this.documentId">基于此模板</router-link>
+                
+                <div>
+                    <router-link type="primary" :to="'/createFromTemplate/'+this.documentId">基于此模板</router-link>
+                </div>
+
+                <div>
+                    <router-link type="primary" :to="'/docmange/'+this.documentId">管理</router-link>
+                </div>
+
+                
                 <div id="sharePanel" v-if="displaySwitch.share">
                     <HR style="margin-top:2.5rem; margin-bottom:2.5rem;" />
                     <div>将下方链接复制到浏览器打开 或扫描二维码</div>
