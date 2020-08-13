@@ -1,15 +1,17 @@
 <template>
     <div>
+        <h1>文档回收站</h1>
         <!--{{this.global.me.id}}-->
         <el-row :gutter="20">
             <el-col :span="6" v-for="item in documents" :key="item.id"><div class="grid-content bg-purple">
                 <el-card class="box-card">
                     <div slot="header" class="clearfix">
-                        <span >{{item.title}}</span><div @click="readDocument(item.id)">读</div>
-                        <el-button style="float: right; padding: 3px 0" type="icon" icon="el-icon-delete" @click="recycleDocument(item)"></el-button>
+                        <div>文档ID：{{ item.id }}</div>
+                        <span>文档标题：{{item.title}}</span>
+                        <el-button style="float: right; padding: 3px 0" type="icon" icon="el-icon-refresh-left" @click="recycleDocument(item)"></el-button>
                     </div>
                     <div class="text item" >
-                        {{item.description}}
+                        文档简介：{{item.description}}
                     </div>
                 </el-card>
             </div></el-col>
@@ -71,9 +73,9 @@
 <style scoped>
     .el-row {
         margin-bottom: 20px;
-    &:last-child {
+    }
+    :last-child {
          margin-bottom: 0;
-     }
     }
     .el-col {
         border-radius: 4px;
