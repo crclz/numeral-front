@@ -17,8 +17,9 @@ import SetDocPermission from "../components/SetDocPermission";
 import SetTeamDocPermis from "../components/SetTeamDocPermis";
 import Team from "../views/Team";
 import ManageApplications from "../views/ManageApplications";
-import Logout from '../components/Logout.vue'
-import PatchUser from '../views/PatchUser.vue'
+import Logout from '../components/Logout.vue';
+import PatchUser from '../views/PatchUser.vue';
+import MoveFileToTeam from "../views/MoveFileToTeam";
 
 Vue.use(VueRouter)
     // asdsadsadsa
@@ -66,6 +67,11 @@ const routes = [{
         path: '/patchUser/:id',
         name: 'PatchUser',
         component: PatchUser
+    },
+    {
+        path: '/movefiletoteam/:id',
+        name: 'MoveFileToTeam',
+        component: MoveFileToTeam
     },
     {
         path: '/createFile',
