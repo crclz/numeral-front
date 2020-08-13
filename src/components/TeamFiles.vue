@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!--{{this.global.me.id}}-->
     <div v-if="documents.length==0">还未添加团队文档</div>
     <el-row :gutter="20">
       <el-col :span="6" v-for="item in documents" :key="item.id">
@@ -9,12 +8,6 @@
             <div slot="header" class="clearfix">
               <span @click="openDocument(item.id)">{{item.title}}</span>
               <div @click="readDocument(item.id)">读</div>
-              <!-- <el-button
-                style="float: right; padding: 3px 0"
-                type="icon"
-                icon="el-icon-delete"
-                @click="abandonDocument(item)"
-              ></el-button>-->
             </div>
             <div class="text item" @click="openDocument(item.id)">{{item.description}}</div>
           </el-card>
@@ -51,25 +44,7 @@ export default {
     };
   },
   methods: {
-    // abandonDocument(document) {
-    //   document.isAbandoned = true;
-    //   axios
-    //     .patch("/api/documents/" + document.id, {
-    //       isAbandoned: true,
-    //     })
-    //     .then(function (response) {
-    //       console.log(response);
-    //       alert("删除成功");
-    //       window.location.reload();
-    //     })
-    //     .catch(function (error) {
-    //       console.log(error);
-    //       alert("删除失败");
-    //     });
-    // },
     openDocument(documentId) {
-      // 结合router
-      // alert(documentId);
       this.$router.push({ path: "/editFile/" + documentId });
     },
     readDocument(documentId) {
