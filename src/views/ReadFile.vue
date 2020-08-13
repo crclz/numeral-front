@@ -1,5 +1,7 @@
 <template>
     <div v-if="ret">
+        <div v-if="dirty.lockOwner" style="background-color: coral; color: white">请注意，该文档正在被{{this.dirty.lockOwner.username}}编辑，您看到的可能不是该文档的最新版本。</div>
+        <div v-if="dirty.isDirty && !dirty.lockOwner" style="background-color: #42b983; color: white">请注意，{{this.dirty.lastModifierName}}已于{{this.dirty.updatedAt | moment}}提交了该文档的最新版本，刷新页面以获得最新版本内容。</div>
         <div>{{currentFile.title}}</div>
         <div>{{currentFile.creatorId}}</div>
         <div>{{currentFile.teamId}}</div>
@@ -56,6 +58,44 @@
             this.loadComments(); // 加载评论
             this.shareUrl = window.location.href;
             this.ret = true;
+
+            // 计数器，获取该文档的写状态
+            this.timer = setInterval(() => {
+                // this.testCount=this.testCount+1;
+                // alert("hello");
+                axios.get('/api/e-lock/get-owner?documentId='+this.documentId )
+                    .then((response) => {
+                        console.log(response);
+                        this.dirty.lockOwner = response.data;
+                        if(this.dirty.lockOwner){    // 写锁有主
+                            this.dirty.isDirty = true;
+                            this.dirty.lastModifierName = this.dirty.lockOwner.username;
+                        }
+                        else{                   // 写锁有主
+                            if(this.dirty.isDirty){ // 已脏
+                                axios.get('/api/documents/'+this.documentId)
+                                    .then((response)=>{
+                                        // window.console.log(response.data.length);
+                                        console.log(response);
+                                        this.dirty.updatedAt=response.data.updatedAt;
+
+                                        // alert("请求成功")
+                                    })
+                                    .catch(function (error) {
+                                        console.log(error);
+                                    });
+                            }
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        alert("获取写锁失败");
+                    });
+            }, 1000);
+        },
+        destroyed() {
+            if(this.timer)
+                clearInterval(this.timer);
         },
         data() {
             return {
@@ -70,6 +110,12 @@
                 comments: [{}],
                 shareUrl: '',
                 ret: false,
+                dirty: {
+                    isDirty: false,
+                    lockOwner: null,
+                    lastModifierName: '',
+                    updatedAt: 0
+                }
             }
         },
         methods: {

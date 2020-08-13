@@ -15,7 +15,7 @@
     "moment": "^2.27.0",
     "vue": "^2.6.11",
     "vue-qr": "^2.2.1",
-    "vue-router": "^3.2.0",
+    "vue-router": "^3.4.3",
     "wangeditor": "^3.1.1"
   },
   "devDependencies": {
