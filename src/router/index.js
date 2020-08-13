@@ -21,6 +21,7 @@ import Logout from '../components/Logout.vue';
 import PatchUser from '../views/PatchUser.vue';
 import MoveFileToTeam from "../views/MoveFileToTeam";
 import Register from "../views/Register";
+import DocMange from "../views/DocMange";
 
 Vue.use(VueRouter)
     // asdsadsadsa
@@ -80,6 +81,11 @@ const routes = [{
         component: MoveFileToTeam
     },
     {
+        path: '/docmange/:id',
+        name: 'DocMange',
+        component: DocMange
+    },
+    {
         path: '/createFile',
         name: 'CreateFile',
         component: CreateFile
@@ -135,6 +141,12 @@ const routes = [{
         component: ManageApplications
     },
     {
+<<<<<<< HEAD
+        path: '/team-manage/:id',
+        name: 'TeamManage',
+        component: () =>
+            import ('../views/TeamManage.vue')
+=======
         path:'/team-manage/:id',
         name:'TeamManage',
         component: () =>import ('../views/TeamManage.vue')
@@ -143,6 +155,7 @@ const routes = [{
         path:'/team-files/:id',
         name:'TeamFiles',
         component: () =>import ('../components/TeamFiles.vue')
+>>>>>>> main/master
     }
 ]
 
