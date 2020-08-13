@@ -1,19 +1,39 @@
 <template>
   <div>
-    <div v-if="membership.length==0">还未添加团队文档</div>
     <el-row :gutter="20">
       <el-col :span="6" v-for="item in memberships" :key="item.id">
         <div class="grid-content bg-purple">
           <el-card class="box-card">
+            <!-- 这里显示头像-->
             <div class="avatar_box">
               <span @click="openUser(item.user.id)" width="100%">
-                <img :src="item.avatarUrl" width="100%" alt="avatar" />
+                <img :src="item.user.avatarUrl" style="width: 50px; height: 50px;" alt="avatar" />
               </span>
             </div>
-            <div slot="header" class="clearfix">
-              <span @click="openUser(item.user.id)">{{item.user.username}}</span>
+            <!-- 这里显示用户名-->
+            <div class="clearfix">
+              <!-- <span @click="openUser(item.user.id)"> -->
+              <span>
+                <tr>
+                  <td>用户名：</td>
+                  <td>{{item.user.username}}</td>
+                </tr>
+                <tr>
+                  <td>简介：</td>
+                  <td>{{item.user.description}}</td>
+                </tr>
+                <tr v-if="showKick">
+                  <td>
+                    <el-button type="primary" @click="removeMembership(item.id)">踢出团队</el-button>
+                  </td>
+                </tr>
+              </span>
+              <!-- </span> -->
             </div>
-            <div class="text item" @click="openUser(item.user.id)">{{item.user.description}}</div>
+            <!-- 这里显示个人简介
+            <div class="text item" @click="openUser(item.user.id)">
+              
+            </div>-->
           </el-card>
         </div>
       </el-col>
@@ -24,47 +44,43 @@
 <script>
 export default {
   name: "MyFiles",
-  props: ["teamId"],
+  props: ["teamId", "showKick"],
   mounted() {
     this.$axios
       .get("/api/memberships", {
         params: { teamId: this.teamId },
       })
       .then((response) => {
-        this.membershipIdArr = response.data;
-        console.log(this.membershipIdArr);
+        this.memberships = response.data;
+        console.log(this.memberships);
         console.log("申请membership成功");
+        console.log(this.memberships[0].user);
       })
       .catch(function (error) {
         console.log(error);
         alert("请求团队成员失败");
       });
-    this.membershipIdArr.filter((item, i) => {
-      console.log(item, i);
-      this.$axios
-        .get("/api/memberships/" + this.item.id, {
-          params: { id: item.id },
-        })
-        .then((response) => {
-          console.log(response);
-          alert("踢出成员成功");
-        })
-        .catch(function (error) {
-          console.log(error);
-          alert("踢出成员失败");
-        });
-      return item >= 0;
-    });
   },
   data() {
     return {
-      membershipIdArr: [],
       memberships: [],
     };
   },
   methods: {
     openUser(userID) {
       this.$router.push({ path: "/getuser/" + userID });
+    },
+    removeMembership(id) {
+      this.$axios
+        .delete("/api/memberships/" + id)
+        .then((res) => {
+          console.log(res);
+          alert("踢出成功！");
+        })
+        .catch((err) => {
+          console.error(err);
+          alert("踢出失败");
+        });
     },
   },
 };

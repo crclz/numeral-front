@@ -97,6 +97,7 @@ export default {
           alert("注册成功");
           console.log("开始测试");
           console.log(response);
+          this.$router.push({ path: "/login/" });
         })
         .catch(function (error) {
           console.log(error);

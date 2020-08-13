@@ -1,10 +1,25 @@
 <template>
+  <!--这3个功能被放在TeamManage.vue：
+   解散、踢人按钮、link_to处理申请页
+
+   团队文档列表功能 被安排到 “团队文档列表页”
+  -->
+
+  <!--Todo:
+  1. 实现团队成员列表
+  -->
+
   <div v-if="ret">
-    <div>团队名：{{team.name}}</div>
+    <h1>团队名：{{team.name}}</h1>
+    <h2>团队信息：{{team.description}}</h2>
+
+    <hr style="width: 680px; margin-top:2.5rem; margin-bottom: 2.5rem; " />
+
     <div v-if="isMember">
       <div v-if="isCreator">
-        <el-button type="primary" @click="manageApplication">处理团队申请</el-button>
-        <el-button type="danger" @click="dismissTeam">解散团队</el-button>
+        <h2>
+          <router-link :to="'/team-manage/'+team.id">团队管理页</router-link>
+        </h2>
       </div>
       <div v-if="!isCreator">
         <el-button type="danger" @click="quitTeam">退出团队</el-button>
@@ -13,40 +28,38 @@
     <div v-if="!isMember">
       <el-button type="primary" @click="applyForTeam" plain>申请加入</el-button>
     </div>
-    <div>团队信息：{{team.description}}</div>
+
+    <hr style="width: 680px; margin-top:2.5rem; margin-bottom: 2.5rem; " />
+
     <div>
+      <el-button type="primary" @click="toggleShare" plain>分享团队</el-button>
+    </div>
+    <div v-if="showShare">
       <h1>分享团队</h1>
       {{this.shareUrl}}
       <share-q-r></share-q-r>
     </div>
+
+    <hr style="width: 680px; margin-top:2.5rem; margin-bottom: 2.5rem; " />
+
     <div>
-      团队成员：
-      <h3>团队成员</h3>
+      <h3>团队成员列表</h3>
       <team-members :teamId="teamId"></team-members>
-    </div>
-    <div>
-      <h3>团队文档</h3>
-      <team-files :teamfiles="teamId"></team-files>
     </div>
   </div>
 </template>
-<!--Todo:
-1. 实现团队成员列表
-5. 展示团队文档
-6. 实现管理团队成员
--->
+
 
 <script>
 import axios from "axios";
 import ShareQR from "../components/ShareQR";
-import TeamFiles from "@/components/TeamFiles.vue";
 import TeamMembers from "@/components/TeamMembers.vue";
 
 export default {
   name: "Team",
+
   components: {
     ShareQR,
-    TeamFiles,
     TeamMembers,
   },
   created() {
@@ -112,6 +125,7 @@ export default {
       membershipId: 0,
       isCreator: false,
       shareUrl: "",
+      showShare: false,
     };
   },
   methods: {
@@ -157,6 +171,9 @@ export default {
           console.log(error);
           alert("申请失败");
         });
+    },
+    toggleShare() {
+      this.showShare = !this.showShare;
     },
   },
 };

@@ -6,8 +6,9 @@
         <div class="grid-content bg-purple">
           <el-card class="box-card">
             <div slot="header" class="clearfix">
-              <span @click="openDocument(item.id)">{{item.title}}</span>
-              <div @click="readDocument(item.id)">读</div>
+              <!-- <span @click="openDocument(item.id)">{{item.title}}</span> -->
+              <el-link @click="readDocument(item.id)">{{item.title}}</el-link>
+              <!-- <div @click="readDocument(item.id)">读</div> -->
               <el-button
                 style="float: right; padding: 3px 0"
                 type="icon"
@@ -15,7 +16,8 @@
                 @click="abandonDocument(item)"
               ></el-button>
             </div>
-            <div class="text item" @click="openDocument(item.id)">{{item.description}}</div>
+            <!-- <div class="text item" @click="openDocument(item.id)">{{item.description}}</div> -->
+             <div class="text item">{{item.description}}</div>
           </el-card>
         </div>
       </el-col>

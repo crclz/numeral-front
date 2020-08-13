@@ -24,6 +24,7 @@
         <el-form-item class="btns">
           <el-button type="primary" @click="login">登录</el-button>
           <el-button type="info" @click="resetLoginForm">重置</el-button>
+          <el-button type="primary" @click="jumpToRegister">注册</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -61,6 +62,9 @@ export default {
     resetLoginForm() {
       this.$refs.loginFormRef.resetFields();
     },
+    jumpToRegister() {
+      this.$router.push({ path: "/register/" });
+    },
     login() {
       this.$axios
         .post("/api/access/login", {
@@ -72,7 +76,7 @@ export default {
           alert("登录成功");
           console.log("开始测试");
           console.log(response);
-
+          this.$router.push({ path: "/getuser/" + this.global.me.id });
           // 刷新页面从而起到刷新global.me的作用
           this.$router.go(0);
         })

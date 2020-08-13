@@ -23,8 +23,8 @@
       <hr style="width: 680px; margin-top:2.5rem; margin-bottom: 2.5rem; " />
 
       <div>
-        团队成员：
-        <h1>TODO: Not yet implemented</h1>
+        <h2>团队成员</h2>
+        <team-members :showKick="true" :teamId="teamId"></team-members>
       </div>
     </div>
   </div>
@@ -37,10 +37,13 @@
 
 <script>
 import axios from "axios";
+import TeamMembers from "@/components/TeamMembers.vue";
 
 export default {
   name: "TeamManage",
-  components: {},
+  components: {
+    TeamMembers,
+  },
   created() {
     this.teamId = this.$route.params.id;
     this.shareUrl = window.location.href;

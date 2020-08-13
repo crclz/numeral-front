@@ -1,7 +1,7 @@
 
 <template>
   <div class="getuser_container">
-    <h1>GetUser</h1>
+    <h1>用户信息</h1>
     <div class="info">
       <user-profile-box :user="Info"></user-profile-box>
     </div>
@@ -38,7 +38,6 @@ export default {
         this.Info = response.data;
       })
       .catch((error) => {
-        // window.err3 = error;
         console.log(error);
         alert(error.response.data.message);
       });
