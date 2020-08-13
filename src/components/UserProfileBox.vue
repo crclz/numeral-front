@@ -1,6 +1,7 @@
 
 <template>
   <div class="User">
+
     <div>
       <img :src="user.avatarUrl" alt style="width:80px; height:80px;" />
     </div>
@@ -13,6 +14,7 @@
       </el-form>
     </div>
   </div>
+
 </template>
 
 <script>
