@@ -141,21 +141,16 @@ const routes = [{
         component: ManageApplications
     },
     {
-<<<<<<< HEAD
         path: '/team-manage/:id',
         name: 'TeamManage',
         component: () =>
             import ('../views/TeamManage.vue')
-=======
-        path:'/team-manage/:id',
-        name:'TeamManage',
-        component: () =>import ('../views/TeamManage.vue')
     },
     {
-        path:'/team-files/:id',
-        name:'TeamFiles',
-        component: () =>import ('../components/TeamFiles.vue')
->>>>>>> main/master
+        path: '/team-files/:id',
+        name: 'TeamFiles',
+        component: () =>
+            import ('../components/TeamFiles.vue')
     }
 ]
 
