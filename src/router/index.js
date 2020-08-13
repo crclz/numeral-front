@@ -14,8 +14,10 @@ import RecycleFiles from "../views/RecycleFiles";
 import CreateTeam from "../views/CreateTeam";
 import MyTeams from "../views/MyTeams";
 import SetDocPermission from "../components/SetDocPermission"
-import Logout from '../components/Logout'
-import PatchUser from '../views/PatchUser'
+import Team from "../views/Team";
+import ManageApplications from "../views/ManageApplications";
+import Logout from '../components/Logout.vue'
+import PatchUser from '../views/PatchUser.vue'
 
 Vue.use(VueRouter)
     // asdsadsadsa
@@ -103,6 +105,16 @@ const routes = [{
         path: '/myTeams',
         name: 'MyTeams',
         component: MyTeams
+    },
+    {
+        path: '/team/:id',
+        name: 'Team',
+        component: Team
+    },
+    {
+        path: '/manageApplications/:id',
+        name: 'ManageApplications',
+        component: ManageApplications
     },
 ]
 

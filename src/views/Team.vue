@@ -15,6 +15,11 @@
         </div>
         <div>团队信息：{{team.description}}</div>
         <div>
+            <h1>分享团队</h1>
+            {{this.shareUrl}}
+            <share-q-r></share-q-r>
+        </div>
+        <div>
             团队成员：<h1>Not yet implemented</h1>
         </div>
         <div>
@@ -24,18 +29,22 @@
 </template>
 <!--Todo:
 1. 实现团队成员列表
-2. 实现解散团队
-3. 实现处理团队申请
-4. 实现申请团队
+5. 展示团队文档
+6. 实现管理团队成员
 -->
 
 <script>
     import axios from "axios";
+    import ShareQR from "../components/ShareQR";
 
     export default {
         name: "Team",
+        components: {
+            ShareQR
+        },
         created() {
             this.teamId = this.$route.params.id;
+            this.shareUrl = window.location.href;
             // 获取团队信息
             axios.get('/api/teams/'+this.teamId)
                 .then((response)=>{
@@ -60,8 +69,9 @@
                                 .then((response)=>{
                                     // window.console.log(response.data.length);
                                     console.log(response);
-                                    if(response.data){
+                                    if(response.data.length > 0){
                                         this.isMember = true;
+                                        this.membershipId = response.data[0].id;
                                     }
                                 })
                                 .catch(function (error) {
@@ -82,26 +92,53 @@
         },
         data() {
             return {
-                teamId: '',
+                teamId: 0,
                 team: {},
                 members: [],
                 ret: false,
                 isMember: false,
+                membershipId: 0,
                 isCreator: false,
+                shareUrl: '',
             }
         },
         methods: {
             manageApplication() {
-            //Todo
+                this.$router.push({path: '/manageApplications/'+this.teamId});
             },
-            dismissTeam() {
-            //Todo
+            dismissTeam() { // 解散团队
+                axios.delete('/api/teams/'+this.teamId)
+                    .then(function (response) {
+                        console.log(response);
+                        alert("解散成功");
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        alert("解散失败");
+                    });
             },
-            quitTeam() {
-            //Todo
+            quitTeam() { // 退出团队
+                axios.delete('/api/memberships/'+this.membershipId)
+                    .then(function (response) {
+                        console.log(response);
+                        alert("退出成功");
+                        window.location.reload();
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        alert("退出失败");
+                    });
             },
-            applyForTeam() {
-            //Todo
+            applyForTeam() { // 申请加入团队
+                axios.post('/api/team-requests',  {teamId: this.teamId})
+                    .then(function (response) {
+                        console.log(response);
+                        alert("已发送申请");
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                        alert("申请失败");
+                    });
             }
         }
     }
