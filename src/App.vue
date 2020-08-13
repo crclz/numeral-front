@@ -25,30 +25,17 @@
                 <router-link to="/createTeam">CreateTeam</router-link>|
                 <router-link to="/myTeams">MyTeams</router-link>
 
-<<<<<<< HEAD
-                <div v-if="this.global.me">|<router-link :to="'/getuser/'+this.global.me.id" v-if="this.global.me">MyProfile</router-link></div>
-=======
         <div v-if="this.global.me">
           |
           <router-link :to="'/getuser/'+this.global.me.id" v-if="this.global.me">MyProfile</router-link>
         </div>
->>>>>>> 028dc33f6ef3a5113fe704925e805d995ae27f56
 
                 <router-link :to="'/patchuser/' +this.global.me.id" v-if="this.global.me">|PatchUser</router-link>
 
-<<<<<<< HEAD
-                <router-link to="/createFromTemplate">|CreateFromTemplate</router-link>
-
-            </div>
-
-        </div>
-        <router-view />
-=======
         <router-link to="/createFromTemplate">|CreateFromTemplate</router-link>
       </div>
       <!-- 重要！防止路由复用！ -->
       <router-view :key="key" />
->>>>>>> 028dc33f6ef3a5113fe704925e805d995ae27f56
     </div>
 </template>
 
@@ -78,27 +65,18 @@
                 console.log(key, keyPath);
                 this.$router.push({path: key});
             }
+        },
+        computed: {
+            // 防止路由复用相关
+            key() {
+                return this.$route.name !== undefined
+                ? this.$route.name + new Date()
+                : this.$route + new Date();
+            }
         }
-    };
-<<<<<<< HEAD
-=======
-  },
-  created() {
-    this.axios.get("/api/access/me").then((res) => {
-      this.meReturned = true;
-      this.global.me = res.data;
-    });
-  },
-  computed: {
-    // 防止路由复用相关
-    key() {
-      return this.$route.name !== undefined
-        ? this.$route.name + new Date()
-        : this.$route + new Date();
     },
   },
-};
->>>>>>> 028dc33f6ef3a5113fe704925e805d995ae27f56
+    };
 </script>
 
 <style>
