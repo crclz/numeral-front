@@ -1,23 +1,20 @@
 
 <template>
   <div class="User">
-    <h2>个人信息</h2>
-    <ul>
-      <li>用户名：{{user.username}}</li>
-      <li>个人简介：{{user.description}}</li>
-    </ul>
-    <div class="PatchUserBtns" v-if="this.$route.params.id==this.global.me.id">
-      <el-form class="btns">
-        <el-button type="primary" @click="jumpToPatchUser">修改个人信息</el-button>
-      </el-form>
-    </div>
+
     <div>
       <img :src="user.avatarUrl" alt style="width:80px; height:80px;" />
     </div>
 
     <h2>用户名：{{user.username}}</h2>
     <h2>个人简介：{{user.description}}</h2>
+    <div class="PatchUserBtns" v-if="this.$route.params.id==this.global.me.id">
+      <el-form class="btns">
+        <el-button type="primary" @click="jumpToPatchUser">修改个人信息</el-button>
+      </el-form>
+    </div>
   </div>
+
 </template>
 
 <script>
