@@ -76,9 +76,17 @@ export default {
           alert("登录成功");
           console.log("开始测试");
           console.log(response);
-          this.$router.push({ path: "/getuser/" + this.global.me.id });
-          // 刷新页面从而起到刷新global.me的作用
-          this.$router.go(0);
+          this.axios
+            .get("/api/access/me")
+            .then((res) => {
+              // get user id
+              this.$router.push({ path: "/getuser/" + res.data.id });
+              this.$router.go(0)
+              console.log(res);
+            })
+            .catch((err) => {
+              console.error(err);
+            });
         })
         .catch(function (error) {
           // window.err3 = error;
