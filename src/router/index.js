@@ -13,9 +13,9 @@ import FavoriteFiles from "../views/FavoriteFiles";
 import RecycleFiles from "../views/RecycleFiles";
 import CreateTeam from "../views/CreateTeam";
 import MyTeams from "../views/MyTeams";
+import SetDocPermission from "../components/SetDocPermission"
 import Team from "../views/Team";
 import ManageApplications from "../views/ManageApplications";
-
 import Logout from '../components/Logout.vue'
 import PatchUser from '../views/PatchUser.vue'
 
@@ -35,6 +35,7 @@ const routes = [{
         component: () =>
             import ( /* webpackChunkName: "about" */ '../views/About.vue')
     },
+
     {
         path: '/login',
         name: 'Login',
@@ -44,6 +45,11 @@ const routes = [{
         path: '/logout',
         name: 'Logout',
         component: Logout
+    },
+    {
+        path: '/setdocpermission/:id',
+        name: 'SetDocPermission',
+        component: SetDocPermission
     },
     {
         path: '/getuser/:id',
