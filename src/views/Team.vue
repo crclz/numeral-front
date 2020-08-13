@@ -40,6 +40,8 @@
       <share-q-r></share-q-r>
     </div>
 
+    <router-link :to="'/team-files/'+teamId">团队文档列表</router-link>
+
     <hr style="width: 680px; margin-top:2.5rem; margin-bottom: 2.5rem; " />
 
     <div>
