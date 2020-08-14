@@ -67,32 +67,26 @@ export default {
     },
     login() {
       this.$axios
-        .post("/api/access/login", {
-          password: this.loginForm.password,
-          username: this.loginForm.username,
-        })
-        .then((response) => {
-          console.log(response);
-          alert("登录成功");
-          console.log("开始测试");
-          console.log(response);
+        .post("/api/access/login", this.loginForm)
+        .then((res) => {
+          console.log(res);
+          this.common.ok(this, "登录成功，正在跳转...");// ok消息示例
+
+          // 获取当前userId，以跳转到用户信息页面
           this.axios
             .get("/api/access/me")
             .then((res) => {
               // get user id
               this.$router.push({ path: "/getuser/" + res.data.id });
-              this.$router.go(0)
+
+              // 刷新页面以更新global.me
+              this.$router.go(0);
+
               console.log(res);
             })
-            .catch((err) => {
-              console.error(err);
-            });
+            .catch((p) => this.common.err(this, p));// error消息示例
         })
-        .catch(function (error) {
-          // window.err3 = error;
-          console.log(error);
-          alert(error.response.data.message);
-        });
+        .catch((p) => this.common.err(this, p));
     },
   },
 };
