@@ -70,23 +70,25 @@ export default {
         .post("/api/access/login", this.loginForm)
         .then((res) => {
           console.log(res);
-          this.common.ok(this, "登录成功，正在跳转...");// ok消息示例
+          this.success("登录成功，正在跳转..."); // ok消息示例
 
           // 获取当前userId，以跳转到用户信息页面
           this.axios
             .get("/api/access/me")
             .then((res) => {
               // get user id
-              this.$router.push({ path: "/getuser/" + res.data.id });
+              this.global.me = res.data;
+              this.global.i = 2;
+              // this.$router.push({ path: "/getuser/" + res.data.id });
 
-              // 刷新页面以更新global.me
-              this.$router.go(0);
+              // // 刷新页面以更新global.me
+              // this.$router.go(0);
 
               console.log(res);
             })
-            .catch((p) => this.common.err(this, p));// error消息示例
+            .catch((p) => this.err(p)); // error消息示例
         })
-        .catch((p) => this.common.err(this, p));
+        .catch((p) => this.err(p));
     },
   },
 };

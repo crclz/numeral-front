@@ -5,7 +5,6 @@ import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import moment from 'moment'
-import Common from './components/Common'
 
 Vue.filter('moment', function (value, formatString) {
     formatString = formatString || 'YYYY-MM-DD HH:mm:ss';
@@ -17,11 +16,27 @@ Vue.filter('moment', function (value, formatString) {
 Vue.config.productionTip = false
 Vue.use(ElementUI);
 
-Vue.prototype.common = Common
-
 Vue.prototype.global = {
     me: null
 }
+
+
+Vue.mixin({
+    methods: {
+        success(message) {
+            this.$message({
+                message: message,
+                type: "success",
+            });
+        },
+        err(errObj) {
+            this.$message({
+                message: errObj.response.data.message,
+                type: "error",
+            });
+        }
+    }
+})
 
 new Vue({
     router,
