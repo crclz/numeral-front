@@ -16,7 +16,7 @@
           <el-menu-item index="/recycleFiles">回收站</el-menu-item>
 
           <div style="flex-grow: 1;"></div>
-          <el-menu-item @click="logout_now">退出登录</el-menu-item>
+          <el-menu-item @click="logout">退出登录</el-menu-item>
           <el-menu-item :index="'/getUser/'+this.global.me.id">{{this.global.me.username}}</el-menu-item>
           <el-avatar :size="40" :src="this.global.me.avatarUrl"></el-avatar>
         </div>
@@ -93,18 +93,15 @@ export default {
       console.log(key, keyPath);
       this.$router.push({ path: key });
     },
-    logout_now: function () {
+    logout() {
       this.$axios
         .post("/api/access/logout", {})
-        .then((response) => {
+        .then(() => {
+          this.success("登出成功");
+          this.$router.go(0);
           this.$router.push({ path: "/login" });
-          this.$router.go(0)
-          console.log("开始测试");
-          console.log(response);
         })
-        .catch(function (error) {
-          alert(error.response.data.message);
-        });
+        .catch((p) => this.err(p));
     },
   },
   computed: {
