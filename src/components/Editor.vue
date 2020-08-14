@@ -14,6 +14,7 @@ export default {
   model: {
     event: "change",
   },
+  props:['initialContent'],
   data() {
     return {
       editorContent: "",
