@@ -61,7 +61,7 @@
                     </el-row>
                 </div>
                 <HR/>
-                <create-comment></create-comment>
+                <create-comment :documentId="documentId"></create-comment>
             </div>
         </div>
 
