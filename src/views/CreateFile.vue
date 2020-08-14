@@ -10,7 +10,7 @@
             </el-form-item>
         </el-form>
         <div>文档内容</div>
-        <editor ref="thisEditor" @change="change"></editor>
+        <editor ref="thisEditor" :initial-content="initialContent"></editor>
         <el-button type="success" @click="onSubmit">保存文件</el-button>
     </div>
 </template>
@@ -22,14 +22,31 @@
         name: "CreateFile",
         components: {Editor},
         created() {
-
+            // 判断是否由模板建立
+            this.templateId = this.$route.params.id;
+            if(this.templateId) {
+                // 初始化编辑器
+                axios.get("/api/documents/" + this.templateId)
+                        .then((response) => {
+                            // window.console.log(response.data.length);
+                            console.log(response);
+                            this.newFile.title = response.data.title;
+                            this.newFile.description = response.data.description;
+                            this.initialContent = response.data.data;
+                            // alert("请求成功")
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+            }
         },
         data () {
             return {
+                templateId: 0,
+                initialContent: '',
                 newFile:{
                     title: '',
                     description: '',
-                    data: '',
                 },
                 rules: {
                     title: [
@@ -43,21 +60,18 @@
             }
         },
         methods: {
-            change(val){
-                this.newFile.data = val;
-                // alert(val);
-            },
             onSubmit(){
                 // this.newFile.data = this.$refs.thisEditor.getEditorContent;
                 // this.newFile.data = '123';
                 axios.post('/api/documents/', {
-                            "data": this.newFile.data,
+                            "data": this.$refs.thisEditor.getEditorContent(),
                             "description": this.newFile.description,
                             "title": this.newFile.title,
                         })
-                            .then(function (response) {
+                            .then((response) => {
                                 console.log(response);
                                 alert("保存成功");
+                                this.$router.push({path: "/myFiles"});
                             })
                             .catch(function (error) {
                                 console.log(error);

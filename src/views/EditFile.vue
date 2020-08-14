@@ -27,7 +27,7 @@
           </el-form-item>
         </el-form>
         <div>文档内容</div>
-        <editor ref="thisEditor"></editor>
+        <editor ref="thisEditor" :initial-content="defaultData"></editor>
         <el-button type="success" @click="onSubmit">保存文件</el-button>
       </div>
     </div>
@@ -139,9 +139,6 @@ export default {
     };
   },
   methods: {
-    editorOnChange(value) {
-      this.currentFile.data = value;
-    },
     onSubmit() {
       axios
         .patch("/api/documents/" + this.documentId, {

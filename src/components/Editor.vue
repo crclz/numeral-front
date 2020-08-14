@@ -7,7 +7,6 @@
 
 <script>
 import E from "wangeditor";
-import axios from "axios";
 
 export default {
   name: "editor",
@@ -29,6 +28,7 @@ export default {
   },
   created() {},
   mounted() {
+
     var editor = new E(this.$refs.editor);
     this.editor = editor;
 
@@ -114,26 +114,13 @@ export default {
     editor.create();
 
     // 初始化文本编辑器内容
-    var defaultId = this.$parent.getDocumentId();
-    // alert(defaultId);
-    if (defaultId != null) {
-      axios
-        .get("/api/documents/" + defaultId)
-        .then((response) => {
-          // window.console.log(response.data.length);
-          console.log(response);
-          if (response.status == 200) {
-            this.editorContent = response.data.data;
-            editor.txt.html(this.editorContent);
-            // alert("jiedaole");
-          }
-          // alert("请求成功")
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
+      setTimeout(()=>{
+          if(this.initialContent)
+            editor.txt.html(this.initialContent);
+          },500);
+
   },
+
 };
 </script>
 

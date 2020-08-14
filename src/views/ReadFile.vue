@@ -28,7 +28,7 @@
                 <el-button type="success" :disabled="!userPermissions.document.canShare" @click="toggleShare">分享文档</el-button>
                 
                 <div>
-                    <router-link type="primary" :to="'/createFromTemplate/'+this.documentId">基于此模板</router-link>
+                    <router-link type="primary" :to="'/createFile/'+this.documentId">基于此模板</router-link>
                 </div>
 
                 <div>

@@ -8,7 +8,7 @@ import EditFile from "../views/EditFile";
 import MyFiles from "../views/MyFiles";
 import Login from '../views/Login.vue'
 import ReadFile from "../views/ReadFile";
-import CreateFromTemplate from "../views/CreateFromTemplate";
+// import CreateFromTemplate from "../views/CreateFromTemplate";
 import FavoriteFiles from "../views/FavoriteFiles";
 import RecycleFiles from "../views/RecycleFiles";
 import CreateTeam from "../views/CreateTeam";
@@ -91,6 +91,11 @@ const routes = [{
         component: CreateFile
     },
     {
+        path: '/createFile/:id',
+        name: 'CreateFromTemplate',
+        component: CreateFile
+    },
+    {
         path: '/editFile/:id',
         name: 'EditFile',
         component: EditFile
@@ -115,11 +120,11 @@ const routes = [{
         name: 'ReadFile',
         component: ReadFile
     },
-    {
-        path: '/createFromTemplate/:id',
-        name: 'CreateFromTemplate',
-        component: CreateFromTemplate
-    },
+    // {
+    //     path: '/createFromTemplate/:id',
+    //     name: 'CreateFromTemplate',
+    //     component: CreateFromTemplate
+    // },
     {
         path: '/createTeam',
         name: 'CreateTeam',
