@@ -2,7 +2,7 @@
   <div>
     <h1>撰写评论</h1>
     <div>评论内容</div>
-    <editor ref="thisEditor" @change="change"></editor>
+    <editor ref="thisEditor"></editor>
     <el-button type="success" @click="onSubmit">提交评论</el-button>
   </div>
 </template>
@@ -19,23 +19,28 @@ export default {
   },
   created() {},
   data() {
-    return {
-      editorContent: "",
-    };
+    return {};
   },
   methods: {
-    change(val) {
-      this.editorContent = val;
-    },
     onSubmit() {
+      var content = this.$refs.thisEditor.getEditorContent();
+
       axios
         .post("/api/comments/", {
           documentId: this.documentId,
-          content: this.editorContent,
+          content: content,
         })
         .then((response) => {
           console.log(response);
-          this.$router.go(0);
+
+          this.$message({
+            message: "发送成功",
+            type: "success",
+          });
+
+          setTimeout(() => {
+            this.$router.go(0);
+          }, 500);
         })
         .catch(function (error) {
           console.log(error);
