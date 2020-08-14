@@ -98,8 +98,8 @@ export default {
         .post("/api/access/logout", {})
         .then(() => {
           this.success("登出成功");
-          this.$router.go(0);
-          this.$router.push({ path: "/login" });
+          this.$router.go(0)
+          this.$router.push({path:'/login'})
         })
         .catch((p) => this.err(p));
     },

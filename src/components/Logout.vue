@@ -1,5 +1,6 @@
 
 <template>
+  <!-- 废弃 -->
   <div class="logout_container">
     <!-- 登出表单区域 -->
     <el-form class="logout_form">
