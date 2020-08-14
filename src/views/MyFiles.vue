@@ -61,7 +61,9 @@ export default {
         .then(function (response) {
           console.log(response);
           alert("删除成功");
-          window.location.reload();
+          setTimeout(() => {
+                this.$router.go(0);
+            }, 500);
         })
         .catch(function (error) {
           console.log(error);
