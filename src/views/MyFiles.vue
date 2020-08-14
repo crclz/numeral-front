@@ -7,7 +7,10 @@
           <el-card class="box-card">
             <div slot="header" class="clearfix">
               <!-- <span @click="openDocument(item.id)">{{item.title}}</span> -->
-              <el-link @click="readDocument(item.id)">{{item.title}}</el-link>
+
+              <!-- 这是声明式的导航 -->
+              <el-link @click="jmp('/readFile/'+item.id)">{{item.title}}</el-link>
+
               <!-- <div @click="readDocument(item.id)">读</div> -->
               <el-button
                 style="float: right; padding: 3px 0"
@@ -17,7 +20,7 @@
               ></el-button>
             </div>
             <!-- <div class="text item" @click="openDocument(item.id)">{{item.description}}</div> -->
-             <div class="text item">{{item.description}}</div>
+            <div class="text item">{{item.description}}</div>
           </el-card>
         </div>
       </el-col>
@@ -62,8 +65,8 @@ export default {
           console.log(response);
           alert("删除成功");
           setTimeout(() => {
-                this.$router.go(0);
-            }, 500);
+            this.$router.go(0);
+          }, 500);
         })
         .catch(function (error) {
           console.log(error);

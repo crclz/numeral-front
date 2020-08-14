@@ -34,6 +34,9 @@ Vue.mixin({
                 message: errObj.response.data.message,
                 type: "error",
             });
+        },
+        jmp(path) {
+            this.$router.push({ path: path })
         }
     }
 })
@@ -42,14 +45,6 @@ new Vue({
     router,
     render: h => h(App)
 }).$mount('#app')
-
-export default {
-    data() {
-        return {
-            userid: '',
-        }
-    }
-}
 
 
 //枚举类Access
