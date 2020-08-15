@@ -135,4 +135,8 @@ export default {
   max-width: 860px;
   margin: 0 auto;
 }
+
+.text-center {
+  text-align: center;
+}
 </style>

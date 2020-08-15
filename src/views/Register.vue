@@ -1,6 +1,8 @@
 <template>
   <div class="register_container">
     <div class="register_box">
+      <h1 class="text-center">注册</h1>
+
       <!-- 注册表单区域 -->
       <el-form
         ref="registerFormRef"
@@ -113,49 +115,14 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.register_container {
-  background-color: skyblue;
-  height: 100%;
+.register_box {
+  width: 320px;
+  margin: 0 auto;
 }
-.register_form {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  // 文本框向下
-  padding: 0 30px;
-  box-sizing: border-box;
-}
+
 .btns {
   display: flex;
   justify-content: flex-end;
   // 按钮尾部对齐
-}
-.register_box {
-  width: 450px;
-  height: 300px;
-  background-color: #fff;
-  border-radius: 3%;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  .avatar_box {
-    height: 130px;
-    width: 130px;
-    padding: 10px;
-    box-shadow: 0 0 10px #ddd;
-    border: 1px solid #b2b2b2;
-    border-radius: 50%;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    img {
-      height: 100%;
-      width: 100%;
-      border-radius: 50%;
-      background-color: #eee;
-    }
-  }
 }
 </style>
