@@ -3,7 +3,7 @@
     <document-list
       :QDocument="this.documents"
       :isMyFavorite="true"
-      @abandonFavorite-onclick="abandonFavorite"
+      @abandon-favorite-onclick="abandonFavorite"
     ></document-list>
   </div>
 </template>
