@@ -1,11 +1,7 @@
 <template>
   <div>
     <!-- height是表头的高度，为了固定表头，这样在文档很多的情况下，也能显示表头 -->
-<<<<<<< HEAD
     <el-table :data="QDocument" style="width: 100%" stripe :key="refreshKey">
-=======
-    <el-table :data="QDocument" style="width: 100%" stripe>
->>>>>>> main/master
       <el-table-column label="标题" width="200">
         <template slot-scope="scope">
           <el-link
@@ -40,7 +36,7 @@ export default {
   name: "DocumentList",
   props: ["QDocument", "isMyCreated", "isMyFavorite", "isAbandoned"],
   model: {
-    event: ["recover-document", "refresh"],
+    event: ["recover-document", "refresh", "refreshDoc", "refreshFavorite"],
   },
   created() {},
   data() {
@@ -65,9 +61,7 @@ export default {
           console.log(this.refreshKey);
           this.$forceUpdate();
           this.refreshKey = this.refreshKey + 1;
-          //   setTimeout(() => {
-          //     this.$router.go(0);
-          //   }, 500);
+          this.$emit("refreshDoc");
         })
         .catch((p) => this.err(p));
     },
@@ -82,9 +76,8 @@ export default {
             .then((response) => {
               console.log(response);
               this.success("取消收藏成功");
-              setTimeout(() => {
-                this.$router.go(0);
-              }, 500);
+              this.refreshKey = this.refreshKey + 1;
+              this.$emit("refreshFavorite");
             })
             .catch((p) => this.err(p));
         })

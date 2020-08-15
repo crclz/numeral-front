@@ -1,6 +1,6 @@
 <template>
   <div>
-    <document-list :QDocument="this.documents" :isMyCreated="true"></document-list>
+    <document-list :QDocument="this.documents" :isMyCreated="true" @refreshDoc="refresh"></document-list>
   </div>
 </template>
 
@@ -31,6 +31,19 @@ export default {
     };
   },
   methods: {
+    refresh() {
+      axios
+        .get("/api/documents", {
+          params: { creatorId: this.global.me.id, isAbandoned: false },
+        })
+        .then((response) => {
+          this.documents = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.err(error);
+        });
+    },
     abandonDocument(document) {
       document.isAbandoned = true;
       axios
