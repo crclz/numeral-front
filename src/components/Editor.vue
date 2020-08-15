@@ -25,6 +25,9 @@ export default {
     getEditorContent() {
       return this.editor.txt.html();
     },
+      clearEditor() {
+        return this.editor.txt.clear();
+      }
   },
   created() {},
   mounted() {

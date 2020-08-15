@@ -28,15 +28,13 @@
 
     <hr style="width: 680px; margin-top:2.5rem; margin-bottom: 2.5rem; " />
 
-    <div>
-      <el-button type="primary" @click="toggleShare" plain>分享团队</el-button>
-    </div>
-    <div v-if="showShare">
-      <h1>分享团队</h1>
-      <div>将下方链接复制到浏览器打开 或扫描二维码</div>
-      {{this.shareUrl}}<el-link icon="el-icon-document-copy" v-clipboard:error="copyOnError" v-clipboard:success="copyOnSuccess" v-clipboard:copy="shareUrl">复制链接</el-link>
-      <share-q-r :share-url="shareUrl"></share-q-r>
-    </div>
+    <el-popover
+            placement="bottom"
+            width="400"
+            trigger="click">
+      <share :share-url="shareUrl"></share>
+      <el-button slot="reference" type="success" :disabled="!isMember">分享团队</el-button>
+    </el-popover>
 
     <el-link @click="jmp('/team-files/'+teamId)" type="primary">团队文档列表</el-link>
 
@@ -52,15 +50,15 @@
 
 <script>
 import axios from "axios";
-import ShareQR from "../components/ShareQR";
 import TeamMembers from "@/components/TeamMembers.vue";
+import Share from "../components/Share";
 
 export default {
   name: "Team",
 
   components: {
-    ShareQR,
     TeamMembers,
+      Share
   },
   created() {
     this.teamId = this.$route.params.id;
@@ -123,13 +121,9 @@ export default {
       membershipId: 0,
       isCreator: false,
       shareUrl: "",
-      showShare: false,
     };
   },
   methods: {
-    manageApplication() {
-      this.$router.push({ path: "/manageApplications/" + this.teamId });
-    },
     dismissTeam() {
       // 解散团队
       axios
@@ -171,9 +165,6 @@ export default {
           console.log(error);
           this.err(error);
         });
-    },
-    toggleShare() {
-      this.showShare = !this.showShare;
     },
       copyOnSuccess(){
           this.$message.success("复制成功");
