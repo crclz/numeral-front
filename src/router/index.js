@@ -39,6 +39,7 @@ const routes = [
             { path: 'myfiles', component: MyFiles },
             { path: 'favorite', component: FavoriteFiles },
             { path: 'myteams', component: MyTeams },
+            { path: 'trash', component: RecycleFiles }
         ]
     },
     {

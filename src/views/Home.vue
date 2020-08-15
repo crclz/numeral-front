@@ -1,13 +1,14 @@
 <template>
   <div class="home">
     <div id="workspace-sidenav">
-      <h5>工作台</h5>
+      <h2>工作台</h2>
       <el-menu
         default-active="2"
         class="el-menu-vertical-demo"
         @open="handleOpen"
         @close="handleClose"
         :router="true"
+        active-text-color="#ffd04b"
       >
         <el-menu-item index="/workspace/recent">
           <i class="el-icon-document"></i>
@@ -29,6 +30,10 @@
           <i class="el-icon-user"></i>
           <span slot="title">我创建的团队 TODO</span>
         </el-menu-item>
+        <el-menu-item index="/workspace/trash">
+          <i class="el-icon-delete-solid"></i>
+          <span slot="title">垃圾箱</span>
+        </el-menu-item>
       </el-menu>
     </div>
 
@@ -49,7 +54,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .header {
   border-bottom-style: solid;
   border-color: #dddddd;
@@ -62,11 +67,11 @@ export default {
 #workspace-sidenav {
   overflow-y: auto;
   position: fixed;
-  top: 63px;
+  top: calc(63px + 20px);
   width: 250px;
   height: calc(100vh - 63px);
 }
 #sub-router-view {
-    margin-left: 255px;
+  margin-left: 280px;
 }
 </style>

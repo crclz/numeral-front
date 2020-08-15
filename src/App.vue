@@ -13,7 +13,6 @@
               <el-menu-item index="/workspace">工作台</el-menu-item>
               <el-menu-item index="/createFile">创建新的文档</el-menu-item>
               <el-menu-item index="/createTeam">创建新的团队</el-menu-item>
-              <el-menu-item index="/recycleFiles">回收站</el-menu-item>
 
               <div style="flex-grow: 1;"></div>
               <el-menu-item @click="logout">登出</el-menu-item>
@@ -45,7 +44,11 @@
         <router-view :key="key" />
       </el-main>
 
-      <el-footer>开发者：numeral 小组 2020</el-footer>
+      <el-footer>
+        <div id="footer-box">
+          <div>开发者：numeral 小组 2020</div>
+        </div>
+      </el-footer>
     </el-container>
   </div>
 </template>
@@ -98,36 +101,38 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  /* text-align: center; */
   color: #2c3e50;
 }
-
 #nav {
   padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
 }
 
 #head-nav {
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 9;
+  z-index: 553;
+}
+#main-content {
+  margin-top: 63px;
 }
 
-#main-content{
-  margin-top: 63px;
+#footer-box {
+  text-align: center;
+  margin: 80px 0 12px;
+}
+</style>
+
+// 全局样式
+<style>
+.center-wrapper {
+  max-width: 860px;
+  margin: 0 auto;
 }
 </style>
