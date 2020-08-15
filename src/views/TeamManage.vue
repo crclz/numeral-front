@@ -4,9 +4,9 @@
 
     <hr style="width: 680px; margin-top:2.5rem; margin-buttom: 2.5rem;" />
 
-    <router-link :to="'/team/'+team.id">
+    <el-link @click="jmp('/team/'+team.id)" type="primary">
       <h2>{{team.name}}</h2>
-    </router-link>
+    </el-link>
 
     <h3>团队信息：{{team.description}}</h3>
 
@@ -16,9 +16,14 @@
       <div>警告：你不是团队的创建人</div>
     </div>
 
-    <div v-if="isCreator">
-      <el-button type="primary" @click="manageApplication">处理团队申请</el-button>
-      <el-button type="danger" @click="dismissTeam">解散团队</el-button>
+    <div v-else>
+      <el-link type="primary" @click="jmp('/manageApplications/' + teamId)">处理团队申请</el-link>
+      <el-popconfirm
+              title="您确定要解散团队吗？" icon="el-icon-warning" icon-color="red" @onConfirm="dismissTeam"
+      >
+        <el-button type="danger" slot="reference">解散团队</el-button>
+      </el-popconfirm>
+
 
       <hr style="width: 680px; margin-top:2.5rem; margin-bottom: 2.5rem; " />
 
@@ -108,16 +113,17 @@ export default {
     };
   },
   methods: {
-    manageApplication() {
-      this.$router.push({ path: "/manageApplications/" + this.teamId });
-    },
+    // manageApplication() {
+    //   this.$router.push({ path: "/manageApplications/" + this.teamId });
+    // },
     dismissTeam() {
       // 解散团队
       axios
         .delete("/api/teams/" + this.teamId)
-        .then(function (response) {
+        .then((response) => {
           console.log(response);
           this.success("解散成功");
+          this.jmp("/myTeams");
         })
         .catch((p) => this.err(p));
     },

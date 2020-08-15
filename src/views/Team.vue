@@ -5,9 +5,6 @@
    团队文档列表功能 被安排到 “团队文档列表页”
   -->
 
-  <!--Todo:
-  1. 实现团队成员列表
-  -->
 
   <div v-if="ret">
     <h1>团队名：{{team.name}}</h1>
@@ -18,7 +15,7 @@
     <div v-if="isMember">
       <div v-if="isCreator">
         <h2>
-          <router-link :to="'/team-manage/'+team.id">团队管理页</router-link>
+          <el-link @click="jmp('/team-manage/'+team.id)" type="primary">团队管理页</el-link>
         </h2>
       </div>
       <div v-if="!isCreator">
@@ -36,11 +33,12 @@
     </div>
     <div v-if="showShare">
       <h1>分享团队</h1>
-      {{this.shareUrl}}
-      <share-q-r></share-q-r>
+      <div>将下方链接复制到浏览器打开 或扫描二维码</div>
+      {{this.shareUrl}}<el-link icon="el-icon-document-copy" v-clipboard:error="copyOnError" v-clipboard:success="copyOnSuccess" v-clipboard:copy="shareUrl">复制链接</el-link>
+      <share-q-r :share-url="shareUrl"></share-q-r>
     </div>
 
-    <router-link :to="'/team-files/'+teamId">团队文档列表</router-link>
+    <el-link @click="jmp('/team-files/'+teamId)" type="primary">团队文档列表</el-link>
 
     <hr style="width: 680px; margin-top:2.5rem; margin-bottom: 2.5rem; " />
 
@@ -177,6 +175,12 @@ export default {
     toggleShare() {
       this.showShare = !this.showShare;
     },
+      copyOnSuccess(){
+          this.$message.success("复制成功");
+      },
+      copyOnError(){
+          this.$message.error("复制失败");
+      }
   },
 };
 </script>
