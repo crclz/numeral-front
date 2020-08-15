@@ -30,6 +30,10 @@
           <i class="el-icon-user"></i>
           <span slot="title">我创建的团队 TODO</span>
         </el-menu-item>
+        <el-menu-item index="/workspace/trash">
+          <i class="el-icon-delete-solid"></i>
+          <span slot="title">垃圾箱</span>
+        </el-menu-item>
       </el-menu>
     </div>
 

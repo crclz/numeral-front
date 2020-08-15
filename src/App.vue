@@ -13,7 +13,6 @@
               <el-menu-item index="/workspace">工作台</el-menu-item>
               <el-menu-item index="/createFile">创建新的文档</el-menu-item>
               <el-menu-item index="/createTeam">创建新的团队</el-menu-item>
-              <el-menu-item index="/recycleFiles">回收站</el-menu-item>
 
               <div style="flex-grow: 1;"></div>
               <el-menu-item @click="logout">登出</el-menu-item>
