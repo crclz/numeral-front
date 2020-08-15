@@ -44,9 +44,9 @@ export default {
         this.documents = response.data;
         // alert("请求成功")
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log(error);
-        alert("请求失败");
+        this.err(error);
       });
   },
   data() {
@@ -63,14 +63,14 @@ export default {
         })
         .then((response) => {
           console.log(response);
-          alert("取消删除成功");
+          this.success("取消删除成功");
           setTimeout(() => {
             this.$router.go(0);
           }, 500);
         })
-        .catch(function (error) {
+        .catch((error) => {
           console.log(error);
-          alert("取消删除失败");
+          this.err(error);
         });
     },
     openDocument(documentId) {

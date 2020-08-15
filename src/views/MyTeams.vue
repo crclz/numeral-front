@@ -37,9 +37,9 @@
                     this.teamList = response.data;
                     // alert("请求成功")
                 })
-                .catch(function (error) {
+                .catch((error) => {
                     console.log(error);
-                    alert("请求失败")
+                    this.err(error);
                 });
         },
         data() {

@@ -24,23 +24,24 @@
 
 
                 <el-button type="warning" :icon="favorite.favoriteIcon" @click="favoriteFile" circle></el-button>
-                <el-button type="primary" :disabled="!userPermissions.document.canWrite" @click="gotoEditFile">编辑文档</el-button>
                 <el-button type="success" :disabled="!userPermissions.document.canShare" @click="toggleShare">分享文档</el-button>
-                
-                <div>
-                    <router-link type="primary" :to="'/createFile/'+this.documentId">基于此模板</router-link>
-                </div>
 
                 <div>
-                    <router-link type="primary" :to="'/docmange/'+this.documentId">管理</router-link>
+                    <el-link @click="jmp('/editFile/'+documentId)" type="primary">编辑文档</el-link>
+                </div>
+                <div>
+                    <el-link @click="jmp('/createFile/'+documentId)" type="primary">基于此模板</el-link>
+                </div>
+                <div>
+                    <el-link @click="jmp('/docmange/'+documentId)" type="primary">管理</el-link>
                 </div>
 
                 
                 <div id="sharePanel" v-if="displaySwitch.share">
                     <HR style="margin-top:2.5rem; margin-bottom:2.5rem;" />
                     <div>将下方链接复制到浏览器打开 或扫描二维码</div>
-                    <div>{{shareUrl}}</div>
-                    <div><ShareQR></ShareQR></div>
+                    <div>{{shareUrl}}</div><el-link icon="el-icon-document-copy" v-clipboard:error="copyOnError" v-clipboard:success="copyOnSuccess" v-clipboard:copy="shareUrl">复制链接</el-link>
+                    <div><ShareQR :shareUrl="shareUrl"></ShareQR></div>
                 </div>
                 <HR style="margin-top:2.5rem; margin-bottom:2.5rem;" />
                 <h1>文档内容</h1>
@@ -154,15 +155,15 @@
                                         }
                                     }
                                 })
-                                .catch(function (error) {
+                                .catch((error) => {
                                     console.log(error);
-                                    alert("获取写锁失败");
+                                    this.err("获取写锁失败");
                                 });
                         }, 1000);
                     }
                     this.ret = true;
                 })
-                .catch(function (error) {
+                .catch((error) => {
                     console.log(error);
                 });
 
@@ -224,7 +225,7 @@
                             this.favorite.favoriteId = response.data.id;
                         }
                     })
-                    .catch(function (error) {
+                    .catch((error) => {
                         console.log(error);
                     });
             },
@@ -238,7 +239,7 @@
                             this.favorite.favoriteIcon = this.favorite.icons[1];
                             this.favorite.favoriteId = response.data.id;
                         })
-                        .catch(function (error) {
+                        .catch((error) => {
                             console.log(error);
                         });
 
@@ -252,7 +253,7 @@
                             this.favorite.favoriteIcon = this.favorite.icons[0];
                             this.favorite.favoriteId = '';
                         })
-                        .catch(function (error) {
+                        .catch((error) => {
                             console.log(error);
                         });
                 }
@@ -267,13 +268,19 @@
                         console.log(error);
                     });
             },
-            gotoEditFile() {
-                this.$router.push({path: "/editFile/"+this.documentId})
-            },
+            // gotoEditFile() {
+            //     this.$router.push({path: "/editFile/"+this.documentId})
+            // },
             toggleShare(){
                 if(this.userPermissions.document.canShare){
                     this.displaySwitch.share = !this.displaySwitch.share;
                 }
+            },
+            copyOnSuccess(){
+                this.$message.success("复制成功");
+            },
+            copyOnError(){
+                this.$message.error("复制失败");
             }
         }
     }

@@ -33,18 +33,15 @@ export default {
         .then((response) => {
           console.log(response);
 
-          this.$message({
-            message: "发送成功",
-            type: "success",
-          });
+          this.success("发送成功");
 
           setTimeout(() => {
             this.$router.go(0);
           }, 500);
         })
-        .catch(function (error) {
+        .catch((error) => {
           console.log(error);
-          alert("提交失败");
+            this.err(error);
         });
     },
   },

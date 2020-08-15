@@ -101,19 +101,17 @@ export default {
                   this.membershipId = response.data[0].id;
                 }
               })
-              .catch(function (error) {
+              .catch((error) => {
                 console.log(error);
               });
 
             this.ret = true;
-            // alert("请求成功")
           })
-          .catch(function (error) {
+          .catch((error) => {
             console.log(error);
           });
-        // alert("请求成功")
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log(error);
       });
   },
@@ -138,40 +136,42 @@ export default {
       // 解散团队
       axios
         .delete("/api/teams/" + this.teamId)
-        .then(function (response) {
+        .then((response) => {
           console.log(response);
-          alert("解散成功");
+          this.success("解散成功");
         })
-        .catch(function (error) {
+        .catch((error) => {
           console.log(error);
-          alert("解散失败");
+          this.err(error);
         });
     },
     quitTeam() {
       // 退出团队
       axios
         .delete("/api/memberships/" + this.membershipId)
-        .then(function (response) {
+        .then((response) => {
           console.log(response);
-          alert("退出成功");
-          window.location.reload();
+          this.success("退出成功");
+            setTimeout(() => {
+                this.$router.go(0);
+            }, 500);
         })
-        .catch(function (error) {
+        .catch((error) => {
           console.log(error);
-          alert("退出失败");
+          this.err(error);
         });
     },
     applyForTeam() {
       // 申请加入团队
       axios
         .post("/api/team-requests", { teamId: this.teamId })
-        .then(function (response) {
+        .then((response) => {
           console.log(response);
-          alert("已发送申请");
+          this.success("已发送申请");
         })
-        .catch(function (error) {
+        .catch((error) => {
           console.log(error);
-          alert("申请失败");
+          this.err(error);
         });
     },
     toggleShare() {

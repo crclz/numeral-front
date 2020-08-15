@@ -20,9 +20,9 @@ export default {
       .then((response) => {
         this.documents = response.data;
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log(error);
-        alert("请求失败");
+        this.err(error);
       });
   },
   data() {
@@ -37,21 +37,20 @@ export default {
         .patch("/api/documents/" + document.id, {
           isAbandoned: true,
         })
-        .then(function (response) {
+        .then((response) => {
           console.log(response);
-          alert("删除成功");
+            this.success("删除成功");
           setTimeout(() => {
             this.$router.go(0);
           }, 500);
         })
-        .catch(function (error) {
+        .catch((error) => {
           console.log(error);
-          alert("删除失败");
+          this.err(error);
         });
     },
     openDocument(documentId) {
       // 结合router
-      // alert(documentId);
       this.$router.push({ path: "/editFile/" + documentId });
     },
     readDocument(documentId) {

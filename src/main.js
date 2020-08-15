@@ -5,6 +5,8 @@ import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import moment from 'moment'
+import VueClipboard from 'vue-clipboard2';
+
 
 Vue.filter('moment', function (value, formatString) {
     formatString = formatString || 'YYYY-MM-DD HH:mm:ss';
@@ -14,7 +16,7 @@ Vue.filter('moment', function (value, formatString) {
 
 
 Vue.config.productionTip = false
-Vue.use(ElementUI);
+Vue.use(ElementUI).use(VueClipboard);
 
 Vue.prototype.global = {
     me: null
