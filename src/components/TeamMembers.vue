@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-row :gutter="20">
+    <el-row :gutter="20" :key="refreshKey">
       <el-col :span="6" v-for="item in memberships" :key="item.id">
         <div class="grid-content bg-purple">
           <el-card class="box-card">
@@ -53,6 +53,7 @@ export default {
   data() {
     return {
       memberships: [],
+      refreshKey: 0,
     };
   },
   methods: {
@@ -65,6 +66,17 @@ export default {
         .then((res) => {
           console.log(res);
           this.success("踢出成功！");
+            this.$axios
+                .get("/api/memberships", {
+                    params: { teamId: this.teamId },
+                })
+                .then((response) => {
+                    this.memberships = response.data;
+                    console.log(this.memberships);
+                })
+                .catch((p) => this.err(p));
+            this.refreshKey = this.refreshKey + 1;
+
         })
         .catch((p) => this.err(p));
     },

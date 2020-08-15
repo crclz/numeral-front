@@ -27,6 +27,7 @@
 
 <script>
 import axios from "axios";
+
 import DocumentList from "@/components/DocumentList.vue";
 export default {
   name: "RecycleFiles",

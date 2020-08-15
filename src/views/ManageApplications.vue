@@ -4,7 +4,7 @@
             <h1>处理申请</h1> 团队{{this.teamId}}
         </div>
         <div>
-            <ul>
+            <ul :key="refreshKey">
                 <li v-for="item in applications" :key="item.id">
                     <img width="32px" height="32px" :src="item.sender.avatarUrl"/>
                     {{item.sender.username}}
@@ -30,15 +30,17 @@
                     console.log(response);
                     this.applications = response.data;
                 })
-                .catch(function (error) {
+                .catch((error) => {
                     console.log(error);
-                    alert("拉取申请失败");
+                    // alert("拉取申请失败");
+                    this.err(error);
                 });
         },
         data() {
             return {
                 teamId: 0,
                 applications: [],
+                refreshKey: 0, // 控制组件刷新
             }
         },
         methods: {
@@ -46,12 +48,25 @@
                 axios.patch('/api/team-requests/'+appId, {agree: isAgree})
                     .then((response) => {
                         console.log(response);
-                        alert("处理申请成功");
-                        window.location.reload();
+                        // alert("处理申请成功");
+                        this.success("处理申请成功");
+                        // window.location.reload();
+                        axios.get('/api/team-requests', {params:{isHandled: false, teamId: this.teamId}})
+                                .then((response) => {
+                                    console.log(response);
+                                    this.applications = response.data;
+                                    this.refreshKey = this.refreshKey + 1;
+                                })
+                                .catch((error) => {
+                                    console.log(error);
+                                    // alert("拉取申请失败");
+                                    this.err(error);
+                                });
                     })
-                    .catch(function (error) {
+                    .catch((error) => {
                         console.log(error);
-                        alert("处理申请失败");
+                        // alert("处理申请失败");
+                        this.err(error);
                     });
             },
         }

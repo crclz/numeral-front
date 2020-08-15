@@ -95,7 +95,7 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.success("注册成功!正在跳转至登录页面...");
-          setInterval(() => {
+          setTimeout(() => {
             this.$router.push({ path: "/login/" });
           }, 500);
         })

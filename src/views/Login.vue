@@ -82,7 +82,7 @@ export default {
           console.log(res);
           this.success("登录成功，正在跳转..."); // success消息示例
 
-          setInterval(() => {
+          setTimeout(() => {
             this.$router.push({ path: "/" });
             this.$router.go(0); // 刷新global.me
           }, 500);
