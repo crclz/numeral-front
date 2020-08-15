@@ -39,6 +39,13 @@ Vue.mixin({
         },
         jmp(path) {
             this.$router.push({ path: path })
+        },
+        refreshMe() {
+            this.axios.get("/api/access/me").then((res) => {
+                this.meReturned = true;
+                this.global.me = res.data;
+            });
+            this.$router.go(0);
         }
     }
 })
