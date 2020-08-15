@@ -10,15 +10,13 @@
             @select="handleSelect"
           >
             <div style="display: flex;">
-              <el-menu-item index="/favoriteFiles">我收藏的文档</el-menu-item>
-              <el-menu-item index="/myFiles">我创建的文档</el-menu-item>
+              <el-menu-item index="/workspace">工作台</el-menu-item>
               <el-menu-item index="/createFile">创建新的文档</el-menu-item>
-              <el-menu-item index="/myTeams">我加入的团队</el-menu-item>
               <el-menu-item index="/createTeam">创建新的团队</el-menu-item>
               <el-menu-item index="/recycleFiles">回收站</el-menu-item>
 
               <div style="flex-grow: 1;"></div>
-              <el-menu-item @click="logout">退出登录</el-menu-item>
+              <el-menu-item @click="logout">登出</el-menu-item>
               <el-menu-item :index="'/getUser/'+this.global.me.id">{{this.global.me.username}}</el-menu-item>
               <el-avatar :size="40" :src="this.global.me.avatarUrl"></el-avatar>
             </div>
