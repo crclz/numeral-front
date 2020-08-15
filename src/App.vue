@@ -21,29 +21,6 @@
           <el-avatar :size="40" :src="this.global.me.avatarUrl"></el-avatar>
         </div>
       </el-menu>
-      <div id="nav" v-if="displayOldNav">
-        <router-link to="/">Home</router-link>|
-        <router-link to="/about">About</router-link>|
-        <router-link to="/createFile">CreateFile</router-link>|
-        <router-link to="/editFile">EditFile</router-link>|
-        <router-link to="/myFiles">MyFiles</router-link>|
-        <router-link to="/favoriteFiles">FavoriteFiles</router-link>|
-        <router-link to="/recycleFiles">RecycleFiles</router-link>|
-        <router-link to="/readFile">ReadFile</router-link>|
-        <router-link to="/login">Login</router-link>|
-        <router-link to="/logout">Logout</router-link>|
-        <router-link to="/createFromTemplate">CreateFromTemplate</router-link>
-        <router-link to="/createTeam">CreateTeam</router-link>|
-        <router-link to="/myTeams">MyTeams</router-link>
-
-        <div v-if="this.global.me">
-          |
-          <router-link :to="'/getuser/'+this.global.me.id" v-if="this.global.me">MyProfile</router-link>
-        </div>
-
-        <router-link :to="'/patchuser/' +this.global.me.id" v-if="this.global.me">|PatchUser</router-link>
-        <router-link to="/createFromTemplate">|CreateFromTemplate</router-link>
-      </div>
     </div>
 
     <!-- 未登录 -->
