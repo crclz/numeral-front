@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-table :data="QDocument" style="width: 100%" height="250" stripe>
-      <el-table-column prop="createdAt" label="日期" width="200"></el-table-column>
+      <el-table-column prop="createdAt" label="发布日期" width="200"></el-table-column>
       <el-table-column prop="title" label="标题" width="200"></el-table-column>
       <el-table-column prop="description" label="描述" width="500"></el-table-column>
       <el-table-column>
@@ -25,8 +25,30 @@ export default {
     return {};
   },
   methods: {
-    handleClick(row) {
-      console.log(row);
+    readDocument(id) {
+      console.log(id);
+      this.$router.push({ path: "/readFile/" + id });
+    },
+    deleteDocument(id) {
+      console.log(id);
+      this.$axios
+        .patch("/api/documents/" + id, {
+          isAbandoned: true,
+        })
+        .then(function (response) {
+          console.log(response);
+          this.success("删除成功");
+          setTimeout(() => {
+            this.$router.go(0);
+          }, 500);
+        })
+        .catch((p) => this.err(p));
+    },
+    deleteFavorite(id) {
+      console.log(id);
+    },
+    recoverDocument(id) {
+      console.log(id);
     },
   },
 };
