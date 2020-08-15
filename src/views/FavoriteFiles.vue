@@ -1,108 +1,99 @@
 <template>
-    <div>
-        <!--{{this.global.me.id}}-->
-        <el-row :gutter="20">
-            <el-col :span="6" v-for="item in documents" :key="item.id"><div class="grid-content bg-purple">
-                <el-card class="box-card">
-                    <div slot="header" class="clearfix">
-                        <!-- <span  @click="openDocument(item.id)">{{item.title}}</span><div @click="readDocument(item.id)">读</div> -->
-                        <el-link @click="readDocument(item.id)">{{item.title}}</el-link>
-                        <el-button style="float: right; padding: 3px 0" type="icon" icon="el-icon-star-on" @click="abandonFavorite(item)"></el-button>
-                    </div>
-                    <!-- <div class="text item"  @click="openDocument(item.id)">
-                        {{item.description}}
-                    </div> -->
-                    <div class="text item">
-                        {{item.description}}
-                    </div>
-                </el-card>
-            </div></el-col>
-        </el-row>
-    </div>
+  <div>
+    <document-list :QDocument="this.documents" :isMyFavorite="true"></document-list>
+  </div>
 </template>
 
 <script>
-    import axios from "axios";
+import axios from "axios";
+import DocumentList from "@/components/DocumentList.vue";
 
-    export default {
-        name: "MyFiles",
-        created() {
-            axios.get('/api/documents',{params:{isAbandoned:false, myfavorite:true}})
-                .then((response)=>{
-                    // window.console.log(response.data.length);
-                    this.documents = response.data;
-                })
-                .catch((error) => {
-                    console.log(error);
-                    this.err(error);
-                });
-        },
-        data() {
-            return{
-                documents: [],
-                favoriteId: ''
-            }
-        },
-        methods: {
-            abandonFavorite(document){
-                axios.get("/api/favorites/find-by-documentId?documentId="+document.id)
-                    .then((response)=>{
-                        console.log(response);
-                        this.favoriteId = response.data.id;
-                        axios.delete('/api/favorites/'+this.favoriteId)
-                            .then((response) => {
-                                console.log(response);
-                                this.success("取消收藏成功");
-                                setTimeout(() => {
-                                    this.$router.go(0);
-                                }, 500);
-                            })
-                            .catch((error) => {
-                                console.log(error);
-                                this.err(error);
-                            });
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    })
-
-            },
-            openDocument(documentId){
-                // 结合router
-                this.$router.push({path: '/editFile/'+documentId});
-            },
-            readDocument(documentId){
-                this.$router.push({path: '/readFile/'+documentId});
-            }
-        }
-    }
+export default {
+  name: "FavoriteFiles",
+  components: {
+    DocumentList,
+  },
+  created() {
+    axios
+      .get("/api/documents", {
+        params: { isAbandoned: false, myfavorite: true },
+      })
+      .then((response) => {
+        // window.console.log(response.data.length);
+        this.documents = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        this.err(error);
+      });
+  },
+  data() {
+    return {
+      documents: [],
+      favoriteId: "",
+    };
+  },
+  methods: {
+    abandonFavorite(document) {
+      axios
+        .get("/api/favorites/find-by-documentId?documentId=" + document.id)
+        .then((response) => {
+          console.log(response);
+          this.favoriteId = response.data.id;
+          axios
+            .delete("/api/favorites/" + this.favoriteId)
+            .then((response) => {
+              console.log(response);
+              this.success("取消收藏成功");
+              setTimeout(() => {
+                this.$router.go(0);
+              }, 500);
+            })
+            .catch((error) => {
+              console.log(error);
+              this.err(error);
+            });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    openDocument(documentId) {
+      // 结合router
+      this.$router.push({ path: "/editFile/" + documentId });
+    },
+    readDocument(documentId) {
+      this.$router.push({ path: "/readFile/" + documentId });
+    },
+  },
+};
 </script>
 
 <style scoped>
-    .el-row {
-        margin-bottom: 20px;
-    &:last-child {
-         margin-bottom: 0;
-     }
-    }
-    .el-col {
-        border-radius: 4px;
-    }
-    .bg-purple-dark {
-        background: #99a9bf;
-    }
-    .bg-purple {
-        background: #d3dce6;
-    }
-    .bg-purple-light {
-        background: #e5e9f2;
-    }
-    .grid-content {
-        border-radius: 4px;
-        min-height: 36px;
-    }
-    .row-bg {
-        padding: 10px 0;
-        background-color: #f9fafc;
-    }
+.el-row {
+  margin-bottom: 20px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+.el-col {
+  border-radius: 4px;
+}
+.bg-purple-dark {
+  background: #99a9bf;
+}
+.bg-purple {
+  background: #d3dce6;
+}
+.bg-purple-light {
+  background: #e5e9f2;
+}
+.grid-content {
+  border-radius: 4px;
+  min-height: 36px;
+}
+.row-bg {
+  padding: 10px 0;
+  background-color: #f9fafc;
+}
 </style>
