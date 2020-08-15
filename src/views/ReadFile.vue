@@ -58,28 +58,28 @@
         <h1 class="text-center">文档内容</h1>
 
         <div id="doc-content" class="flex-center">
-            <div v-html="currentFile.data"></div>
+          <div v-html="currentFile.data"></div>
         </div>
 
-        <HR style="margin-top:2.5rem; margin-bottom:2.5rem;" />
-        <div>
-          <h1>评论列表</h1>
-        </div>
-        <div>
-          <el-row :key="refreshCommentKey">
-            <div v-for="item in comments" :key="item.id">
-              <el-col :span="24">
-                <div class="grid-content">
-                  <img height="32" width="32" :src="item.user.avatarUrl" />
-                  {{item.user.username}}
+        <div id="comment-big-box">
+          <h1 class="text-center">评论列表</h1>
+          <div id="comment-list-box">
+            <!-- TODO refresh?? -->
+            <div :key="refreshCommentKey">
+              <div v-for="item in comments" :key="item.id">
+                <div class="comment-each">
+                  <div class="comment-user-info">
+                    <el-avatar :size="45" :src="item.user.avatarUrl"></el-avatar>
+                    <div class="comment-username">{{item.user.username}}</div>
+                  </div>
+
+                  <div class="comment-content">
+                    <div class="grid-content" v-html="item.content"></div>
+                  </div>
                 </div>
-              </el-col>
-              <el-col>
-                <div class="grid-content" v-html="item.content"></div>
-              </el-col>
-              <hr style="width: 555px;" />
+              </div>
             </div>
-          </el-row>
+          </div>
         </div>
         <HR />
         <create-comment ref="createComment" :documentId="documentId" @submit-comment="loadComments"></create-comment>
@@ -336,5 +336,47 @@ export default {
   border-radius: 30px;
   border-color: #dcdfe6;
   padding: 30px 80px;
+}
+
+#comment-big-box {
+  margin: 60px 0;
+}
+
+#comment-list-box {
+  border-style: dashed;
+  border-width: 2px;
+  border-radius: 15px;
+  border-color: #dcdfe6;
+  padding: 15px 15px;
+}
+
+.comment-user-info {
+  display: flex;
+  align-items: center;
+  background-color: lightblue;
+  width: fit-content;
+  padding: 8px 25px;
+  border-radius: 4px;
+}
+
+.comment-username {
+  margin-left: 15px;
+}
+
+.comment-content {
+  background-color: lightgrey;
+  padding: 8px 25px;
+  margin-top: 10px;
+  border-radius: 6px;
+  width: fit-content;
+  min-width: 160px;
+  margin-left: 15px;
+}
+
+.comment-each {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #dcdfe6;
+  padding: 20px 0;
 }
 </style>
