@@ -1,6 +1,10 @@
 <template>
   <div>
-    <document-list :QDocument="this.documents" :isMyFavorite="true" @refreshFavorite="refresh"></document-list>
+    <document-list
+      :QDocument="this.documents"
+      :isMyFavorite="true"
+      @abandon-favorite-onclick="abandonFavorite"
+    ></document-list>
   </div>
 </template>
 
@@ -34,7 +38,7 @@ export default {
     };
   },
   methods: {
-    refresh() {
+    loadData() {
       axios
         .get("/api/documents", {
           params: { isAbandoned: false, myfavorite: true },
@@ -59,9 +63,7 @@ export default {
             .then((response) => {
               console.log(response);
               this.success("取消收藏成功");
-              setTimeout(() => {
-                this.$router.go(0);
-              }, 500);
+              this.loadData();
             })
             .catch((error) => {
               console.log(error);

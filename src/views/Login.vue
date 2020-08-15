@@ -21,7 +21,8 @@
         <!-- 按钮区域 -->
         <el-form-item class="btns">
           <el-button type="primary" @click="login">登录</el-button>
-          <el-button type="info" @click="resetLoginForm">重置</el-button>
+          <!-- <el-button type="info" @click="resetLoginForm">重置</el-button> -->
+          <!-- <el-button type="info" @click="jumpToRegister">注册</el-button> -->
         </el-form-item>
       </el-form>
     </div>
@@ -66,22 +67,32 @@ export default {
   },
   methods: {
     // 点击重置按钮，重置登录表单
-    resetLoginForm() {
-      this.$refs.loginFormRef.resetFields();
-    },
+    // resetLoginForm() {
+    //   this.$refs.loginFormRef.resetFields();
+    // },
+    // jumpToRegister() {
+    //   this.$router.push({ path: "/register/" });
+    // },
     login() {
-      this.$axios
-        .post("/api/access/login", this.loginForm)
-        .then((res) => {
-          console.log(res);
-          this.success("登录成功，正在跳转..."); // success消息示例
+      this.$refs.loginFormRef.validate((valid) => {
+        if (valid) {
+          this.$axios
+            .post("/api/access/login", this.loginForm)
+            .then((res) => {
+              console.log(res);
+              this.success("登录成功，正在跳转..."); // success消息示例
 
-          setTimeout(() => {
-            this.$router.push({ path: "/" });
-            this.$router.go(0); // 刷新global.me
-          }, 500);
-        })
-        .catch((p) => this.err(p)); // error消息示例
+              setTimeout(() => {
+                this.$router.push({ path: "/" });
+                this.$router.go(0); // 刷新global.me
+              }, 500);
+            })
+            .catch((p) => this.err(p)); // error消息示例
+        } else {
+          console.log("err");
+          return false;
+        }
+      });
     },
   },
 };
