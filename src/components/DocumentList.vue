@@ -1,7 +1,6 @@
 <template>
   <div>
-    <!-- height是表头的高度，为了固定表头，这样在文档很多的情况下，也能显示表头 -->
-    <el-table :data="QDocument" style="width: 100%" stripe :key="refreshKey">
+    <el-table :data="QDocument" style="width: 100%" stripe>
       <el-table-column label="标题" width="200">
         <template slot-scope="scope">
           <el-link
@@ -17,21 +16,24 @@
       </el-table-column>
       <el-table-column>
         <template slot-scope="scope">
-          <el-button @click="deleteDocument(scope.row.id)" v-if="isMyCreated" type="danger" plain>删除</el-button>
           <el-button
-            @click="deleteFavorite(scope.row.id)"
+            @click="$emit('delete-onclick',scope.row)"
+            v-if="isMyCreated"
+            type="danger"
+            plain
+          >删除</el-button>
+          <el-button
+            @click="$emit('abandon-favorite-onclick',scope.row)"
             v-if="isMyFavorite"
             type="warning"
             plain
           >取消收藏</el-button>
-
           <el-button
             @click="$emit('on-recover-click',scope.row.id)"
             v-if="isAbandoned"
             type="warning"
             plain
           >恢复</el-button>
-          
         </template>
       </el-table-column>
     </el-table>
@@ -43,66 +45,12 @@ export default {
   name: "DocumentList",
   props: ["QDocument", "isMyCreated", "isMyFavorite", "isAbandoned"],
   model: {
-    event: [
-      "recover-document",
-      "refresh",
-      "refreshDoc",
-      "refreshFavorite",
-      "on-recover-click",
-    ],
+    event: ["delete-onclick", "abandon-favorite-onclick", "on-recover-click"],
   },
-  created() {},
   data() {
-    return {
-      refreshKey: 0,
-    };
+    return {};
   },
-  methods: {
-    readDocument(id) {
-      console.log(id);
-      this.$router.push({ path: "/readFile/" + id });
-    },
-    deleteDocument(id) {
-      console.log(id);
-      this.$axios
-        .patch("/api/documents/" + id, {
-          isAbandoned: true,
-        })
-        .then((response) => {
-          console.log(response);
-          this.success("删除成功");
-          console.log(this.refreshKey);
-          this.$forceUpdate();
-          this.refreshKey = this.refreshKey + 1;
-          this.$emit("refreshDoc");
-        })
-        .catch((p) => this.err(p));
-    },
-    deleteFavorite(id) {
-      console.log(id);
-      this.$axios
-        .get("/api/favorites/find-by-documentId?documentId=" + id)
-        .then((response) => {
-          this.favoriteId = response.data.id;
-          this.$axios
-            .delete("/api/favorites/" + this.favoriteId)
-            .then((response) => {
-              console.log(response);
-              this.success("取消收藏成功");
-              this.refreshKey = this.refreshKey + 1;
-              this.$emit("refreshFavorite");
-            })
-            .catch((p) => this.err(p));
-        })
-        .catch((p) => this.err(p));
-    },
-    recoverDocument(document) {
-      this.refreshKey = this.refreshKey + 1;
-
-      this.$emit("recover-document", document);
-      this.$emit("refresh");
-    },
-  },
+  methods: {},
 };
 </script>
 

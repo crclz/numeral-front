@@ -1,6 +1,10 @@
 <template>
   <div>
-    <document-list :QDocument="this.documents" :isMyCreated="true" @refreshDoc="refresh"></document-list>
+    <document-list
+      :QDocument="this.documents"
+      :isMyCreated="true"
+      @delete-onclick="abandonDocument"
+    ></document-list>
   </div>
 </template>
 
@@ -31,7 +35,7 @@ export default {
     };
   },
   methods: {
-    refresh() {
+    loadData() {
       axios
         .get("/api/documents", {
           params: { creatorId: this.global.me.id, isAbandoned: false },
@@ -53,9 +57,7 @@ export default {
         .then((response) => {
           console.log(response);
           this.success("删除成功");
-          setTimeout(() => {
-            this.$router.go(0);
-          }, 500);
+          this.loadData();
         })
         .catch((error) => {
           console.log(error);
