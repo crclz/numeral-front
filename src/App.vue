@@ -45,7 +45,11 @@
         <router-view :key="key" />
       </el-main>
 
-      <el-footer>开发者：numeral 小组 2020</el-footer>
+      <el-footer>
+        <div id="footer-box">
+          <div>开发者：numeral 小组 2020</div>
+        </div>
+      </el-footer>
     </el-container>
   </div>
 </template>
@@ -103,7 +107,7 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  /* text-align: center; */
   color: #2c3e50;
 }
 
@@ -127,7 +131,12 @@ export default {
   z-index: 9;
 }
 
-#main-content{
+#main-content {
   margin-top: 63px;
+}
+
+#footer-box {
+  text-align: center;
+  margin: 80px 0 12px;
 }
 </style>
