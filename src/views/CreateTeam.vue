@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="center-wrapper">
     <h1>创建团队</h1>
-    <el-form :model="newTeam" :rules="rules" ref="ruleForm" label-width="100px" class="team-ruleForm">
+    <el-form :model="newTeam" :rules="rules" ref="ruleForm" label-position="top" class="team-ruleForm">
       <el-form-item label="团队名" prop="name">
         <el-input v-model="newTeam.name" placeholder="请输入团队名"></el-input>
       </el-form-item>
