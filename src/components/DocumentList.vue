@@ -17,13 +17,13 @@
       <el-table-column>
         <template slot-scope="scope">
           <el-button
-            @click="$emit('refresh-doc',scope.row)"
+            @click="$emit('delete-onclick',scope.row)"
             v-if="isMyCreated"
             type="danger"
             plain
           >删除</el-button>
           <el-button
-            @click="$emit('refresh-favorite',scope.row)"
+            @click="$emit('abandon-favorite-onclick',scope.row)"
             v-if="isMyFavorite"
             type="warning"
             plain
@@ -45,7 +45,7 @@ export default {
   name: "DocumentList",
   props: ["QDocument", "isMyCreated", "isMyFavorite", "isAbandoned"],
   model: {
-    event: ["refresh-doc", "refresh-favorite", "on-recover-click"],
+    event: ["delete-onclick", "abandon-favorite-onclick", "on-recover-click"],
   },
   data() {
     return {};

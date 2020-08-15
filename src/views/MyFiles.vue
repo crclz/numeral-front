@@ -1,6 +1,10 @@
 <template>
   <div>
-    <document-list :QDocument="this.documents" :isMyCreated="true" @refresh-doc="abandonDocument"></document-list>
+    <document-list
+      :QDocument="this.documents"
+      :isMyCreated="true"
+      @delete-onclick="abandonDocument"
+    ></document-list>
   </div>
 </template>
 
