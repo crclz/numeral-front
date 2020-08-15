@@ -1,6 +1,6 @@
 <template>
   <div>
-    <document-list :QDocument="this.documents" :isMyFavorite="true"></document-list>
+    <document-list :QDocument="this.documents" :isMyFavorite="true" @refreshFavorite="refresh"></document-list>
   </div>
 </template>
 
@@ -34,6 +34,20 @@ export default {
     };
   },
   methods: {
+    refresh() {
+      axios
+        .get("/api/documents", {
+          params: { isAbandoned: false, myfavorite: true },
+        })
+        .then((response) => {
+          // window.console.log(response.data.length);
+          this.documents = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.err(error);
+        });
+    },
     abandonFavorite(document) {
       axios
         .get("/api/favorites/find-by-documentId?documentId=" + document.id)
