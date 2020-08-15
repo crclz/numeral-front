@@ -28,12 +28,12 @@
                 })
                     .then((response) => {
                         console.log(response);
-                        alert("创建成功");
+                        this.success("创建成功");
                         this.$router.push({path: '/myTeams'});
                     })
-                    .catch(function (error) {
+                    .catch((error) => {
                         console.log(error);
-                        alert("创建失败");
+                        this.err(error);
                     });
             }
         }

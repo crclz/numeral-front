@@ -35,7 +35,7 @@
                             this.initialContent = response.data.data;
                             // alert("请求成功")
                         })
-                        .catch(function (error) {
+                        .catch((error) => {
                             console.log(error);
                         });
             }
@@ -70,12 +70,12 @@
                         })
                             .then((response) => {
                                 console.log(response);
-                                alert("保存成功");
+                                this.success("保存成功");
                                 this.$router.push({path: "/myFiles"});
                             })
-                            .catch(function (error) {
+                            .catch((error) => {
                                 console.log(error);
-                                alert("保存失败");
+                                this.err(error)
                             });
             },
             getDocumentId(){

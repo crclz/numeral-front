@@ -62,16 +62,13 @@ export default {
               this.defaultData = response.data.data;
               this.ret = true;
 
-              // alert("请求成功")
             })
-            .catch(function (error) {
+            .catch((error) => {
               console.log(error);
             });
 
           // 计时器，定时获取锁
           this.timer = setInterval(() => {
-            // this.testCount=this.testCount+1;
-            // alert("hello");
             axios
               .post("/api/e-lock/acquire?documentId=" + this.documentId)
               .then((response) => {
@@ -85,17 +82,16 @@ export default {
                   this.haveLock = false;
                 }
               })
-              .catch(function (error) {
+              .catch((error) => {
                 console.log(error);
-                alert("获取写锁失败");
+                  this.err(error);
               });
           }, 1000);
         } else {
           this.ret = true;
         }
-        // alert("请求成功")
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log(error);
       });
   },
@@ -148,17 +144,16 @@ export default {
         })
         .then((response) => {
           console.log(response);
-          alert("保存成功");
+            this.success("保存成功");
           this.$router.push({ path: "/readFile/" + this.documentId });
         })
-        .catch(function (error) {
+        .catch((error) => {
           console.log(error);
-          alert("保存失败");
+            this.err(error);
         });
     },
     change(val) {
       this.currentFile.data = val;
-      // alert(val);
     },
   },
 };
