@@ -139,4 +139,14 @@ export default {
 .text-center {
   text-align: center;
 }
+
+.box-center {
+  margin: 0 auto;
+}
+
+.flex-center{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
 </style>
