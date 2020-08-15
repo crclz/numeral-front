@@ -8,12 +8,11 @@ import moment from 'moment'
 import VueClipboard from 'vue-clipboard2';
 
 
-Vue.filter('moment', function (value, formatString) {
+Vue.filter('moment', function(value, formatString) {
     formatString = formatString || 'YYYY-MM-DD HH:mm:ss';
     // return moment(value).format(formatString); // value可以是普通日期 20170723
     return moment.unix(value / 1000).format(formatString); // 这是时间戳转时间
 });
-
 
 Vue.config.productionTip = false
 Vue.use(ElementUI).use(VueClipboard);
@@ -71,6 +70,6 @@ Access.None = new Access('none');
 Access.Read = new Access('read');
 Access.ReadWrite = new Access('readWrite');
 
-Object.freeze(Access);               // 冻结对象，防止修改
+Object.freeze(Access); // 冻结对象，防止修改
 
 export { Access }
