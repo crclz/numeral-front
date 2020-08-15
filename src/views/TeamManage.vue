@@ -86,12 +86,10 @@ export default {
               });
 
             this.ret = true;
-            // alert("请求成功")
           })
           .catch(function (error) {
             console.log(error);
           });
-        // alert("请求成功")
       })
       .catch(function (error) {
         console.log(error);
@@ -119,12 +117,9 @@ export default {
         .delete("/api/teams/" + this.teamId)
         .then(function (response) {
           console.log(response);
-          alert("解散成功");
+          this.success("解散成功");
         })
-        .catch(function (error) {
-          console.log(error);
-          alert("解散失败");
-        });
+        .catch((p) => this.err(p));
     },
     quitTeam() {
       // 退出团队
@@ -132,13 +127,10 @@ export default {
         .delete("/api/memberships/" + this.membershipId)
         .then(function (response) {
           console.log(response);
-          alert("退出成功");
+          this.success("退出成功");
           window.location.reload();
         })
-        .catch(function (error) {
-          console.log(error);
-          alert("退出失败");
-        });
+        .catch((p) => this.err(p));
     },
     applyForTeam() {
       // 申请加入团队
@@ -146,12 +138,9 @@ export default {
         .post("/api/team-requests", { teamId: this.teamId })
         .then(function (response) {
           console.log(response);
-          alert("已发送申请");
+          this.success("已发送申请");
         })
-        .catch(function (error) {
-          console.log(error);
-          alert("申请失败");
-        });
+        .catch((p) => this.err(p));
     },
   },
 };

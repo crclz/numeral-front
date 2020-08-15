@@ -1,4 +1,5 @@
 <template>
+<!-- 废弃 -->
     <div>
         <el-row class="container" v-if="this.global.me" gutter="20">
             <el-col :span="20" class="grid-content">&nbsp;</el-col>

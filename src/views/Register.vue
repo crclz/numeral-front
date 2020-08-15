@@ -93,16 +93,13 @@ export default {
           username: this.registerForm.username,
         })
         .then((response) => {
-          console.log(response);
-          alert("注册成功");
-          console.log("开始测试");
-          console.log(response);
-          this.$router.push({ path: "/login/" });
+          console.log(response.data);
+          this.success("注册成功!正在跳转至登录页面...");
+          setInterval(() => {
+            this.$router.push({ path: "/login/" });
+          }, 500);
         })
-        .catch(function (error) {
-          console.log(error);
-          alert(error.response.data.message);
-        });
+        .catch((p) => this.err(p));
     },
   },
 };

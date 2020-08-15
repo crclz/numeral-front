@@ -48,10 +48,7 @@ export default {
         this.memberships = response.data;
         console.log(this.memberships);
       })
-      .catch(function (error) {
-        console.log(error);
-        alert("请求团队成员失败");
-      });
+      .catch((p) => this.err(p));
   },
   data() {
     return {
@@ -67,12 +64,9 @@ export default {
         .delete("/api/memberships/" + id)
         .then((res) => {
           console.log(res);
-          alert("踢出成功！");
+          this.success("踢出成功！");
         })
-        .catch((err) => {
-          console.error(err);
-          alert("踢出失败");
-        });
+        .catch((p) => this.err(p));
     },
   },
 };

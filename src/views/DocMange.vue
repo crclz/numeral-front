@@ -47,17 +47,10 @@ export default {
               this.leaderId = response.data.leaderId;
               console.log("这是leaderId：" + this.leaderId);
             })
-            .catch(function (error) {
-              console.log(error);
-              alert("请求leaderIdID失败");
-              console.log("这是leaderId：" + this.leaderId);
-            });
+            .catch((p) => this.err(p));
         }
       })
-      .catch(function (error) {
-        console.log(error);
-        alert("请求文档创建者ID失败");
-      });
+      .catch((p) => this.err(p));
   },
   data() {
     return {

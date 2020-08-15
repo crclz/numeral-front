@@ -102,13 +102,10 @@ export default {
           avatarUrl: this.PatchUserForm.avatarUrl,
         })
         .then((response) => {
-          alert("头像更换成功");
+          this.success("头像更换成功");
           console.log(response.data);
         })
-        .catch((error) => {
-          console.log("错误提示！");
-          console.log(error.response.data);
-        });
+        .catch((p) => this.err(p));
     },
     beforeAvatarUpload(file) {
       console.log(file);
@@ -134,13 +131,10 @@ export default {
           password: this.PatchUserForm.password,
         })
         .then((response) => {
-          alert("修改成功");
+          this.success("修改成功");
           console.log(response.data);
         })
-        .catch((error) => {
-          console.log("错误提示！");
-          console.log(error.response.data);
-        });
+        .catch((p) => this.err(p));
     },
     submitForm_description() {
       this.$axios
@@ -148,13 +142,10 @@ export default {
           description: this.PatchUserForm.description,
         })
         .then((response) => {
-          alert("修改成功");
+          this.success("修改成功");
           console.log(response.data);
         })
-        .catch((error) => {
-          console.log("错误提示！");
-          console.log(error.response.data);
-        });
+        .catch((p) => this.err(p));
     },
   },
 };

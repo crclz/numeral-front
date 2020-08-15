@@ -77,32 +77,17 @@ export default {
     },
     login() {
       this.$axios
-        .post("/api/access/login", {
-          password: this.loginForm.password,
-          username: this.loginForm.username,
+        .post("/api/access/login", this.loginForm)
+        .then((res) => {
+          console.log(res);
+          this.success("登录成功，正在跳转..."); // success消息示例
+
+          setInterval(() => {
+            this.$router.push({ path: "/" });
+            this.$router.go(0); // 刷新global.me
+          }, 500);
         })
-        .then((response) => {
-          console.log(response);
-          alert("登录成功");
-          console.log("开始测试");
-          console.log(response);
-          this.axios
-            .get("/api/access/me")
-            .then((res) => {
-              // get user id
-              this.$router.push({ path: "/getuser/" + res.data.id });
-              this.$router.go(0);
-              console.log(res);
-            })
-            .catch((err) => {
-              console.error(err);
-            });
-        })
-        .catch(function (error) {
-          // window.err3 = error;
-          console.log(error);
-          alert(error.response.data.message);
-        });
+        .catch((p) => this.err(p)); // error消息示例
     },
   },
 };

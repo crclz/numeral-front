@@ -88,12 +88,10 @@ export default {
           teamDocumentAccess: this.currentTeamPermis.teamDocumentAccess,
         })
         .then((response) => {
-          alert("修改成功");
+          this.success("权限修改成功");
           console.log(response.data);
         })
-        .catch((error) => {
-          console.log(error.response.data);
-        });
+        .catch((p) => this.err(p));
     },
   },
 };

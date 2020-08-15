@@ -9,7 +9,7 @@ import moment from 'moment'
 Vue.filter('moment', function (value, formatString) {
     formatString = formatString || 'YYYY-MM-DD HH:mm:ss';
     // return moment(value).format(formatString); // value可以是普通日期 20170723
-    return moment.unix(value/1000).format(formatString); // 这是时间戳转时间
+    return moment.unix(value / 1000).format(formatString); // 这是时间戳转时间
 });
 
 
@@ -20,18 +20,31 @@ Vue.prototype.global = {
     me: null
 }
 
+
+Vue.mixin({
+    methods: {
+        success(message) {
+            this.$message({
+                message: message,
+                type: "success",
+            });
+        },
+        err(errObj) {
+            this.$message({
+                message: errObj.response.data.message,
+                type: "error",
+            });
+        },
+        jmp(path) {
+            this.$router.push({ path: path })
+        }
+    }
+})
+
 new Vue({
     router,
     render: h => h(App)
 }).$mount('#app')
-
-export default {
-    data() {
-        return {
-            userid: '',
-        }
-    }
-}
 
 
 //枚举类Access

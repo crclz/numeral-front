@@ -37,10 +37,7 @@ export default {
         console.log(response);
         this.Info = response.data;
       })
-      .catch((error) => {
-        console.log(error);
-        alert(error.response.data.message);
-      });
+      .catch((p) => this.err(p));
   },
   methods: {},
 };

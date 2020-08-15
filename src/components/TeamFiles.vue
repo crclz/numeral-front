@@ -29,10 +29,7 @@ export default {
       .then((response) => {
         this.documents = response.data;
       })
-      .catch(function (error) {
-        console.log(error);
-        alert("请求失败");
-      });
+      .catch((p) => this.err(p));
   },
   data() {
     return {
