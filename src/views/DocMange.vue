@@ -11,13 +11,13 @@
         <el-button
           type="primary"
           @click="jumpToSetDocPermis"
-          v-if="this.creatorId==this.global.me.id"
+          v-if="this.creatorId==this.global.me.id || this.global.me.id==this.leaderId"
         >修改文档权限</el-button>
-        <el-button
-          type="primary"
-          @click="jumpToSetTeamDocPermis"
-          v-if="this.global.me.id==this.leaderId && this.global.me.id!=this.creatorId"
-        >修改团队人员文档权限</el-button>
+        <!--<el-button-->
+        <!--  type="primary"-->
+        <!--  @click="jumpToSetTeamDocPermis"-->
+        <!--  v-if="this.global.me.id==this.leaderId && this.global.me.id!=this.creatorId"-->
+        <!--&gt;修改团队人员文档权限</el-button>-->
       </el-form>
     </div>
   </div>
