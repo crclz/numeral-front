@@ -1,21 +1,20 @@
 <template>
   <div>
-    <h1>我加入的团队</h1>
-    <team-list :teamList="this.teamList" :isMycreated="false"></team-list>
+    <h1>我创建的团队</h1>
+    <team-list :teamList="this.teamList" :isMycreated="true"></team-list>
   </div>
 </template>
 
 <script>
-import axios from "axios";
 import TeamList from "@/components/TeamList.vue";
 export default {
-  name: "MyTeams",
+  name: "MyCreatedTeams",
   components: {
     TeamList,
   },
   created() {
-    axios
-      .get("/api/memberships", { params: { userId: this.global.me.id } })
+    this.$axios
+      .get("/api/teams", { params: { leaderId: this.global.me.id } })
       .then((response) => {
         this.teamList = response.data;
       })

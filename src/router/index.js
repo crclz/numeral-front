@@ -22,11 +22,10 @@ import PatchUser from '../views/PatchUser.vue';
 import MoveFileToTeam from "../views/MoveFileToTeam";
 import Register from "../views/Register";
 import DocMange from "../views/DocMange";
-
+import MyCreatedTeams from "../views/MyCreatedTeams";
 Vue.use(VueRouter)
 
-const routes = [
-    {
+const routes = [{
         path: '/',
         redirect: { path: '/workspace' }
     },
@@ -49,7 +48,7 @@ const routes = [
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () =>
-            import( /* webpackChunkName: "about" */ '../views/About.vue')
+            import ( /* webpackChunkName: "about" */ '../views/About.vue')
     },
 
     {
@@ -148,6 +147,11 @@ const routes = [
         component: MyTeams
     },
     {
+        path: '/mycreatedteams',
+        name: 'MyCreatedTeams',
+        component: MyCreatedTeams
+    },
+    {
         path: '/team/:id',
         name: 'Team',
         component: Team
@@ -160,12 +164,14 @@ const routes = [
     {
         path: '/team-manage/:id',
         name: 'TeamManage',
-        component: () => import('../views/TeamManage.vue')
+        component: () =>
+            import ('../views/TeamManage.vue')
     },
     {
         path: '/team-files/:id',
         name: 'TeamFiles',
-        component: () => import('../components/TeamFiles.vue')
+        component: () =>
+            import ('../components/TeamFiles.vue')
     }
 ]
 
