@@ -11,7 +11,7 @@
         </el-form>
         <div>文档内容</div>
         <editor ref="thisEditor" :initial-content="initialContent"></editor>
-        <el-button type="success" @click="onSubmit">保存文件</el-button>
+        <el-button type="success" @click="submitForm('ruleForm')">保存文件</el-button>
     </div>
 </template>
 
@@ -80,7 +80,17 @@
             },
             getDocumentId(){
                 return null;
-            }
+            },
+            submitForm(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        this.onSubmit();
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            },
         }
     }
 </script>

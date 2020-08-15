@@ -17,6 +17,9 @@ export default {
   components: {
     Editor,
   },
+  model: {
+      event: 'submit-comment',
+  },
   created() {},
   data() {
     return {};
@@ -35,9 +38,10 @@ export default {
 
           this.success("发送成功");
 
-          setTimeout(() => {
-            this.$router.go(0);
-          }, 500);
+          // setTimeout(() => {
+          //   this.$router.go(0);
+          // }, 500);
+            this.$emit('submit-comment');
         })
         .catch((error) => {
           console.log(error);

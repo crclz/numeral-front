@@ -1,83 +1,84 @@
 <template>
-    <div v-if="ret">
-        <div v-if="!userPermissions.document.canRead">
-            <h1>对不起，您没有该文档的阅读权限。</h1>
-            <h1>Sorry, but you have no permission to read this document.</h1>
-        </div>
-        <div v-else>
-            <div>
-                <div v-if="dirty.lockOwner" style="background-color: coral; color: white">请注意，该文档正在被{{this.dirty.lockOwner.username}}编辑，您看到的可能不是该文档的最新版本。</div>
-                <div v-if="dirty.isDirty && !dirty.lockOwner" style="background-color: #42b983; color: white">请注意，{{this.dirty.lastModifierName}}已于{{this.dirty.updatedAt | moment}}提交了该文档的最新版本，刷新页面以获得最新版本内容。</div>
-                <div><h1>{{currentFile.title}}</h1></div>
-
-                <HR style="margin-top:2.5rem; margin-bottom:2.5rem;" />
-
-                <div>创建者：{{currentFile.creatorId}}</div>
-                <div>团队ID：{{currentFile.teamId}}</div>
-                <div>创建时间：{{currentFile.createdAt | moment}}</div>
-                <div>编辑次数：{{currentFile.modifyCount}}</div>
-                <div>上次更新时间：{{currentFile.updatedAt | moment}}</div>
-                <div>上次更新者：{{currentFile.lastModifierId}}</div>
-                <div>文件描述：{{currentFile.description}}</div>
-
-                <HR style="margin-top:2.5rem; margin-bottom:2.5rem;" />
-
-
-                <el-button type="warning" :icon="favorite.favoriteIcon" @click="favoriteFile" circle></el-button>
-                <el-button type="success" :disabled="!userPermissions.document.canShare" @click="toggleShare">分享文档</el-button>
-
-                <div>
-                    <el-link @click="jmp('/editFile/'+documentId)" type="primary">编辑文档</el-link>
-                </div>
-                <div>
-                    <el-link @click="jmp('/createFile/'+documentId)" type="primary">基于此模板</el-link>
-                </div>
-                <div>
-                    <el-link @click="jmp('/docmange/'+documentId)" type="primary">管理</el-link>
-                </div>
-
-                
-                <div id="sharePanel" v-if="displaySwitch.share">
-                    <HR style="margin-top:2.5rem; margin-bottom:2.5rem;" />
-                    <div>将下方链接复制到浏览器打开 或扫描二维码</div>
-                    <div>{{shareUrl}}</div><el-link icon="el-icon-document-copy" v-clipboard:error="copyOnError" v-clipboard:success="copyOnSuccess" v-clipboard:copy="shareUrl">复制链接</el-link>
-                    <div><ShareQR :shareUrl="shareUrl"></ShareQR></div>
-                </div>
-                <HR style="margin-top:2.5rem; margin-bottom:2.5rem;" />
-                <h1>文档内容</h1>
-                <div v-html="currentFile.data"></div>
-                <HR style="margin-top:2.5rem; margin-bottom:2.5rem;" />
-                <div><h1>评论列表</h1></div>
-                <div>
-                    <el-row>
-                        <div v-for="item in comments" :key="item.id">
-                            <el-col :span="24">
-                                <div class="grid-content"><img height="32" width="32" :src="item.user.avatarUrl"/>{{item.user.username}}</div>
-                            </el-col>
-                            <el-col>
-                                <div class="grid-content" v-html="item.content"></div>
-                            </el-col>
-                            <hr style="width: 555px;">
-                        </div>
-                    </el-row>
-                </div>
-                <HR/>
-                <create-comment :documentId="documentId"></create-comment>
-            </div>
-        </div>
-
+  <div v-if="ret">
+    <div v-if="!userPermissions.document.canRead">
+      <h1>对不起，您没有该文档的阅读权限。</h1>
+      <h1>Sorry, but you have no permission to read this document.</h1>
     </div>
+    <div v-else>
+      <div>
+        <div v-if="dirty.lockOwner" style="background-color: coral; color: white">请注意，该文档正在被{{this.dirty.lockOwner.username}}编辑，您看到的可能不是该文档的最新版本。</div>
+        <div v-if="dirty.isDirty && !dirty.lockOwner" style="background-color: #42b983; color: white">请注意，{{this.dirty.lastModifierName}}已于{{this.dirty.updatedAt | moment}}提交了该文档的最新版本，刷新页面以获得最新版本内容。</div>
+        <div><h1>{{currentFile.title}}</h1></div>
+
+        <HR style="margin-top:2.5rem; margin-bottom:2.5rem;" />
+
+        <div>创建者：{{currentFile.creatorId}}</div>
+        <div>团队ID：{{currentFile.teamId}}</div>
+        <div>创建时间：{{currentFile.createdAt | moment}}</div>
+        <div>编辑次数：{{currentFile.modifyCount}}</div>
+        <div>上次更新时间：{{currentFile.updatedAt | moment}}</div>
+        <div>上次更新者：{{currentFile.lastModifierId}}</div>
+        <div>文件描述：{{currentFile.description}}</div>
+
+        <HR style="margin-top:2.5rem; margin-bottom:2.5rem;" />
+
+
+        <el-button type="warning" :icon="favorite.favoriteIcon" @click="favoriteFile" circle></el-button>
+
+
+        <div>
+          <el-link @click="jmp('/editFile/'+documentId)" type="primary">编辑文档</el-link>
+        </div>
+        <div>
+          <el-link @click="jmp('/createFile/'+documentId)" type="primary">基于此模板</el-link>
+        </div>
+        <div>
+          <el-link @click="jmp('/docmange/'+documentId)" type="primary">管理</el-link>
+        </div>
+
+        <el-popover
+                placement="bottom"
+                width="400"
+                trigger="click">
+          <share :share-url="shareUrl"></share>
+          <el-button slot="reference" type="success" :disabled="!userPermissions.document.canShare">分享文档</el-button>
+        </el-popover>
+
+        <HR style="margin-top:2.5rem; margin-bottom:2.5rem;" />
+        <h1>文档内容</h1>
+        <div v-html="currentFile.data"></div>
+        <HR style="margin-top:2.5rem; margin-bottom:2.5rem;" />
+        <div><h1>评论列表</h1></div>
+        <div>
+          <el-row :key="refreshCommentKey">
+            <div v-for="item in comments" :key="item.id">
+              <el-col :span="24">
+                <div class="grid-content"><img height="32" width="32" :src="item.user.avatarUrl"/>{{item.user.username}}</div>
+              </el-col>
+              <el-col>
+                <div class="grid-content" v-html="item.content"></div>
+              </el-col>
+              <hr style="width: 555px;">
+            </div>
+          </el-row>
+        </div>
+        <HR/>
+        <create-comment ref="createComment" :documentId="documentId" @submit-comment="loadComments"></create-comment>
+      </div>
+    </div>
+
+  </div>
 </template>
 
 <script>
     import axios from "axios";
-    import ShareQR from "../components/ShareQR";
     import CreateComment from "../components/CreateComment";
+    import Share from "../components/Share";
 
     export default {
         name: "ReadFile",
         components: {
-            ShareQR,
+            Share,
             CreateComment
         },
         created() {
@@ -204,9 +205,7 @@
                         canWrite: false,
                     }
                 },
-                displaySwitch: {
-                    share: false,
-                }
+                refreshCommentKey: 0,
             }
         },
         methods: {
@@ -263,6 +262,11 @@
                     .then((response) => {
                         console.log(response);
                         this.comments = response.data;
+                        // 初始化编辑器
+                        if(this.$refs.createComment.$refs.thisEditor.editor){
+                            this.$refs.createComment.$refs.thisEditor.clearEditor();
+                        }
+                        this.refreshCommentKey = this.refreshCommentKey + 1;
                     })
                     .catch(function (error) {
                         console.log(error);
@@ -271,46 +275,35 @@
             // gotoEditFile() {
             //     this.$router.push({path: "/editFile/"+this.documentId})
             // },
-            toggleShare(){
-                if(this.userPermissions.document.canShare){
-                    this.displaySwitch.share = !this.displaySwitch.share;
-                }
-            },
-            copyOnSuccess(){
-                this.$message.success("复制成功");
-            },
-            copyOnError(){
-                this.$message.error("复制失败");
-            }
         }
     }
 </script>
 
 <style scoped>
-    .el-row {
-        margin-bottom: 20px;
-    &:last-child {
-         margin-bottom: 0;
-     }
-    }
-    .el-col {
-        border-radius: 4px;
-    }
-    .bg-purple-dark {
-        background: #99a9bf;
-    }
-    .bg-purple {
-        background: #d3dce6;
-    }
-    .bg-purple-light {
-        background: #e5e9f2;
-    }
-    .grid-content {
-        border-radius: 4px;
-        min-height: 36px;
-    }
-    .row-bg {
-        padding: 10px 0;
-        background-color: #f9fafc;
-    }
+  .el-row {
+    margin-bottom: 20px;
+  &:last-child {
+     margin-bottom: 0;
+   }
+  }
+  .el-col {
+    border-radius: 4px;
+  }
+  .bg-purple-dark {
+    background: #99a9bf;
+  }
+  .bg-purple {
+    background: #d3dce6;
+  }
+  .bg-purple-light {
+    background: #e5e9f2;
+  }
+  .grid-content {
+    border-radius: 4px;
+    min-height: 36px;
+  }
+  .row-bg {
+    padding: 10px 0;
+    background-color: #f9fafc;
+  }
 </style>
