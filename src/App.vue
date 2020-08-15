@@ -1,7 +1,7 @@
 <template>
   <div id="app" v-if="this.meReturned">
     <el-container>
-      <el-header>
+      <el-header id="head-nav">
         <div v-if="this.global.me">
           <el-menu
             :default-active="activeIndex"
@@ -42,14 +42,12 @@
         </div>
       </el-header>
 
-      <el-main>
+      <el-main id="main-content">
         <!-- 重要！防止路由复用！ -->
         <router-view :key="key" />
       </el-main>
 
-      <el-footer>
-        开发者：numeral 小组 2020
-      </el-footer>
+      <el-footer>开发者：numeral 小组 2020</el-footer>
     </el-container>
   </div>
 </template>
@@ -122,5 +120,16 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+#head-nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 9;
+}
+
+#main-content{
+  margin-top: 63px;
 }
 </style>
