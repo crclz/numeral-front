@@ -50,7 +50,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .header {
   border-bottom-style: solid;
   border-color: #dddddd;

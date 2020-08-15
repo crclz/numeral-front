@@ -102,6 +102,7 @@ export default {
 };
 </script>
 
+// Style not scoped!!
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
