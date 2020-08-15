@@ -1,46 +1,56 @@
 <template>
   <div id="app" v-if="this.meReturned">
-    <div v-if="this.global.me">
-      <el-menu
-        :default-active="activeIndex"
-        class="el-menu-demo"
-        mode="horizontal"
-        @select="handleSelect"
-      >
-        <div style="display: flex;">
-          <el-menu-item index="/favoriteFiles">我收藏的文档</el-menu-item>
-          <el-menu-item index="/myFiles">我创建的文档</el-menu-item>
-          <el-menu-item index="/createFile">创建新的文档</el-menu-item>
-          <el-menu-item index="/myTeams">我加入的团队</el-menu-item>
-          <el-menu-item index="/createTeam">创建新的团队</el-menu-item>
-          <el-menu-item index="/recycleFiles">回收站</el-menu-item>
+    <el-container>
+      <el-header>
+        <div v-if="this.global.me">
+          <el-menu
+            :default-active="activeIndex"
+            class="el-menu-demo"
+            mode="horizontal"
+            @select="handleSelect"
+          >
+            <div style="display: flex;">
+              <el-menu-item index="/favoriteFiles">我收藏的文档</el-menu-item>
+              <el-menu-item index="/myFiles">我创建的文档</el-menu-item>
+              <el-menu-item index="/createFile">创建新的文档</el-menu-item>
+              <el-menu-item index="/myTeams">我加入的团队</el-menu-item>
+              <el-menu-item index="/createTeam">创建新的团队</el-menu-item>
+              <el-menu-item index="/recycleFiles">回收站</el-menu-item>
 
-          <div style="flex-grow: 1;"></div>
-          <el-menu-item @click="logout">退出登录</el-menu-item>
-          <el-menu-item :index="'/getUser/'+this.global.me.id">{{this.global.me.username}}</el-menu-item>
-          <el-avatar :size="40" :src="this.global.me.avatarUrl"></el-avatar>
+              <div style="flex-grow: 1;"></div>
+              <el-menu-item @click="logout">退出登录</el-menu-item>
+              <el-menu-item :index="'/getUser/'+this.global.me.id">{{this.global.me.username}}</el-menu-item>
+              <el-avatar :size="40" :src="this.global.me.avatarUrl"></el-avatar>
+            </div>
+          </el-menu>
         </div>
-      </el-menu>
-    </div>
 
-    <!-- 未登录 -->
-    <div v-if="!this.global.me">
-      <el-menu
-        :default-active="activeIndex"
-        class="el-menu-demo"
-        mode="horizontal"
-        @select="handleSelect"
-      >
-        <div style="display: flex;">
-          <div style="flex-grow: 1;"></div>
-          <el-menu-item index="/login">登录</el-menu-item>
-          <el-menu-item index="/register">注册</el-menu-item>
+        <!-- 未登录 -->
+        <div v-if="!this.global.me">
+          <el-menu
+            :default-active="activeIndex"
+            class="el-menu-demo"
+            mode="horizontal"
+            @select="handleSelect"
+          >
+            <div style="display: flex;">
+              <div style="flex-grow: 1;"></div>
+              <el-menu-item index="/login">登录</el-menu-item>
+              <el-menu-item index="/register">注册</el-menu-item>
+            </div>
+          </el-menu>
         </div>
-      </el-menu>
-    </div>
+      </el-header>
 
-    <!-- 重要！防止路由复用！ -->
-    <router-view :key="key" />
+      <el-main>
+        <!-- 重要！防止路由复用！ -->
+        <router-view :key="key" />
+      </el-main>
+
+      <el-footer>
+        开发者：numeral 小组 2020
+      </el-footer>
+    </el-container>
   </div>
 </template>
 
@@ -75,8 +85,8 @@ export default {
         .post("/api/access/logout", {})
         .then(() => {
           this.success("登出成功");
-          this.$router.push({path:'/login'})
-          this.$router.go(0)
+          this.$router.push({ path: "/login" });
+          this.$router.go(0);
         })
         .catch((p) => this.err(p));
     },
