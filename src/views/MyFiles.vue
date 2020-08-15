@@ -39,7 +39,7 @@ export default {
         })
         .then((response) => {
           console.log(response);
-            this.success("删除成功");
+          this.success("删除成功");
           setTimeout(() => {
             this.$router.go(0);
           }, 500);

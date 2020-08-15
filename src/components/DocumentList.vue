@@ -1,20 +1,20 @@
 <template>
   <div>
     <!-- height是表头的高度，为了固定表头，这样在文档很多的情况下，也能显示表头 -->
-    <el-table :data="QDocument" style="width: 100%" stripe>
+    <el-table :data="QDocument" style="width: 100%" stripe :key="refreshKey">
       <el-table-column label="标题" width="200">
         <template slot-scope="scope">
           <el-link
             @click="jmp('/readFile/'+scope.row.id)"
             v-if="isAbandoned!=true"
           >{{scope.row.title}}</el-link>
+          <p v-if="isAbandoned">{{scope.row.title}}</p>
         </template>
       </el-table-column>
       <el-table-column prop="description" label="描述" width="500"></el-table-column>
       <el-table-column label="发布时间" width="200">
         <template slot-scope="scope">{{scope.row.createdAt|moment}}</template>
       </el-table-column>
-
       <el-table-column>
         <template slot-scope="scope">
           <el-button @click="deleteDocument(scope.row.id)" v-if="isMyCreated" type="danger" plain>删除</el-button>
@@ -35,9 +35,14 @@
 export default {
   name: "DocumentList",
   props: ["QDocument", "isMyCreated", "isMyFavorite", "isAbandoned"],
+  model: {
+    event: ["recover-document", "refresh"],
+  },
   created() {},
   data() {
-    return {};
+    return {
+      refreshKey: 0,
+    };
   },
   methods: {
     readDocument(id) {
@@ -53,9 +58,12 @@ export default {
         .then((response) => {
           console.log(response);
           this.success("删除成功");
-          setTimeout(() => {
-            this.$router.go(0);
-          }, 500);
+          console.log(this.refreshKey);
+          this.$forceUpdate();
+          this.refreshKey = this.refreshKey + 1;
+          //   setTimeout(() => {
+          //     this.$router.go(0);
+          //   }, 500);
         })
         .catch((p) => this.err(p));
     },
@@ -79,19 +87,10 @@ export default {
         .catch((p) => this.err(p));
     },
     recoverDocument(document) {
-      document.isAbandoned = true;
-      this.$axios
-        .patch("/api/documents/" + document.id, {
-          isAbandoned: false,
-        })
-        .then((response) => {
-          this.success("恢复成功");
-          console.log(response);
-          setTimeout(() => {
-            this.$router.go(0);
-          }, 500);
-        })
-        .catch((p) => this.err(p));
+      this.refreshKey = this.refreshKey + 1;
+
+      this.$emit("recover-document", document);
+      this.$emit("refresh");
     },
   },
 };
