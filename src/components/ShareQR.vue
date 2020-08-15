@@ -12,11 +12,15 @@
         components: {
             VueQr
         },
+        props: ['shareUrl'],
         data() {
             return {
                 logoSrc: require('../assets/logo_mini_64x.png'),
-                codeUrl: 'http://localhost:8080/#/readFile/79170782113792'
+                codeUrl: ''
             }
+        },
+        created() {
+            this.codeUrl = this.shareUrl;
         }
     }
 </script>

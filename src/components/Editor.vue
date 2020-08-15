@@ -63,29 +63,29 @@ export default {
         //     msg: '放弃上传'
         // }
       },
-      success: function (xhr, editor, result) {
+      success: (xhr, editor, result) => {
         // 图片上传并返回结果，图片插入成功之后触发
         // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，result 是服务器端返回的结果
         console.log(xhr, editor, result);
-        alert("上传成功");
+        this.success("上传成功");
       },
-      fail: function (xhr, editor, result) {
+      fail:(xhr, editor, result) => {
         // 图片上传并返回结果，但图片插入错误时触发
         // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，result 是服务器端返回的结果
         console.log(xhr, editor, result);
-        alert("图片插入失败");
+        this.err(result);
       },
-      error: function (xhr, editor) {
+      error: (xhr, editor) => {
         // 图片上传出错时触发
         // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象
         console.log(xhr, editor);
-        alert("图片上传失败，请检查图片大小（单个文件不得超过300k）");
+          this.$message.error("图片上传失败");
       },
-      timeout: function (xhr, editor) {
+      timeout: (xhr, editor) => {
         // 图片上传超时时触发
         // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象
         console.log(xhr, editor);
-        alert("图片上传超时");
+          this.$message.error("图片上传失败，请检查网络连接");
       },
 
       // // 如果服务器端返回的不是 {errno:0, data: [...]} 这种格式，可使用该配置
@@ -100,7 +100,6 @@ export default {
         var url = "";
         for (let i = 0; i < result.data.length; i++) {
           url = result.data[i];
-          // alert(url);
           insertImg("http://47.95.230.65" + url);
         }
 

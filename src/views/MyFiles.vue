@@ -34,7 +34,6 @@ import axios from "axios";
 export default {
   name: "MyFiles",
   created() {
-    // alert(this.global.me.id);
     axios
       .get("/api/documents", {
         params: { creatorId: this.global.me.id, isAbandoned: false },
@@ -42,11 +41,10 @@ export default {
       .then((response) => {
         // window.console.log(response.data.length);
         this.documents = response.data;
-        // alert("请求成功")
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log(error);
-        alert("请求失败");
+        this.err(error);
       });
   },
   data() {
@@ -61,21 +59,20 @@ export default {
         .patch("/api/documents/" + document.id, {
           isAbandoned: true,
         })
-        .then(function (response) {
+        .then((response) => {
           console.log(response);
-          alert("删除成功");
+            this.success("删除成功");
           setTimeout(() => {
             this.$router.go(0);
           }, 500);
         })
-        .catch(function (error) {
+        .catch((error) => {
           console.log(error);
-          alert("删除失败");
+          this.err(error);
         });
     },
     openDocument(documentId) {
       // 结合router
-      // alert(documentId);
       this.$router.push({ path: "/editFile/" + documentId });
     },
     readDocument(documentId) {
