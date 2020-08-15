@@ -3,14 +3,6 @@
     <h3 class="PatchUser_title">修改个人信息</h3>
     <div class="PatchUser_box">
       <!-- 修改个人信息表单区域 -->
-      <el-form
-        ref="PatchUserFormRef"
-        :model="PatchUserForm"
-        status-icon
-        :rules="PatchUserFormRules"
-        label-width="100px"
-        class="PatchUser_form"
-      >
         <!-- 上传头像 -->
         <el-upload
           class="avatar-uploader"
@@ -24,6 +16,14 @@
         </el-upload>
 
         <!-- 密码 -->
+      <el-form
+              ref="password"
+              :model="PatchUserForm"
+              status-icon
+              :rules="PatchUserFormRulesPassword"
+              label-width="100px"
+              class="PatchUser_form"
+      >
         <el-form-item label="密码" prop="password">
           <el-input type="password" v-model="PatchUserForm.password" autocomplete="off"></el-input>
         </el-form-item>
@@ -32,18 +32,27 @@
           <el-input type="password" v-model="PatchUserForm.checkPass" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item class="btns">
-          <el-button type="primary" @click="submitForm_pass('PatchUserForm')">修改密码</el-button>
-          <el-button type="info" @click="resetPatchUserForm">重置</el-button>
+          <el-button type="primary" @click="submitForm('password')">修改密码</el-button>
+          <el-button type="info" @click="resetPatchUserForm('password')">重置</el-button>
         </el-form-item>
+      </el-form>
         <!-- 描述信息 -->
+      <el-form
+              ref="description"
+              :model="PatchUserForm"
+              status-icon
+              :rules="PatchUserFormRulesDescription"
+              label-width="100px"
+              class="PatchUser_form"
+      >
         <el-form-item label="个人简介" prop="description">
           <el-input type="textarea" v-model="PatchUserForm.description" placeholder="请输入个人简介"></el-input>
         </el-form-item>
 
         <!-- 按钮区域 -->
         <el-form-item class="btns">
-          <el-button type="primary" @click="submitForm_description('PatchUserForm')">保存</el-button>
-          <el-button type="info" @click="resetPatchUserForm">重置</el-button>
+          <el-button type="primary" @click="submitForm('description')">保存</el-button>
+          <el-button type="info" @click="resetPatchUserForm('description')">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -75,17 +84,19 @@ export default {
         password: null,
         checkPass: null,
       },
-      PatchUserFormRules: {
-        password: [
-          { required: true, message: "请输入密码", trigger: "change" },
-          {
-            min: 6,
-            max: 16,
-            message: "密码长度在 6 到 32 个字符",
-            trigger: "change",
-          },
-        ],
-        checkPass: [{ validator: validatePass2, trigger: "change" }],
+      PatchUserFormRulesPassword: {
+          password: [
+              {required: true, message: "请输入密码", trigger: "change"},
+              {
+                  min: 6,
+                  max: 16,
+                  message: "密码长度在 6 到 32 个字符",
+                  trigger: "change",
+              },
+          ],
+          checkPass: [{validator: validatePass2, trigger: "change"}],
+      },
+      PatchUserFormRulesDescription: {
         description: [
           { min: 0, max: 32, message: "长度超出32个字符", trigger: "change" },
         ],
@@ -104,6 +115,8 @@ export default {
         .then((response) => {
           this.success("头像更换成功");
           console.log(response.data);
+          // 更新用户信息
+            this.refreshMe();
         })
         .catch((p) => this.err(p));
     },
@@ -122,9 +135,22 @@ export default {
     },
 
     // 点击重置按钮，重置登录表单
-    resetPatchUserForm() {
-      this.$refs.PatchUserFormRef.resetFields();
+    resetPatchUserForm(formname) {
+      this.$refs[formname].resetFields();
     },
+      submitForm(formName) {
+          this.$refs[formName].validate((valid) => {
+              if (valid) {
+                  if(formName == 'password')
+                      this.submitForm_pass();
+                  else
+                      this.submitForm_description();
+              } else {
+                  console.log('error submit!!');
+                  return false;
+              }
+          });
+      },
     submitForm_pass() {
       this.$axios
         .patch("/api/users/" + this.UserId, {
