@@ -22,7 +22,7 @@
         <el-form-item class="btns">
           <el-button type="primary" @click="login">登录</el-button>
           <!-- <el-button type="info" @click="resetLoginForm">重置</el-button> -->
-          <el-button type="info" @click="jumpToRegister">注册</el-button>
+          <!-- <el-button type="info" @click="jumpToRegister">注册</el-button> -->
         </el-form-item>
       </el-form>
     </div>
@@ -70,9 +70,9 @@ export default {
     // resetLoginForm() {
     //   this.$refs.loginFormRef.resetFields();
     // },
-    jumpToRegister() {
-      this.$router.push({ path: "/register/" });
-    },
+    // jumpToRegister() {
+    //   this.$router.push({ path: "/register/" });
+    // },
     login() {
       this.$refs.loginFormRef.validate((valid) => {
         if (valid) {

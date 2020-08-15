@@ -73,5 +73,6 @@ export default {
 }
 #sub-router-view {
   margin-left: 280px;
+  min-height: 660px;
 }
 </style>
