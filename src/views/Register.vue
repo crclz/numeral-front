@@ -86,20 +86,27 @@ export default {
       this.$refs.registerFormRef.resetFields();
     },
     register() {
-      this.$axios
-        .post("/api/users", {
-          description: this.registerForm.description,
-          password: this.registerForm.password,
-          username: this.registerForm.username,
-        })
-        .then((response) => {
-          console.log(response.data);
-          this.success("注册成功!正在跳转至登录页面...");
-          setTimeout(() => {
-            this.$router.push({ path: "/login/" });
-          }, 500);
-        })
-        .catch((p) => this.err(p));
+      this.$refs.registerFormRef.validate((valid) => {
+        if (valid) {
+          this.$axios
+            .post("/api/users", {
+              description: this.registerForm.description,
+              password: this.registerForm.password,
+              username: this.registerForm.username,
+            })
+            .then((response) => {
+              console.log(response.data);
+              this.success("注册成功!正在跳转至登录页面...");
+              setTimeout(() => {
+                this.$router.push({ path: "/login/" });
+              }, 500);
+            })
+            .catch((p) => this.err(p));
+        } else {
+          console.log("err");
+          return false;
+        }
+      });
     },
   },
 };
