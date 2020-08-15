@@ -6,7 +6,7 @@
     <el-form class="logout_form">
       <!-- 按钮区域 -->
       <el-form-item class="btns">
-        <el-button @click="logout_now">登出</el-button>
+        <el-link @click="logout_now">登出</el-link>
       </el-form-item>
     </el-form>
   </div>

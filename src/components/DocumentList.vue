@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- height是表头的高度，为了固定表头，这样在文档很多的情况下，也能显示表头 -->
-    <el-table :data="QDocument" style="width: 100%" height="250" stripe>
+    <el-table :data="QDocument" style="width: 100%" stripe>
       <el-table-column label="标题" width="200">
         <template slot-scope="scope">
           <el-link
