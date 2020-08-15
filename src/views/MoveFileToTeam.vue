@@ -22,14 +22,9 @@ export default {
     this.$axios
       .get("/api/memberships", { params: { userId: this.global.me.id } })
       .then((response) => {
-        // window.console.log(response.data.length);
         this.teamList = response.data;
-        // alert("请求成功")
       })
-      .catch(function (error) {
-        console.log(error);
-        alert("请求失败");
-      });
+      .catch((p) => this.err(p));
   },
   data() {
     return {
@@ -46,20 +41,10 @@ export default {
           teamId: this.teamId,
         })
         .then((response) => {
-          console.log(response);
-          alert("成功将文档移除团队");
-          console.log("正确提示！");
+          this.success("成功将文档移除团队");
           console.log(response.data);
-          console.log(this.documentId);
         })
-        .catch((error) => {
-          alert("文档移除失败");
-          console.log("错误提示！");
-          console.log(this.documentId);
-          console.log("团队id");
-          console.log(this.teamId);
-          console.log(error.response.data);
-        });
+        .catch((p) => this.err(p));
     },
     openTeam(team) {
       this.$router.push({ path: "/team/" + team.teamId });
@@ -71,19 +56,10 @@ export default {
           teamId: this.teamId,
         })
         .then((response) => {
-          console.log(response);
-          alert("成功将文档移动到该团队");
-          console.log("正确提示！");
+          this.success("成功将文档移动到该团队");
           console.log(response.data);
-          console.log(this.documentId);
         })
-        .catch((error) => {
-          alert("文档移动失败");
-          console.log(this.documentId);
-          console.log("团队id");
-          console.log(this.teamId);
-          console.log(error.response.data);
-        });
+        .catch((p) => this.err(p));
     },
   },
 };

@@ -37,9 +37,6 @@ export default {
         this.creatorId = response.data.creatorId;
         this.teamId = response.data.teamId;
         console.log(response.data);
-        console.log("这是teamId(1)：" + this.teamId);
-        console.log(this.creatorId);
-        console.log(this.global.me.id);
         if (this.teamId != null) {
           this.$axios
             .get("/api/teams/" + this.teamId, {
@@ -50,19 +47,10 @@ export default {
               this.leaderId = response.data.leaderId;
               console.log("这是leaderId：" + this.leaderId);
             })
-            .catch(function (error) {
-              console.log(error);
-              alert("请求leaderIdID失败");
-              console.log("这是leaderId：" + this.leaderId);
-            });
+            .catch((p) => this.err(p));
         }
       })
-      .catch(function (error) {
-        console.log(error);
-        alert("请求文档创建者ID失败");
-      });
-    // 通过文档看teamId然后看team创建者是否为用户↓
-    console.log("这是teamId：" + this.teamId);
+      .catch((p) => this.err(p));
   },
   data() {
     return {

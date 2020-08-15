@@ -1,48 +1,24 @@
 <template>
   <div>
-    <!--{{this.global.me.id}}-->
-    <el-row :gutter="20">
-      <el-col :span="6" v-for="item in documents" :key="item.id">
-        <div class="grid-content bg-purple">
-          <el-card class="box-card">
-            <div slot="header" class="clearfix">
-              <!-- <span @click="openDocument(item.id)">{{item.title}}</span> -->
-
-              <!-- 这是声明式的导航 -->
-              <el-link @click="jmp('/readFile/'+item.id)">{{item.title}}</el-link>
-
-              <!-- <div @click="readDocument(item.id)">读</div> -->
-              <el-button
-                style="float: right; padding: 3px 0"
-                type="icon"
-                icon="el-icon-delete"
-                @click="abandonDocument(item)"
-              ></el-button>
-            </div>
-            <!-- <div class="text item" @click="openDocument(item.id)">{{item.description}}</div> -->
-            <div class="text item">{{item.description}}</div>
-          </el-card>
-        </div>
-      </el-col>
-    </el-row>
+    <document-list :QDocument="this.documents" :isMyCreated="true"></document-list>
   </div>
 </template>
 
 <script>
 import axios from "axios";
-
+import DocumentList from "@/components/DocumentList.vue";
 export default {
   name: "MyFiles",
+  components: {
+    DocumentList,
+  },
   created() {
-    // alert(this.global.me.id);
     axios
       .get("/api/documents", {
         params: { creatorId: this.global.me.id, isAbandoned: false },
       })
       .then((response) => {
-        // window.console.log(response.data.length);
         this.documents = response.data;
-        // alert("请求成功")
       })
       .catch(function (error) {
         console.log(error);

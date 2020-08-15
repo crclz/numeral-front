@@ -14,7 +14,7 @@
 
 <script>
 export default {
-  name: "Login",
+  name: "Logout",
   methods: {
     // 点击“登出”按钮，接受服务器反馈
     logout_now: function () {

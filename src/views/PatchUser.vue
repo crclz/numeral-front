@@ -53,30 +53,11 @@
 <script>
 export default {
   name: "PatchUser",
-  created() {
+  mounted() {
     this.UserId = this.$route.params.id;
-    console.log(this.UserId);
   },
   data() {
-    // 后面主要是进行一个表单的验证
-    var checkDescpt = (rule, value, callback) => {
-      // 或许还应该完善
-      if (value.length > 32) {
-        callback(new Error("字数超出限制"));
-      } else {
-        callback();
-      }
-    };
-    var validatePass = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error("请输入密码"));
-      } else {
-        if (this.PatchUserForm.checkPass !== "") {
-          this.$refs.PatchUserFormRef.validateField("checkPass");
-        }
-        callback();
-      }
-    };
+    //对两次输入的密码是否相同进行验证
     var validatePass2 = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请再次输入密码"));
@@ -86,10 +67,8 @@ export default {
         callback();
       }
     };
-
     return {
       UserId: "",
-
       PatchUserForm: {
         avatarUrl: null,
         description: null,
@@ -98,16 +77,18 @@ export default {
       },
       PatchUserFormRules: {
         password: [
-          { validator: validatePass, trigger: "change" },
+          { required: true, message: "请输入密码", trigger: "change" },
           {
             min: 6,
-            max: 32,
+            max: 16,
             message: "密码长度在 6 到 32 个字符",
             trigger: "change",
           },
         ],
         checkPass: [{ validator: validatePass2, trigger: "change" }],
-        description: [{ validator: checkDescpt, trigger: "change" }],
+        description: [
+          { min: 0, max: 32, message: "长度超出32个字符", trigger: "change" },
+        ],
       },
     };
   },
@@ -115,27 +96,16 @@ export default {
     // 上传头像的限制
     handleAvatarSuccess(res, file) {
       this.PatchUserForm.avatarUrl = res;
-      console.log(this.PatchUserForm.avatarUrl);
       console.log(file);
-      this.PatchUserForm.description = null;
-      this.PatchUserForm.password = null;
       this.$axios
         .patch("/api/users/" + this.UserId, {
           avatarUrl: this.PatchUserForm.avatarUrl,
-          description: this.PatchUserForm.description,
-          password: this.PatchUserForm.password,
         })
         .then((response) => {
-          console.log(response);
-          alert("头像更换成功");
-          console.log("正确提示！");
+          this.success("头像更换成功");
           console.log(response.data);
         })
-        .catch((error) => {
-          console.log("错误提示！");
-          console.log(this.PatchUserForm);
-          console.log(error.response.data);
-        });
+        .catch((p) => this.err(p));
     },
     beforeAvatarUpload(file) {
       console.log(file);
@@ -156,48 +126,26 @@ export default {
       this.$refs.PatchUserFormRef.resetFields();
     },
     submitForm_pass() {
-      this.PatchUserForm.description = null;
-      this.PatchUserForm.avatarUrl = null;
       this.$axios
         .patch("/api/users/" + this.UserId, {
-          avatarUrl: this.PatchUserForm.avatarUrl,
-          description: this.PatchUserForm.description,
           password: this.PatchUserForm.password,
         })
         .then((response) => {
-          console.log(response);
-          alert("修改成功");
-          console.log("正确提示！");
+          this.success("修改成功");
           console.log(response.data);
-          console.log(this.PatchUserForm);
         })
-        .catch((error) => {
-          console.log("错误提示！");
-          console.log(this.PatchUserForm);
-          console.log(error.response.data);
-        });
+        .catch((p) => this.err(p));
     },
     submitForm_description() {
-      this.PatchUserForm.avatarUrl = null;
-      this.PatchUserForm.password = null;
       this.$axios
         .patch("/api/users/" + this.UserId, {
-          avatarUrl: this.PatchUserForm.avatarUrl,
           description: this.PatchUserForm.description,
-          password: this.PatchUserForm.password,
         })
         .then((response) => {
-          alert("修改成功");
-          console.log("正确提示！");
+          this.success("修改成功");
           console.log(response.data);
-          console.log(this.PatchUserForm);
         })
-        .catch((error) => {
-          // window.err3 = error;
-          console.log("错误提示！");
-          console.log(this.PatchUserForm);
-          console.log(error.response.data);
-        });
+        .catch((p) => this.err(p));
     },
   },
 };
