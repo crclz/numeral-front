@@ -24,11 +24,22 @@ import Register from "../views/Register";
 import DocMange from "../views/DocMange";
 
 Vue.use(VueRouter)
-    // asdsadsadsa
-const routes = [{
+
+const routes = [
+    {
         path: '/',
-        name: 'Home',
-        component: Home
+        redirect: { path: '/workspace' }
+    },
+    {
+        path: '/workspace',
+        name: 'workspace',
+        component: Home,
+        children: [
+            { path: '', redirect: { path: 'myfiles' } },
+            { path: 'myfiles', component: MyFiles },
+            { path: 'favorite', component: FavoriteFiles },
+            { path: 'myteams', component: MyTeams },
+        ]
     },
     {
         path: '/about',
@@ -37,7 +48,7 @@ const routes = [{
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () =>
-            import ( /* webpackChunkName: "about" */ '../views/About.vue')
+            import( /* webpackChunkName: "about" */ '../views/About.vue')
     },
 
     {
@@ -146,14 +157,14 @@ const routes = [{
         component: ManageApplications
     },
     {
-        path:'/team-manage/:id',
-        name:'TeamManage',
-        component: () =>import ('../views/TeamManage.vue')
+        path: '/team-manage/:id',
+        name: 'TeamManage',
+        component: () => import('../views/TeamManage.vue')
     },
     {
-        path:'/team-files/:id',
-        name:'TeamFiles',
-        component: () =>import ('../components/TeamFiles.vue')
+        path: '/team-files/:id',
+        name: 'TeamFiles',
+        component: () => import('../components/TeamFiles.vue')
     }
 ]
 
