@@ -2,12 +2,9 @@
   <div>
     <h1>文档回收站</h1>
     <document-list
-      ref="recoverDoc"
       :QDocument="this.documents"
       :isAbandoned="true"
-      @recover-document="recycleDocument"
-      @refresh="refresh"
-      :key="refreshKey"
+      @on-recover-click="recoverDocument"
     ></document-list>
   </div>
 </template>
@@ -22,64 +19,36 @@ export default {
     DocumentList,
   },
   created() {
-    // alert(this.global.me.id);
-    axios
-      .get("/api/documents", {
-        params: { creatorId: this.global.me.id, isAbandoned: true },
-      })
-      .then((response) => {
-        // window.console.log(response.data.length);
-        this.documents = response.data;
-        // alert("请求成功")
-      })
-      .catch((error) => {
-        console.log(error);
-        this.err(error);
-      });
+    this.loadData();
   },
   data() {
     return {
       documents: [],
-      refreshKey: 0,
     };
   },
   methods: {
-    recycleDocument(document) {
-      document.isAbandoned = true;
+    loadData() {
       axios
-        .patch("/api/documents/" + document.id, {
-          isAbandoned: false,
+        .get("/api/documents", {
+          params: { creatorId: this.global.me.id, isAbandoned: true },
         })
         .then((response) => {
-          console.log(response);
-          this.success("恢复成功");
-          this.refreshKey = this.refreshKey + 1;
-          //   setTimeout(() => {
-          //     this.$router.go(0);
-          //   }, 500);
+          this.documents = response.data;
         })
         .catch((error) => {
           console.log(error);
           this.err(error);
         });
     },
-    openDocument(documentId) {
-      // 结合router
-      // alert(documentId);
-      this.$router.push({ path: "/editFile/" + documentId });
-    },
-    readDocument(documentId) {
-      this.$router.push({ path: "/readFile/" + documentId });
-    },
-    refresh() {
+    recoverDocument(documentId) {
       axios
-        .get("/api/documents", {
-          params: { creatorId: this.global.me.id, isAbandoned: true },
+        .patch("/api/documents/" + documentId, {
+          isAbandoned: false,
         })
         .then((response) => {
-          // window.console.log(response.data.length);
-          this.documents = response.data;
-          // alert("请求成功")
+          console.log(response);
+          this.success("恢复成功");
+          this.loadData();
         })
         .catch((error) => {
           console.log(error);
