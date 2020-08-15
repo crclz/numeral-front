@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="center-wrapper">
+    <div class="center-wrapper">
       <h1>创建文件</h1>
       <el-form :model="newFile" :rules="rules" ref="ruleForm" label-position="top">
         <el-form-item label="标题" prop="title">
@@ -109,11 +109,6 @@ export default {
 </script>
 
 <style scoped>
-#center-wrapper {
-  max-width: 860px;
-  margin: 0 auto;
-}
-
 #editor-area {
   margin: 50px 0;
 }

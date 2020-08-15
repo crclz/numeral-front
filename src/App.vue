@@ -139,4 +139,9 @@ export default {
   text-align: center;
   margin: 80px 0 12px;
 }
+
+.center-wrapper {
+  max-width: 860px;
+  margin: 0 auto;
+}
 </style>
