@@ -23,10 +23,12 @@
 
 <script>
 export default {
-  name: "MyTeams",
+  name: "TeamList",
   props: ["teamList", "isMycreated"],
   created() {},
-  data() {},
+  data() {
+    return {};
+  },
   methods: {
     openTeam(team) {
       console.log(team);
