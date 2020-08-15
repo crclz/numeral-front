@@ -24,7 +24,14 @@
             type="warning"
             plain
           >取消收藏</el-button>
-          <el-button @click="recoverDocument(scope.row)" v-if="isAbandoned" type="warning" plain>恢复</el-button>
+
+          <el-button
+            @click="$emit('on-recover-click',scope.row.id)"
+            v-if="isAbandoned"
+            type="warning"
+            plain
+          >恢复</el-button>
+          
         </template>
       </el-table-column>
     </el-table>
@@ -36,7 +43,13 @@ export default {
   name: "DocumentList",
   props: ["QDocument", "isMyCreated", "isMyFavorite", "isAbandoned"],
   model: {
-    event: ["recover-document", "refresh", "refreshDoc", "refreshFavorite"],
+    event: [
+      "recover-document",
+      "refresh",
+      "refreshDoc",
+      "refreshFavorite",
+      "on-recover-click",
+    ],
   },
   created() {},
   data() {
