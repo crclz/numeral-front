@@ -45,14 +45,24 @@ export default {
       loginFormRules: {
         // 验证用户名是否合法
         username: [
-          { required: true, message: "请输入账号", trigger: "change" },
-          // { min: 3, max: 5, message: "长度在 3 到 5 个字符", trigger: "change" },
+          { required: true, message: "请输入用户名", trigger: "change" },
+          {
+            min: 3,
+            max: 16,
+            message: "用户名长度在 3 到 16 个字符",
+            trigger: "change",
+          },
         ],
 
         //验证密码是否合法
         password: [
           { required: true, message: "请输入密码", trigger: "change" },
-          { min: 6, max: 16, message: "密码格式错误", trigger: "change" },
+          {
+            min: 6,
+            max: 32,
+            message: "密码长度在 6 到 32 个字符",
+            trigger: "change",
+          },
         ],
       },
     };
@@ -81,7 +91,7 @@ export default {
             .then((res) => {
               // get user id
               this.$router.push({ path: "/getuser/" + res.data.id });
-              this.$router.go(0)
+              this.$router.go(0);
               console.log(res);
             })
             .catch((err) => {

@@ -57,15 +57,10 @@ export default {
     this.$axios
       .get("/api/documents/" + this.documentId)
       .then((response) => {
-        // window.console.log(response.data.length);
-        console.log(response);
         this.currentTeamPermis = response.data;
         this.defaultData = response.data.data;
-        console.log("当前传入情况");
-        console.log(this.currentTeamPermis);
-        // alert("请求成功")
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log(error);
       });
   },
@@ -81,7 +76,6 @@ export default {
         teamCommentAccess: "None",
         teamDocumentAccess: "None",
       },
-      currentTeamPermisRules: {},
     };
   },
   mounted() {},
@@ -94,15 +88,10 @@ export default {
           teamDocumentAccess: this.currentTeamPermis.teamDocumentAccess,
         })
         .then((response) => {
-          console.log(response);
           alert("修改成功");
-          console.log("正确提示！");
           console.log(response.data);
-          console.log(this.currentTeamPermis);
         })
         .catch((error) => {
-          console.log("错误提示！");
-          console.log(this.currentTeamPermis);
           console.log(error.response.data);
         });
     },

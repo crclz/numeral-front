@@ -12,7 +12,6 @@
             </div>
             <!-- 这里显示用户名-->
             <div class="clearfix">
-              <!-- <span @click="openUser(item.user.id)"> -->
               <span>
                 <tr>
                   <td>用户名：</td>
@@ -28,12 +27,7 @@
                   </td>
                 </tr>
               </span>
-              <!-- </span> -->
             </div>
-            <!-- 这里显示个人简介
-            <div class="text item" @click="openUser(item.user.id)">
-              
-            </div>-->
           </el-card>
         </div>
       </el-col>
@@ -53,8 +47,6 @@ export default {
       .then((response) => {
         this.memberships = response.data;
         console.log(this.memberships);
-        console.log("申请membership成功");
-        console.log(this.memberships[0].user);
       })
       .catch(function (error) {
         console.log(error);

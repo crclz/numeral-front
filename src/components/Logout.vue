@@ -13,18 +13,16 @@
 
 <script>
 export default {
-  name: "Login",
+  name: "Logout",
   methods: {
     // 点击“退出登录”按钮，接受服务器反馈
     logout_now: function () {
       this.$axios
         .post("/api/access/logout", {})
-        .then(function (response) {
-          alert("退出成功");
-          console.log("开始测试");
+        .then((response) => {
           console.log(response);
         })
-        .catch(function (error) {
+        .catch((error) => {
           alert(error.response.data.message);
         });
     },

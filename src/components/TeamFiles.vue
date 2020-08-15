@@ -6,12 +6,9 @@
         <div class="grid-content bg-purple">
           <el-card class="box-card">
             <div slot="header" class="clearfix">
-              <!-- <span @click="openDocument(item.id)">标题：{{item.title}}</span> -->
               <el-link @click="readDocument(item.id)">标题：{{item.title}}</el-link>
-              <!-- <div @click="readDocument(item.id)">读</div> -->
             </div>
             <div>文档简介：{{item.description}}</div>
-            <!-- <div class="text item" @click="openDocument(item.id)">{{item.description}}</div> -->
           </el-card>
         </div>
       </el-col>
@@ -30,9 +27,7 @@ export default {
         params: { teamId: this.teamId, isAbandoned: false },
       })
       .then((response) => {
-        // window.console.log(response.data.length);
         this.documents = response.data;
-        // alert("请求成功")
       })
       .catch(function (error) {
         console.log(error);

@@ -87,13 +87,9 @@ export default {
     this.$axios
       .get("/api/documents/" + this.documentId)
       .then((response) => {
-        // window.console.log(response.data.length);
         console.log(response);
         this.currentPermission = response.data;
         this.defaultData = response.data.data;
-        console.log("当前传入情况");
-        console.log(this.currentPermission);
-        // alert("请求成功")
       })
       .catch(function (error) {
         console.log(error);
@@ -101,7 +97,6 @@ export default {
   },
   data() {
     return {
-      radio: 3,
       documentId: "",
       defaultData: "",
       currentPermission: {
@@ -112,15 +107,11 @@ export default {
         teamCommentAccess: "None",
         teamDocumentAccess: "None",
       },
-      currentPermissionRules: {},
     };
   },
   mounted() {},
   methods: {
     // 点击重置按钮，重置登录表单
-    // resetcurrentPermission() {
-    //   this.$refs.currentPermissionRef.resetFields();
-    // },
     submit() {
       this.$axios
         .patch("/api/documents/" + this.documentId, {
@@ -134,13 +125,9 @@ export default {
         .then((response) => {
           console.log(response);
           alert("修改成功");
-          console.log("正确提示！");
           console.log(response.data);
-          console.log(this.currentPermission);
         })
         .catch((error) => {
-          console.log("错误提示！");
-          console.log(this.currentPermission);
           console.log(error.response.data);
         });
     },
