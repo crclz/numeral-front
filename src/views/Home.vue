@@ -72,6 +72,6 @@ export default {
   height: calc(100vh - 63px);
 }
 #sub-router-view {
-  margin-left: 255px;
+  margin-left: 280px;
 }
 </style>
