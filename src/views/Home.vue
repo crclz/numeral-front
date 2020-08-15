@@ -22,13 +22,13 @@
           <i class="el-icon-star-off"></i>
           <span slot="title">收藏的文件</span>
         </el-menu-item>
-        <el-menu-item index="/workspace/myTeams">
+        <el-menu-item index="/workspace/my-teams">
           <i class="el-icon-user-solid"></i>
           <span slot="title">我加入的团队</span>
         </el-menu-item>
-        <el-menu-item index="/workspace/myTeams">
+        <el-menu-item index="/workspace/my-created-teams">
           <i class="el-icon-user"></i>
-          <span slot="title">我创建的团队 TODO</span>
+          <span slot="title">我创建的团队</span>
         </el-menu-item>
         <el-menu-item index="/workspace/trash">
           <i class="el-icon-delete-solid"></i>
