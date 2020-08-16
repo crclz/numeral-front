@@ -27,8 +27,9 @@
           </el-form-item>
         </el-form>
         <!-- 在此设置文档权限 -->
+        <set-doc-permission ref="setPermission" :isEditFile="true"></set-doc-permission>
 
-        <div>文档内容</div>
+        <h4>文档内容</h4>
         <editor ref="thisEditor" :initial-content="defaultData"></editor>
         <el-button type="success" @click="onSubmit">保存文件</el-button>
       </div>
@@ -38,10 +39,11 @@
 
 <script>
 import Editor from "../components/Editor";
+import SetDocPermission from "@/components/SetDocPermission.vue";
 import axios from "axios";
 export default {
   name: "EditFile",
-  components: { Editor },
+  components: { Editor, SetDocPermission },
   created() {
     this.documentId = this.$route.params.id;
 
@@ -154,6 +156,7 @@ export default {
         .then((response) => {
           console.log(response);
           this.success("保存成功");
+          this.$refs.setPermission.submit();
           this.$router.push({ path: "/readFile/" + this.documentId });
         })
         .catch((error) => {
