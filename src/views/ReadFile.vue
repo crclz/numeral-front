@@ -52,6 +52,18 @@
           >分享文档</el-button>
         </el-popover>
 
+        <el-popover placement="right" width="400" trigger="click">
+          <team-list
+            :teamList="this.teamList"
+            :document="this.document"
+            :isMycreated="false"
+            :isMoveDoc="true"
+            :userId="this.global.me.id"
+            @get-teamlist="loadTeamlist"
+          ></team-list>
+          <el-button slot="reference" type="warning">{{this.currentTeam}}</el-button>
+        </el-popover>
+        <!-- 当前文档所在团队名，点击可移动文档至团队 -->
         <HR style="margin-top:2.5rem; margin-bottom:2.5rem;" />
 
         <!-- 正文 -->
@@ -92,12 +104,14 @@
 import axios from "axios";
 import CreateComment from "../components/CreateComment";
 import Share from "../components/Share";
+import TeamList from "@/components/TeamList.vue";
 
 export default {
   name: "ReadFile",
   components: {
     Share,
     CreateComment,
+    TeamList,
   },
   created() {
     this.documentId = this.$route.params.id;
@@ -188,13 +202,48 @@ export default {
       .catch((error) => {
         console.log(error);
       });
+
+    axios
+      .get("/api/memberships", { params: { userId: this.global.me.id } })
+      .then((response) => {
+        this.teamList = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+        this.err(error);
+      });
+    axios
+      .get("/api/documents/" + this.documentId)
+      .then((response) => {
+        this.document = response.data;
+        if (this.document.teamId != null && this.document.teamId != 0) {
+          this.$axios
+            .get("/api/teams/" + this.document.teamId)
+            .then((response) => {
+              this.currentTeam = response.data.name;
+            })
+            .catch((error) => {
+              console.log(error);
+              this.err(error);
+            });
+        } else {
+          this.currentTeam = "暂无团队";
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        this.err(error);
+      });
   },
   destroyed() {
     if (this.timer) clearInterval(this.timer);
   },
   data() {
     return {
+      currentTeam: "",
       documentId: null,
+      document: "",
+      teamList: [],
       favorite: {
         favorited: false,
         favoriteId: "",
@@ -227,6 +276,39 @@ export default {
     };
   },
   methods: {
+    loadTeamlist() {
+      axios
+        .get("/api/memberships", { params: { userId: this.global.me.id } })
+        .then((response) => {
+          this.teamList = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.err(error);
+        });
+      axios
+        .get("/api/documents/" + this.documentId)
+        .then((response) => {
+          this.document = response.data;
+          if (this.document.teamId != null && this.document.teamId != 0) {
+            this.$axios
+              .get("/api/teams/" + this.document.teamId)
+              .then((response) => {
+                this.currentTeam = response.data.name;
+              })
+              .catch((error) => {
+                console.log(error);
+                this.err(error);
+              });
+          } else {
+            this.currentTeam = "暂无团队";
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          this.err(error);
+        });
+    },
     checkFavorite() {
       axios
         .get("/api/favorites/find-by-documentId/?documentId=" + this.documentId)

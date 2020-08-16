@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>我加入的团队</h1>
-    <team-list :teamList="this.teamList" :isMycreated="false"></team-list>
+    <team-list :teamList="this.teamList" :isMycreated="false" :isMoveDoc="false"></team-list>
   </div>
 </template>
 

@@ -1,22 +1,39 @@
 <template>
   <div>
     <el-table :data="teamList" style="width: 100%" highlight-current-row v-if="isMycreated==false">
-      <el-table-column prop="teamId" label="团队编号" width="180"></el-table-column>
-      <el-table-column label="团队名称" width="200">
+      <el-table-column prop="teamId" label="团队编号" width="180" v-if="isMoveDoc==false"></el-table-column>
+      <el-table-column label="团队名称" width="150">
         <template slot-scope="scope">
           <el-link @click="jmp('/team/'+scope.row.teamId)">{{scope.row.team.name}}</el-link>
         </template>
       </el-table-column>
       <el-table-column prop="team.description" label="团队描述"></el-table-column>
+      <el-table-column label="操作" width="100" v-if="isMoveDoc">
+        <template slot-scope="scope">
+          <el-button
+            @click="moveToTeam(document,scope.row.teamId)"
+            type="warning"
+            plain
+            v-if="document.teamId!=scope.row.teamId"
+          >移入</el-button>
+          <el-button
+            @click="deletefromteam(document)"
+            type="danger"
+            plain
+            v-if="(document.teamId==scope.row.teamId)&&((userId==document.creatorId)||(userId==scope.row.team.leaderId))"
+          >移出</el-button>
+        </template>
+      </el-table-column>
     </el-table>
+    <!-- 我创建的团队 -->
     <el-table :data="teamList" style="width: 100%" highlight-current-row v-if="isMycreated==true">
       <el-table-column prop="id" label="团队编号" width="180"></el-table-column>
-      <el-table-column label="团队名称" width="200">
+      <el-table-column label="团队名称" width="150">
         <template slot-scope="scope">
           <el-link @click="jmp('/team/'+scope.row.id)">{{scope.row.name}}</el-link>
         </template>
       </el-table-column>
-      <el-table-column prop="team.description" label="团队描述"></el-table-column>
+      <el-table-column prop="description" label="团队描述"></el-table-column>
     </el-table>
   </div>
 </template>
@@ -24,15 +41,46 @@
 <script>
 export default {
   name: "TeamList",
-  props: ["teamList", "isMycreated"],
+  props: ["teamList", "document", "userId", "isMycreated", "isMoveDoc"],
+  model: {
+    event: ["get-teamlist"],
+  },
   created() {},
   data() {
-    return {};
+    return {
+      teamId: -1,
+      documentId: null,
+    };
   },
   methods: {
-    openTeam(team) {
-      console.log(team);
-      // this.$router.push({ path: "/team/" + team.teamId });
+    deletefromteam(document) {
+      this.teamId = -1;
+      this.documentId = document.id;
+      this.$axios
+        .patch("/api/documents/" + this.documentId, {
+          teamId: this.teamId,
+        })
+        .then((response) => {
+          this.success("成功将文档移除团队");
+          console.log(response.data);
+        })
+        .catch((p) => this.err(p));
+    },
+    moveToTeam(document, teamId) {
+      this.teamId = teamId;
+      this.documentId = document.id;
+      console.log("这里是document" + document.id);
+
+      this.$axios
+        .patch("/api/documents/" + this.documentId, {
+          teamId: this.teamId,
+        })
+        .then((response) => {
+          this.success("成功将文档移动到该团队");
+          this.$emit("get-teamlist");
+          console.log(response.data);
+        })
+        .catch((p) => this.err(p));
     },
   },
 };
