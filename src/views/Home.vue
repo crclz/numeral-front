@@ -8,9 +8,9 @@
         :router="true"
         active-text-color="#ffd04b"
       >
-        <el-menu-item index="/workspace/recent">
+        <el-menu-item index="/workspace/recentfiles">
           <i class="el-icon-document"></i>
-          <span slot="title">最近文件 TODO</span>
+          <span slot="title">最近文件</span>
         </el-menu-item>
         <el-menu-item index="/workspace/myfiles">
           <i class="el-icon-document"></i>
