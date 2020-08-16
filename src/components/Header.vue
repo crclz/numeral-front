@@ -10,7 +10,7 @@
                 {{this.global.me.username}}
             </el-col>
             <el-col :span="1" class="grid-content" @click="gotoGetUser" >
-                <el-avatar :size="40" :fit="cover" :src="this.global.me.avatarUrl"></el-avatar>
+                <el-avatar :size="40" fit="cover" :src="this.global.me.avatarUrl"></el-avatar>
             </el-col>
         </el-row>
         <el-row v-else class="container" gutter="20">

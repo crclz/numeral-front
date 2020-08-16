@@ -23,6 +23,7 @@ import MoveFileToTeam from "../views/MoveFileToTeam";
 import Register from "../views/Register";
 import DocMange from "../views/DocMange";
 import MyCreatedTeams from "../views/MyCreatedTeams";
+
 Vue.use(VueRouter)
 
 const routes = [
