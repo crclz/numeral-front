@@ -16,23 +16,47 @@
       </el-table-column>
       <el-table-column>
         <template slot-scope="scope">
-          <el-button
-            @click="$emit('delete-onclick',scope.row)"
-            v-if="isMyCreated"
-            type="danger"
-            plain
-          >删除</el-button>
+          <!-- 删除按钮 -->
+          <el-popover
+            placement="top"
+            width="160"
+            :ref="`popover-${scope.$index}`"
+            title="确定删除该文档吗？"
+          >
+            <div style="text-align: right; margin: 0">
+              <el-button
+                size="mini"
+                type="text"
+                @click="scope._self.$refs[`popover-${scope.$index}`].doClose()"
+              >取消</el-button>
+              <el-button type="primary" size="mini" @click="$emit('delete-onclick',scope.row)">确定</el-button>
+            </div>
+            <el-button
+              v-if="isMyCreated"
+              type="danger"
+              plain
+              icon="el-icon-delete"
+              circle
+              size="mini"
+              slot="reference"
+            ></el-button>
+          </el-popover>
+          <!-- 取消收藏按钮 -->
           <el-button
             @click="$emit('abandon-favorite-onclick',scope.row)"
             v-if="isMyFavorite"
             type="warning"
             plain
+            round
+            size="mini"
           >取消收藏</el-button>
           <el-button
             @click="$emit('on-recover-click',scope.row.id)"
             v-if="isAbandoned"
             type="warning"
             plain
+            round
+            size="mini"
           >恢复</el-button>
         </template>
       </el-table-column>
@@ -48,7 +72,9 @@ export default {
     event: ["delete-onclick", "abandon-favorite-onclick", "on-recover-click"],
   },
   data() {
-    return {};
+    return {
+      visible: false,
+    };
   },
   methods: {},
 };
