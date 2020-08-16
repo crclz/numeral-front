@@ -44,7 +44,6 @@ const routes = [
             { path: 'my-teams', component: MyTeams },
             { path: 'trash', component: RecycleFiles },
             { path: 'my-created-teams', component: MyCreatedTeams },
-            { path: 'recent', component: RecentFiles }
         ]
     },
     {
