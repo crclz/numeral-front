@@ -73,8 +73,14 @@ export default {
   },
   methods: {
     onSubmit() {
-      // this.newFile.data = this.$refs.thisEditor.getEditorContent;
-      // this.newFile.data = '123';
+      var content = this.$refs.thisEditor.getEditorContent();
+
+      const maxlen = 65535;
+      if (content.length > maxlen) {
+        this.errmsg(`当前富文本量为${content.length}, 超出了限制（${maxlen}）`);
+        return;
+      }
+
       axios
         .post("/api/documents/", {
           data: this.$refs.thisEditor.getEditorContent(),

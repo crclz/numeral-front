@@ -61,7 +61,6 @@ export default {
               this.currentFile = response.data;
               this.defaultData = response.data.data;
               this.ret = true;
-
             })
             .catch((error) => {
               console.log(error);
@@ -84,7 +83,7 @@ export default {
               })
               .catch((error) => {
                 console.log(error);
-                  this.err(error);
+                this.err(error);
               });
           }, 1000);
         } else {
@@ -136,20 +135,28 @@ export default {
   },
   methods: {
     onSubmit() {
+      var content = this.$refs.thisEditor.getEditorContent();
+
+      const maxlen = 65535;
+      if (content.length > maxlen) {
+        this.errmsg(`当前富文本量为${content.length}, 超出了限制（${maxlen}）`);
+        return;
+      }
+
       axios
         .patch("/api/documents/" + this.documentId, {
           title: this.currentFile.title,
           description: this.currentFile.description,
-          data: this.$refs.thisEditor.getEditorContent(),
+          data: content,
         })
         .then((response) => {
           console.log(response);
-            this.success("保存成功");
+          this.success("保存成功");
           this.$router.push({ path: "/readFile/" + this.documentId });
         })
         .catch((error) => {
           console.log(error);
-            this.err(error);
+          this.err(error);
         });
     },
     change(val) {
