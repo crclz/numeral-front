@@ -15,6 +15,7 @@
             type="warning"
             plain
             v-if="document.teamId!=scope.row.teamId"
+            size="mini"
           >移入</el-button>
           <!-- <el-button
             @click="deletefromteam(document)"
@@ -53,20 +54,6 @@ export default {
     };
   },
   methods: {
-    // deletefromteam(document) {
-    //   this.teamId = -1;
-    //   this.documentId = document.id;
-    //   this.$axios
-    //     .patch("/api/documents/" + this.documentId, {
-    //       teamId: this.teamId,
-    //     })
-    //     .then((response) => {
-    //       this.success("成功将文档移除团队");
-    //       this.$emit("get-teamlist");
-    //       console.log(response.data);
-    //     })
-    //     .catch((p) => this.err(p));
-    // },
     moveToTeam(document, teamId) {
       this.teamId = teamId;
       this.documentId = document.id;

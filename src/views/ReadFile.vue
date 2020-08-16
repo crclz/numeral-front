@@ -289,6 +289,7 @@ export default {
   },
   methods: {
     loadTeamlist() {
+      this.teamName = "暂无团队";
       axios
         .get("/api/memberships", { params: { userId: this.global.me.id } })
         .then((response) => {
@@ -333,6 +334,8 @@ export default {
           this.success("成功将文档移除团队");
           console.log(response.data);
           this.loadTeamlist();
+          this.teamName = "暂无团队";
+          this.document.teamId = null;
         })
         .catch((p) => this.err(p));
     },
