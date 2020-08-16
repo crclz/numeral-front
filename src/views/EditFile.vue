@@ -28,8 +28,20 @@
               <el-input v-model="currentFile.description" placeholder="请输入对该文档的描述"></el-input>
             </el-form-item>
           </el-form>
-          <!-- 在此设置文档权限 -->
-          <set-doc-permission ref="setPermission" :isEditFile="true"></set-doc-permission>
+          <!-- 设置文档权限弹出框 -->
+          <el-popover placement="top" trigger="click" v-model="visible">
+            <div class="popup-wrapper" style="text-align: center; margin: 0">
+              <set-doc-permission ref="setPermission" :isEditFile="true"></set-doc-permission>
+              <el-button size="mini" type="warning" plain @click="visible = false">取消</el-button>
+              <el-button type="primary" size="mini" @click="SetPermissionOnclick">确定</el-button>
+            </div>
+            <el-button
+              class="action-btn"
+              slot="reference"
+              type="warning"
+              :disabled="this.currentTeam.leaderId!=this.global.me.id&&this.global.me.id!=this.currentFile.creatorId"
+            >设置文档权限</el-button>
+          </el-popover>
 
           <div id="editor-area">
             <editor ref="thisEditor" :initial-content="defaultData"></editor>
@@ -63,7 +75,6 @@ export default {
         this.userPermissions.ref = response.data;
         if (this.userPermissions.ref.documentAccess == "ReadWrite") {
           this.userPermissions.document.canWrite = true;
-
           axios
             .get("/api/documents/" + this.documentId)
             .then((response) => {
@@ -72,6 +83,21 @@ export default {
               this.currentFile = response.data;
               this.defaultData = response.data.data;
               this.ret = true;
+              if (
+                this.currentFile.teamId != null &&
+                this.currentFile.teamId != 0 &&
+                this.currentFile.teamId != -1
+              ) {
+                this.$axios
+                  .get("/api/teams/" + this.currentFile.teamId)
+                  .then((response) => {
+                    this.currentTeam = response.data;
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                    this.err(error);
+                  });
+              }
             })
             .catch((error) => {
               console.log(error);
@@ -110,6 +136,8 @@ export default {
   },
   data() {
     return {
+      visible: false,
+      currentTeam: "",
       documentId: "",
       defaultData: "",
       currentFile: {
@@ -145,6 +173,10 @@ export default {
     };
   },
   methods: {
+    SetPermissionOnclick() {
+      this.$refs.setPermission.submit();
+      this.visible = false;
+    },
     onSubmit() {
       var content = this.$refs.thisEditor.getEditorContent();
 
@@ -163,7 +195,6 @@ export default {
         .then((response) => {
           console.log(response);
           this.success("保存成功");
-          this.$refs.setPermission.submit();
           this.$router.push({ path: "/readFile/" + this.documentId });
         })
         .catch((error) => {

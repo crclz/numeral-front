@@ -40,7 +40,10 @@
         </tr>
       </div>
       <!-- 上面只有在isCreator==true时显示 -->
-      <div class="permisTeam">
+      <div
+        class="permisTeam"
+        v-if="this.currentFile.teamId!=null&&this.currentFile.teamId!=0&&this.currentFile.teamId!=-1"
+      >
         <!-- 团队的权限设置 -->
         <tr>
           <td>团队人员是否可分享：</td>

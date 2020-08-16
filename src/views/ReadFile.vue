@@ -58,7 +58,20 @@
 
           <el-button type="primary" @click="jmp('/createFile/'+documentId)">基于此模板</el-button>
           <el-button type="primary" @click="jmp('/docmange/'+documentId)">管理</el-button>
-
+          <!-- 设置文档权限弹出框 -->
+          <el-popover placement="right" trigger="click" v-model="visible">
+            <div class="popup-set-permission" style="text-align: center; margin: 0">
+              <set-doc-permission ref="setPermission" :isEditFile="true"></set-doc-permission>
+              <el-button size="mini" type="warning" plain @click="visible = false">取消</el-button>
+              <el-button type="primary" size="mini" @click="SetPermissionOnclick">确定</el-button>
+            </div>
+            <el-button
+              class="action-btn"
+              slot="reference"
+              type="warning"
+              :disabled="this.currentTeam.leaderId!=this.global.me.id&&this.global.me.id!=this.document.creatorId"
+            >设置文档权限</el-button>
+          </el-popover>
           <el-popover
             placement="right"
             trigger="click"
@@ -127,6 +140,7 @@ import axios from "axios";
 import CreateComment from "../components/CreateComment";
 import Share from "../components/Share";
 import TeamList from "@/components/TeamList.vue";
+import SetDocPermission from "@/components/SetDocPermission.vue";
 
 export default {
   name: "ReadFile",
@@ -134,6 +148,7 @@ export default {
     Share,
     CreateComment,
     TeamList,
+    SetDocPermission,
   },
   created() {
     this.documentId = this.$route.params.id;
@@ -245,7 +260,11 @@ export default {
       .get("/api/documents/" + this.documentId)
       .then((response) => {
         this.document = response.data;
-        if (this.document.teamId != null && this.document.teamId != 0) {
+        if (
+          this.document.teamId != null &&
+          this.document.teamId != 0 &&
+          this.document.teamId != -1
+        ) {
           this.$axios
             .get("/api/teams/" + this.document.teamId)
             .then((response) => {
@@ -270,6 +289,7 @@ export default {
   },
   data() {
     return {
+      visible: false,
       currentTeam: "",
       teamName: "",
       documentId: null,
@@ -308,6 +328,10 @@ export default {
     };
   },
   methods: {
+    SetPermissionOnclick() {
+      this.$refs.setPermission.submit();
+      this.visible = false;
+    },
     loadTeamlist() {
       this.teamName = "暂无团队";
       axios
@@ -557,7 +581,7 @@ export default {
 }
 
 .popup-wrapper {
-  height: 300px;
+  height: 180px;
   overflow-y: auto;
 }
 </style>
