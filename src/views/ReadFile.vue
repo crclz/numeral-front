@@ -34,22 +34,9 @@
         </div>
 
         <div v-if="currentFile" class="doc-info">
-          <img
-            class="info-badge"
-            :src="`https://badgen.net/badge/创建时间/${moment(currentFile.createdAt)}/cyan`"
-          />
-          <img
-            class="info-badge"
-            :src="`https://badgen.net/badge/上次更新/${moment(currentFile.updatedAt)}/yellow`"
-          />
-
-          <img
-            class="info-badge"
-            :src="`https://badgen.net/badge/编辑次数/${currentFile.modifyCount}/red`"
-          />
-          <!-- 创建时间：{{currentFile.createdAt | moment}} |
-          编辑次数：{{currentFile.modifyCount}} |
-          上次更新时间：{{currentFile.updatedAt | moment}} |-->
+          <span class="info-badge">创建时间: {{currentFile.createdAt | moment}}</span>
+          <span class="info-badge">上次更新: {{currentFile.updatedAt | moment}}</span>
+          <span class="info-badge">编辑次数: {{currentFile.modifyCount}}</span>
         </div>
 
         <div class="doc-actions">
@@ -69,36 +56,34 @@
             :disabled="!userPermissions.document.canShare"
           >分享文档</el-button>
 
-          <el-button @click="jmp('/createFile/'+documentId)" type="primary">基于此模板</el-button>
-          <el-button @click="jmp('/docmange/'+documentId)" type="primary">管理</el-button>
+          <el-button type="primary" @click="jmp('/createFile/'+documentId)">基于此模板</el-button>
+          <el-button type="primary" @click="jmp('/docmange/'+documentId)">管理</el-button>
+
+          <el-popover
+            placement="right"
+            trigger="click"
+            v-if="this.global.me.id==this.document.creatorId"
+          >
+            <!-- 移动到团队的 popup -->
+            <div class="popup-wrapper">
+              <team-list
+                :teamList="this.teamList"
+                :document="this.document"
+                :isMycreated="false"
+                :isMoveDoc="true"
+                :userId="this.global.me.id"
+                @get-teamlist="loadTeamlist"
+              ></team-list>
+            </div>
+            <el-button class="action-btn" slot="reference" type="warning">{{this.teamName}}</el-button>
+          </el-popover>
+          <el-button
+            @click="deletefromteam(document)"
+            type="danger"
+            v-if="(this.document.teamId!=null)&&((this.global.me.id==this.document.creatorId)||(this.global.me.id==this.currentTeam.leaderId))"
+          >移出团队</el-button>
+          <!-- 当前文档所在团队名，点击可移动文档至团队 -->
         </div>
-
-        <div></div>
-        <div></div>
-
-        <el-popover
-          placement="right"
-          trigger="click"
-          v-if="this.global.me.id==this.document.creatorId"
-        >
-          <div class="popup-wrapper">
-            <team-list
-              :teamList="this.teamList"
-              :document="this.document"
-              :isMycreated="false"
-              :isMoveDoc="true"
-              :userId="this.global.me.id"
-              @get-teamlist="loadTeamlist"
-            ></team-list>
-          </div>
-          <el-button slot="reference" type="warning">{{this.teamName}}</el-button>
-        </el-popover>
-        <el-button
-          @click="deletefromteam(document)"
-          type="danger"
-          v-if="(this.document.teamId!=null)&&((this.global.me.id==this.document.creatorId)||(this.global.me.id==this.currentTeam.leaderId))"
-        >移出团队</el-button>
-        <!-- 当前文档所在团队名，点击可移动文档至团队 -->
         <HR style="margin-top:2.5rem; margin-bottom:2.5rem;" />
 
         <!-- 正文 -->
@@ -552,7 +537,11 @@ export default {
 }
 
 .doc-actions {
-  margin: 8px 0;
+  margin: 14px;
+}
+
+.action-btn {
+  margin: 0 5px;
 }
 
 .creator-link {
@@ -560,7 +549,11 @@ export default {
 }
 
 .info-badge {
-  margin: 0 5px;
+  margin: 10px;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 4px;
+  padding: 5px;
 }
 
 .popup-wrapper {
