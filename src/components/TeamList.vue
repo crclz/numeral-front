@@ -16,12 +16,12 @@
             plain
             v-if="document.teamId!=scope.row.teamId"
           >移入</el-button>
-          <el-button
+          <!-- <el-button
             @click="deletefromteam(document)"
             type="danger"
             plain
             v-if="(document.teamId==scope.row.teamId)&&((userId==document.creatorId)||(userId==scope.row.team.leaderId))"
-          >移出</el-button>
+          >移出</el-button>-->
         </template>
       </el-table-column>
     </el-table>
@@ -53,19 +53,20 @@ export default {
     };
   },
   methods: {
-    deletefromteam(document) {
-      this.teamId = -1;
-      this.documentId = document.id;
-      this.$axios
-        .patch("/api/documents/" + this.documentId, {
-          teamId: this.teamId,
-        })
-        .then((response) => {
-          this.success("成功将文档移除团队");
-          console.log(response.data);
-        })
-        .catch((p) => this.err(p));
-    },
+    // deletefromteam(document) {
+    //   this.teamId = -1;
+    //   this.documentId = document.id;
+    //   this.$axios
+    //     .patch("/api/documents/" + this.documentId, {
+    //       teamId: this.teamId,
+    //     })
+    //     .then((response) => {
+    //       this.success("成功将文档移除团队");
+    //       this.$emit("get-teamlist");
+    //       console.log(response.data);
+    //     })
+    //     .catch((p) => this.err(p));
+    // },
     moveToTeam(document, teamId) {
       this.teamId = teamId;
       this.documentId = document.id;

@@ -52,7 +52,12 @@
           >分享文档</el-button>
         </el-popover>
 
-        <el-popover placement="right" width="400" trigger="click">
+        <el-popover
+          placement="right"
+          width="400"
+          trigger="click"
+          v-if="this.global.me.id==this.document.creatorId"
+        >
           <team-list
             :teamList="this.teamList"
             :document="this.document"
@@ -61,8 +66,13 @@
             :userId="this.global.me.id"
             @get-teamlist="loadTeamlist"
           ></team-list>
-          <el-button slot="reference" type="warning">{{this.currentTeam}}</el-button>
+          <el-button slot="reference" type="warning">{{this.teamName}}</el-button>
         </el-popover>
+        <el-button
+          @click="deletefromteam(document)"
+          type="danger"
+          v-if="(this.document.teamId!=null)&&((this.global.me.id==this.document.creatorId)||(this.global.me.id==this.currentTeam.leaderId))"
+        >移出团队</el-button>
         <!-- 当前文档所在团队名，点击可移动文档至团队 -->
         <HR style="margin-top:2.5rem; margin-bottom:2.5rem;" />
 
@@ -220,14 +230,15 @@ export default {
           this.$axios
             .get("/api/teams/" + this.document.teamId)
             .then((response) => {
-              this.currentTeam = response.data.name;
+              this.currentTeam = response.data;
+              this.teamName = response.data.name;
             })
             .catch((error) => {
               console.log(error);
               this.err(error);
             });
         } else {
-          this.currentTeam = "暂无团队";
+          this.teamName = "暂无团队";
         }
       })
       .catch((error) => {
@@ -241,6 +252,7 @@ export default {
   data() {
     return {
       currentTeam: "",
+      teamName: "",
       documentId: null,
       document: "",
       teamList: [],
@@ -294,20 +306,35 @@ export default {
             this.$axios
               .get("/api/teams/" + this.document.teamId)
               .then((response) => {
-                this.currentTeam = response.data.name;
+                this.currentTeam = response.data;
+                this.teamName = response.data.name;
               })
               .catch((error) => {
                 console.log(error);
                 this.err(error);
               });
           } else {
-            this.currentTeam = "暂无团队";
+            this.teamName = "暂无团队";
           }
         })
         .catch((error) => {
           console.log(error);
           this.err(error);
         });
+    },
+    deletefromteam(document) {
+      this.teamId = -1;
+      this.documentId = document.id;
+      this.$axios
+        .patch("/api/documents/" + this.documentId, {
+          teamId: this.teamId,
+        })
+        .then((response) => {
+          this.success("成功将文档移除团队");
+          console.log(response.data);
+          this.loadTeamlist();
+        })
+        .catch((p) => this.err(p));
     },
     checkFavorite() {
       axios
