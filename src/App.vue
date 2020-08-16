@@ -15,9 +15,24 @@
               <el-menu-item index="/createTeam">创建新的团队</el-menu-item>
 
               <div style="flex-grow: 1;"></div>
+              <div id="message-bell" @click="displayMessagePanel = !displayMessagePanel">
+                  <el-popover
+                          placement="bottom-end"
+                          width="400"
+                          trigger="click"
+                          v-model="displayMessagePanel">
+                    <el-badge slot="reference" :value="hintCnt" class="hint" :hidden="!hintCnt">
+                      <i class="el-icon-bell"></i>
+                    </el-badge>
+                    <MessagePanel ref="thisPanel" @messageCntChange="hintChange" style="height: 400px"></MessagePanel>
+                  </el-popover>
+              </div>
               <el-menu-item @click="logout">登出</el-menu-item>
               <el-menu-item :index="'/getUser/'+this.global.me.id">{{this.global.me.username}}</el-menu-item>
-              <el-avatar :size="40" :src="this.global.me.avatarUrl"></el-avatar>
+              <div >
+                <el-avatar :size="40" :src="this.global.me.avatarUrl"></el-avatar>
+              </div>
+
             </div>
           </el-menu>
         </div>
@@ -56,16 +71,20 @@
 <script>
 //import Vue from 'vue';
 // import Header from "./components/Header";
+import MessagePanel from "./components/MessagePanel";
 
 export default {
   components: {
     // Header,
+    MessagePanel,
   },
   data() {
     return {
       meReturned: false,
       activeIndex: "1",
       displayOldNav: false,
+      displayMessagePanel: false,
+      hintCnt: 0,
     };
   },
   created() {
@@ -73,6 +92,8 @@ export default {
       this.meReturned = true;
       this.global.me = res.data;
     });
+  },
+  mounted() {
   },
   methods: {
     handleSelect(key, keyPath) {
@@ -88,6 +109,9 @@ export default {
           this.$router.go(0);
         })
         .catch((p) => this.err(p));
+    },
+    hintChange(newCnt) {
+      this.hintCnt = newCnt;
     },
   },
   computed: {
@@ -127,6 +151,10 @@ export default {
   text-align: center;
   margin: 80px 0 12px;
 }
+
+  #message-bell{
+    margin: 10px 10px 10px 10px;
+  }
 </style>
 
 // 全局样式
@@ -144,9 +172,19 @@ export default {
   margin: 0 auto;
 }
 
-.flex-center{
+.fc-center {
+  margin: 0 auto;
+  width: fit-content;
+}
+
+.flex-center {
   display: flex;
   flex-direction: row;
   justify-content: center;
+}
+
+.hint {
+  margin-top: 10px;
+  margin-right: 40px;
 }
 </style>

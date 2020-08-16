@@ -1,35 +1,38 @@
 <template>
-  <div v-if="ret">
-    <h1>团队管理</h1>
+  <div v-if="ret" class="center-wrapper">
+    <h1 class="text-center">团队管理</h1>
 
-    <hr style="width: 680px; margin-top:2.5rem; margin-buttom: 2.5rem;" />
+    <div class="fc-center">
+      <el-link @click="jmp('/team/'+team.id)" type="primary">
+        <h2>{{team.name}} 团队主页</h2>
+      </el-link>
+    </div>
 
-    <el-link @click="jmp('/team/'+team.id)" type="primary">
-      <h2>{{team.name}}</h2>
-    </el-link>
+    <div class="fc-center">
+      <el-link type="primary" @click="jmp('/manageApplications/' + teamId)">处理团队申请</el-link>
+    </div>
 
-    <h3>团队信息：{{team.description}}</h3>
-
-    <hr style="width: 680px; margin-top:2.5rem; margin-bottom: 2.5rem; " />
+    <div class="fc-center destroy-team">
+      <el-popconfirm
+        title="您确定要解散团队吗？"
+        icon="el-icon-warning"
+        icon-color="red"
+        @onConfirm="dismissTeam"
+      >
+        <el-button type="danger" slot="reference">解散团队</el-button>
+      </el-popconfirm>
+    </div>
 
     <div v-if="!isCreator">
       <div>警告：你不是团队的创建人</div>
     </div>
 
     <div v-else>
-      <el-link type="primary" @click="jmp('/manageApplications/' + teamId)">处理团队申请</el-link>
-      <el-popconfirm
-              title="您确定要解散团队吗？" icon="el-icon-warning" icon-color="red" @onConfirm="dismissTeam"
-      >
-        <el-button type="danger" slot="reference">解散团队</el-button>
-      </el-popconfirm>
-
-
       <hr style="width: 680px; margin-top:2.5rem; margin-bottom: 2.5rem; " />
 
       <div>
         <h2>团队成员</h2>
-        <team-members :showKick="true" :teamId="teamId"></team-members>
+        <team-members :team="team" :showKick="true" :teamId="teamId"></team-members>
       </div>
     </div>
   </div>
@@ -153,4 +156,8 @@ export default {
 </script>
 
 <style scoped>
+.destroy-team {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
 </style>

@@ -5,18 +5,22 @@
    团队文档列表功能 被安排到 “团队文档列表页”
   -->
 
+  <div v-if="ret" class="center-wrapper">
+    <h1 class="text-center">团队：{{team.name}}</h1>
 
-  <div v-if="ret">
-    <h1>团队名：{{team.name}}</h1>
-    <h2>团队信息：{{team.description}}</h2>
+    <!-- 分享团队 -->
+    <div class="flex-center">
+      <el-popover placement="bottom" width="400" trigger="click">
+        <share :share-url="shareUrl"></share>
+        <el-button slot="reference" type="success" :disabled="!isMember">分享团队</el-button>
+      </el-popover>
+    </div>
 
-    <hr style="width: 680px; margin-top:2.5rem; margin-bottom: 2.5rem; " />
+    <h3>简介：{{team.description}}</h3>
 
     <div v-if="isMember">
       <div v-if="isCreator">
-        <h2>
-          <el-link @click="jmp('/team-manage/'+team.id)" type="primary">团队管理页</el-link>
-        </h2>
+        <el-link @click="jmp('/team-manage/'+team.id)" type="primary">团队管理页</el-link>
       </div>
       <div v-if="!isCreator">
         <el-button type="danger" @click="quitTeam">退出团队</el-button>
@@ -26,23 +30,11 @@
       <el-button type="primary" @click="applyForTeam" plain>申请加入</el-button>
     </div>
 
-    <hr style="width: 680px; margin-top:2.5rem; margin-bottom: 2.5rem; " />
-
-    <el-popover
-            placement="bottom"
-            width="400"
-            trigger="click">
-      <share :share-url="shareUrl"></share>
-      <el-button slot="reference" type="success" :disabled="!isMember">分享团队</el-button>
-    </el-popover>
-
     <el-link @click="jmp('/team-files/'+teamId)" type="primary">团队文档列表</el-link>
-
-    <hr style="width: 680px; margin-top:2.5rem; margin-bottom: 2.5rem; " />
 
     <div>
       <h3>团队成员列表</h3>
-      <team-members :teamId="teamId"></team-members>
+      <team-members :team="team" :teamId="teamId"></team-members>
     </div>
   </div>
 </template>
@@ -58,7 +50,7 @@ export default {
 
   components: {
     TeamMembers,
-      Share
+    Share,
   },
   created() {
     this.teamId = this.$route.params.id;
@@ -144,9 +136,9 @@ export default {
         .then((response) => {
           console.log(response);
           this.success("退出成功");
-            setTimeout(() => {
-                this.$router.go(0);
-            }, 500);
+          setTimeout(() => {
+            this.$router.go(0);
+          }, 500);
         })
         .catch((error) => {
           console.log(error);
@@ -166,12 +158,12 @@ export default {
           this.err(error);
         });
     },
-      copyOnSuccess(){
-          this.$message.success("复制成功");
-      },
-      copyOnError(){
-          this.$message.error("复制失败");
-      }
+    copyOnSuccess() {
+      this.$message.success("复制成功");
+    },
+    copyOnError() {
+      this.$message.error("复制失败");
+    },
   },
 };
 </script>

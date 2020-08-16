@@ -7,6 +7,7 @@
     <div v-else>
       <div v-if="!haveLock">该文件正在被{{this.lockOwner.username}}编辑，您暂时无法编辑该文档。</div>
       <div v-if="haveLock">
+<<<<<<< HEAD
         <h1>修改文件</h1>
         <h2
           style="color:red;"
@@ -32,6 +33,38 @@
         <h4>文档内容</h4>
         <editor ref="thisEditor" :initial-content="defaultData"></editor>
         <el-button type="success" @click="onSubmit">保存文件</el-button>
+=======
+        <div class="center-wrapper">
+          <h1 class="text-center">修改文件</h1>
+          <h2
+            style="color:red;"
+            v-if="this.currentFile.isAbandoned"
+          >本文档在回收站中 This document is currently abandoned.</h2>
+
+          <el-form
+            :model="currentFile"
+            :rules="rules"
+            ref="ruleForm"
+            label-width="100px"
+            label-position="top"
+          >
+            <el-form-item label="标题" prop="title">
+              <el-input v-model="currentFile.title" placeholder="请输入标题"></el-input>
+            </el-form-item>
+            <el-form-item label="文档基础信息" prop="description">
+              <el-input v-model="currentFile.description" placeholder="请输入对该文档的描述"></el-input>
+            </el-form-item>
+          </el-form>
+
+          <div id="editor-area">
+            <editor ref="thisEditor" :initial-content="defaultData"></editor>
+          </div>
+
+          <div id="submit-wrapper">
+            <el-button type="success" @click="onSubmit">保存文件</el-button>
+          </div>
+        </div>
+>>>>>>> main/master
       </div>
     </div>
   </div>
@@ -172,4 +205,11 @@ export default {
 </script>
 
 <style scoped>
+#editor-area {
+  margin: 50px 0;
+}
+
+#submit-wrapper {
+  text-align: center;
+}
 </style>

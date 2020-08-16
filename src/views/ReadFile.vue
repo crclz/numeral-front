@@ -27,10 +27,6 @@
               @click="jmp('/getUser/'+creator.id)"
             >{{creator.username}}</el-link>
           </div>
-
-          <el-popover placement="bottom" width="400" trigger="click">
-            <share :share-url="shareUrl"></share>
-          </el-popover>
         </div>
 
         <div v-if="currentFile" class="doc-info">
@@ -50,11 +46,15 @@
           <!-- 收藏按钮 -->
           <el-button type="warning" :icon="favorite.favoriteIcon" @click="favoriteFile" circle></el-button>
 
-          <el-button
-            slot="reference"
-            type="success"
-            :disabled="!userPermissions.document.canShare"
-          >分享文档</el-button>
+          <el-popover placement="bottom" width="400" trigger="click">
+            <share :share-url="shareUrl"></share>
+            <el-button
+              class="action-btn"
+              slot="reference"
+              type="success"
+              :disabled="!userPermissions.document.canShare"
+            >分享文档</el-button>
+          </el-popover>
 
           <el-button type="primary" @click="jmp('/createFile/'+documentId)">基于此模板</el-button>
           <el-button type="primary" @click="jmp('/docmange/'+documentId)">管理</el-button>
@@ -282,7 +282,7 @@ export default {
         icons: ["el-icon-star-off", "el-icon-star-on"], // 未收藏 | 已收藏
       },
       currentFile: {},
-      comments: [{}],
+      comments: [],
       shareUrl: "",
       ret: false,
       dirty: {
