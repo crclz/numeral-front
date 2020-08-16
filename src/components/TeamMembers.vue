@@ -37,7 +37,7 @@
 
 <script>
 export default {
-  name: "MyFiles",
+  name: "TeamMembers",
   props: ["teamId", "showKick"],
   mounted() {
     this.$axios
@@ -66,17 +66,16 @@ export default {
         .then((res) => {
           console.log(res);
           this.success("踢出成功！");
-            this.$axios
-                .get("/api/memberships", {
-                    params: { teamId: this.teamId },
-                })
-                .then((response) => {
-                    this.memberships = response.data;
-                    console.log(this.memberships);
-                })
-                .catch((p) => this.err(p));
-            this.refreshKey = this.refreshKey + 1;
-
+          this.$axios
+            .get("/api/memberships", {
+              params: { teamId: this.teamId },
+            })
+            .then((response) => {
+              this.memberships = response.data;
+              console.log(this.memberships);
+            })
+            .catch((p) => this.err(p));
+          this.refreshKey = this.refreshKey + 1;
         })
         .catch((p) => this.err(p));
     },

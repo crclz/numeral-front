@@ -29,13 +29,13 @@ export default {
   data() {
     return {
       teamList: [],
-      teamId: null,
+      teamId: -1,
       documentId: null,
     };
   },
   methods: {
     deletefromteam: function () {
-      this.teamId = 0;
+      this.teamId = -1;
       this.$axios
         .patch("/api/documents/" + this.documentId, {
           teamId: this.teamId,

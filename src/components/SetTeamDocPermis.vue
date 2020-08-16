@@ -52,6 +52,7 @@
 
 <script>
 export default {
+  name: "SetTeamDocPermis",
   created() {
     this.documentId = this.$route.params.id;
     this.$axios
