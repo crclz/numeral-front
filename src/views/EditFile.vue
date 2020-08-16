@@ -26,6 +26,8 @@
             <el-input v-model="currentFile.description" placeholder="请输入对该文档的描述"></el-input>
           </el-form-item>
         </el-form>
+        <!-- 在此设置文档权限 -->
+
         <div>文档内容</div>
         <editor ref="thisEditor" :initial-content="defaultData"></editor>
         <el-button type="success" @click="onSubmit">保存文件</el-button>
