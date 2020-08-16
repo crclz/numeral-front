@@ -78,18 +78,19 @@
 
         <el-popover
           placement="right"
-          width="400"
           trigger="click"
           v-if="this.global.me.id==this.document.creatorId"
         >
-          <team-list
-            :teamList="this.teamList"
-            :document="this.document"
-            :isMycreated="false"
-            :isMoveDoc="true"
-            :userId="this.global.me.id"
-            @get-teamlist="loadTeamlist"
-          ></team-list>
+          <div class="popup-wrapper">
+            <team-list
+              :teamList="this.teamList"
+              :document="this.document"
+              :isMycreated="false"
+              :isMoveDoc="true"
+              :userId="this.global.me.id"
+              @get-teamlist="loadTeamlist"
+            ></team-list>
+          </div>
           <el-button slot="reference" type="warning">{{this.teamName}}</el-button>
         </el-popover>
         <el-button
@@ -560,5 +561,10 @@ export default {
 
 .info-badge {
   margin: 0 5px;
+}
+
+.popup-wrapper {
+  height: 300px;
+  overflow-y: auto;
 }
 </style>
