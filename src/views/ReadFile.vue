@@ -336,6 +336,7 @@ export default {
   border-radius: 30px;
   border-color: #dcdfe6;
   padding: 30px 80px;
+  word-break: break-word;
 }
 
 #comment-big-box {
