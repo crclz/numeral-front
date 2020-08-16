@@ -11,6 +11,7 @@ import ReadFile from "../views/ReadFile";
 // import CreateFromTemplate from "../views/CreateFromTemplate";
 import FavoriteFiles from "../views/FavoriteFiles";
 import RecycleFiles from "../views/RecycleFiles";
+import RecentFiles from "../views/RecentFiles";
 import CreateTeam from "../views/CreateTeam";
 import MyTeams from "../views/MyTeams";
 import SetDocPermission from "../components/SetDocPermission";
@@ -25,8 +26,7 @@ import DocMange from "../views/DocMange";
 import MyCreatedTeams from "../views/MyCreatedTeams";
 Vue.use(VueRouter)
 
-const routes = [
-    {
+const routes = [{
         path: '/',
         redirect: { path: '/workspace' }
     },
@@ -50,13 +50,18 @@ const routes = [
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () =>
-            import( /* webpackChunkName: "about" */ '../views/About.vue')
+            import ( /* webpackChunkName: "about" */ '../views/About.vue')
     },
 
     {
         path: '/login',
         name: 'Login',
         component: Login
+    },
+    {
+        path: '/recentfiles',
+        name: 'RecentFiles',
+        component: RecentFiles
     },
     {
         path: '/register',
@@ -167,13 +172,13 @@ const routes = [
         path: '/team-manage/:id',
         name: 'TeamManage',
         component: () =>
-            import('../views/TeamManage.vue')
+            import ('../views/TeamManage.vue')
     },
     {
         path: '/team-files/:id',
         name: 'TeamFiles',
         component: () =>
-            import('../components/TeamFiles.vue')
+            import ('../components/TeamFiles.vue')
     }
 ]
 
