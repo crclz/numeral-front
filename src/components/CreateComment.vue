@@ -18,7 +18,7 @@ export default {
     Editor,
   },
   model: {
-      event: 'submit-comment',
+    event: "submit-comment",
   },
   created() {},
   data() {
@@ -27,6 +27,12 @@ export default {
   methods: {
     onSubmit() {
       var content = this.$refs.thisEditor.getEditorContent();
+
+      const maxlen = 1024;
+      if (content.length > maxlen) {
+        this.errmsg(`当前富文本量为${content.length}, 超出了限制（${maxlen}）`);
+        return;
+      }
 
       axios
         .post("/api/comments/", {
@@ -41,11 +47,11 @@ export default {
           // setTimeout(() => {
           //   this.$router.go(0);
           // }, 500);
-            this.$emit('submit-comment');
+          this.$emit("submit-comment");
         })
         .catch((error) => {
           console.log(error);
-            this.err(error);
+          this.err(error);
         });
     },
   },

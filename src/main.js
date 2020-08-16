@@ -8,7 +8,7 @@ import moment from 'moment'
 import VueClipboard from 'vue-clipboard2';
 
 
-Vue.filter('moment', function(value, formatString) {
+Vue.filter('moment', function (value, formatString) {
     formatString = formatString || 'YYYY-MM-DD HH:mm:ss';
     // return moment(value).format(formatString); // value可以是普通日期 20170723
     return moment.unix(value / 1000).format(formatString); // 这是时间戳转时间
@@ -33,6 +33,12 @@ Vue.mixin({
         err(errObj) {
             this.$message({
                 message: errObj.response.data.message,
+                type: "error",
+            });
+        },
+        errmsg(msg) {
+            this.$message({
+                message: msg,
                 type: "error",
             });
         },
