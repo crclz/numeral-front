@@ -37,6 +37,7 @@ const routes = [{
         component: Home,
         children: [
             { path: '', redirect: { path: 'myfiles' } },
+            { path: 'recentfiles', component: RecentFiles },
             { path: 'myfiles', component: MyFiles },
             { path: 'favorite', component: FavoriteFiles },
             { path: 'my-teams', component: MyTeams },
