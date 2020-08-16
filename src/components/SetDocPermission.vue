@@ -39,6 +39,7 @@
           </td>
         </tr>
       </div>
+      <!-- 上面只有在isCreator==true时显示 -->
       <div class="permisTeam">
         <!-- 团队的权限设置 -->
         <tr>
@@ -76,7 +77,7 @@
         <td>
           <!-- 按钮区域 -->
           <el-form-item class="btns">
-            <el-button type="primary" @click="submit()">保存</el-button>
+            <el-button type="primary" @click="submit()" v-if="this.isEditFile == null">保存</el-button>
             <!-- <el-button type="info" @click="resetcurrentFile">重置</el-button> -->
           </el-form-item>
         </td>
@@ -88,6 +89,7 @@
 <script>
 export default {
   name: "SetDocPermission",
+  props: ["document", "isEditFile"],
   created() {
     this.documentId = this.$route.params.id;
     // 获取原本的权限
@@ -139,7 +141,9 @@ export default {
           .then((response) => {
             this.success("权限修改成功");
             console.log(response.data);
-            this.$router.go(-1);
+            if (this.isEditFile == null) {
+              this.$router.go(-1);
+            }
           })
           .catch((p) => this.err(p));
       } else {
@@ -152,7 +156,9 @@ export default {
           .then((response) => {
             this.success("权限修改成功");
             console.log(response.data);
-            this.$router.go(-1);
+            if (this.isEditFile == null) {
+              this.$router.go(-1);
+            }
           })
           .catch((p) => this.err(p));
       }

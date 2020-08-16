@@ -28,6 +28,8 @@
               <el-input v-model="currentFile.description" placeholder="请输入对该文档的描述"></el-input>
             </el-form-item>
           </el-form>
+          <!-- 在此设置文档权限 -->
+          <set-doc-permission ref="setPermission" :isEditFile="true"></set-doc-permission>
 
           <div id="editor-area">
             <editor ref="thisEditor" :initial-content="defaultData"></editor>
@@ -44,10 +46,11 @@
 
 <script>
 import Editor from "../components/Editor";
+import SetDocPermission from "@/components/SetDocPermission.vue";
 import axios from "axios";
 export default {
   name: "EditFile",
-  components: { Editor },
+  components: { Editor, SetDocPermission },
   created() {
     this.documentId = this.$route.params.id;
 
@@ -160,6 +163,7 @@ export default {
         .then((response) => {
           console.log(response);
           this.success("保存成功");
+          this.$refs.setPermission.submit();
           this.$router.push({ path: "/readFile/" + this.documentId });
         })
         .catch((error) => {
