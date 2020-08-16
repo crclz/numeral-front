@@ -27,7 +27,8 @@ import MyCreatedTeams from "../views/MyCreatedTeams";
 
 Vue.use(VueRouter)
 
-const routes = [{
+const routes = [
+    {
         path: '/',
         redirect: { path: '/workspace' }
     },
@@ -42,7 +43,7 @@ const routes = [{
             { path: 'favorite', component: FavoriteFiles },
             { path: 'my-teams', component: MyTeams },
             { path: 'trash', component: RecycleFiles },
-            { path: 'my-created-teams', component: MyCreatedTeams }
+            { path: 'my-created-teams', component: MyCreatedTeams },
         ]
     },
     {
@@ -52,7 +53,7 @@ const routes = [{
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () =>
-            import ( /* webpackChunkName: "about" */ '../views/About.vue')
+            import( /* webpackChunkName: "about" */ '../views/About.vue')
     },
 
     {
@@ -174,13 +175,13 @@ const routes = [{
         path: '/team-manage/:id',
         name: 'TeamManage',
         component: () =>
-            import ('../views/TeamManage.vue')
+            import('../views/TeamManage.vue')
     },
     {
         path: '/team-files/:id',
         name: 'TeamFiles',
         component: () =>
-            import ('../components/TeamFiles.vue')
+            import('../components/TeamFiles.vue')
     }
 ]
 
