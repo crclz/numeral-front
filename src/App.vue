@@ -144,7 +144,12 @@ export default {
   margin: 0 auto;
 }
 
-.flex-center{
+.fc-center {
+  margin: 0 auto;
+  width: fit-content;
+}
+
+.flex-center {
   display: flex;
   flex-direction: row;
   justify-content: center;
