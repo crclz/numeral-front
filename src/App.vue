@@ -15,24 +15,24 @@
               <el-menu-item index="/createTeam">创建新的团队</el-menu-item>
 
               <div style="flex-grow: 1;"></div>
-              <div id="message-bell" @click="displayMessagePanel = !displayMessagePanel">
-                  <el-popover
-                          placement="bottom-end"
-                          width="400"
-                          trigger="click"
-                          v-model="displayMessagePanel">
-                    <el-badge slot="reference" :value="hintCnt" class="hint" :hidden="!hintCnt">
-                      <i class="el-icon-bell"></i>
-                    </el-badge>
-                    <MessagePanel ref="thisPanel" @messageCntChange="hintChange" style="height: 400px"></MessagePanel>
-                  </el-popover>
+              <div id="message-bell">
+                <el-popover placement="bottom-end" width="400" trigger="click">
+                  <el-badge slot="reference" :value="hintCnt" class="hint" :hidden="!hintCnt">
+                    <!-- <i class="el-icon-bell"></i> -->
+                    <el-button type="info" size="mini" icon="el-icon-bell" circle></el-button>
+                  </el-badge>
+                  <MessagePanel
+                    ref="thisPanel"
+                    @messageCntChange="hintChange"
+                    style="height: 400px"
+                  ></MessagePanel>
+                </el-popover>
               </div>
               <el-menu-item @click="logout">登出</el-menu-item>
               <el-menu-item :index="'/getUser/'+this.global.me.id">{{this.global.me.username}}</el-menu-item>
-              <div >
+              <div>
                 <el-avatar :size="40" :src="this.global.me.avatarUrl"></el-avatar>
               </div>
-
             </div>
           </el-menu>
         </div>
@@ -93,8 +93,7 @@ export default {
       this.global.me = res.data;
     });
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
@@ -152,9 +151,9 @@ export default {
   margin: 80px 0 12px;
 }
 
-  #message-bell{
-    margin: 10px 10px 10px 10px;
-  }
+#message-bell {
+  margin: 10px 10px 10px 10px;
+}
 </style>
 
 // 全局样式
