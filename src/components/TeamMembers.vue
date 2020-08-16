@@ -4,29 +4,25 @@
       <el-col :span="6" v-for="item in memberships" :key="item.id">
         <div class="grid-content bg-purple">
           <el-card class="box-card">
-            <!-- 这里显示头像-->
-            <div class="avatar_box">
-              <span @click="openUser(item.user.id)" width="100%">
-                <img :src="item.user.avatarUrl" style="width: 50px; height: 50px;" alt="avatar" />
-              </span>
+            <div class="person-info">
+              <!-- 这里显示头像-->
+              <div class="avatar_box">
+                <span @click="openUser(item.user.id)" width="100%">
+                  <img :src="item.user.avatarUrl" style="width: 50px; height: 50px;" alt="avatar" />
+                </span>
+              </div>
+              <!-- 这里显示用户名-->
+              <div
+                class="username"
+                :class="{ 'leader-username': team.leaderId==item.user.id }"
+              >{{item.user.username}}</div>
             </div>
-            <!-- 这里显示用户名-->
-            <div class="clearfix">
-              <span>
-                <tr>
-                  <td>用户名：</td>
-                  <td>{{item.user.username}}</td>
-                </tr>
-                <tr>
-                  <td>简介：</td>
-                  <td>{{item.user.description}}</td>
-                </tr>
-                <tr v-if="showKick">
-                  <td>
-                    <el-button type="primary" @click="removeMembership(item.id)">踢出团队</el-button>
-                  </td>
-                </tr>
-              </span>
+            <div class="actions">
+              <tr v-if="showKick && team.leaderId!=item.user.id">
+                <td>
+                  <el-button type="primary" @click="removeMembership(item.id)">踢出团队</el-button>
+                </td>
+              </tr>
             </div>
           </el-card>
         </div>
@@ -38,7 +34,7 @@
 <script>
 export default {
   name: "TeamMembers",
-  props: ["teamId", "showKick"],
+  props: ["teamId", "showKick", "team"],
   mounted() {
     this.$axios
       .get("/api/memberships", {
@@ -109,5 +105,18 @@ export default {
 .row-bg {
   padding: 10px 0;
   background-color: #f9fafc;
+}
+
+.person-info {
+  display: flex;
+  align-items: center;
+}
+
+.username{
+  margin: 0 8px;
+}
+
+.leader-username {
+  color: gold;
 }
 </style>
