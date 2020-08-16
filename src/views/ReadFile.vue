@@ -16,41 +16,65 @@
         >请注意，{{this.dirty.lastModifierName}}已于{{this.dirty.updatedAt | moment}}提交了该文档的最新版本，刷新页面以获得最新版本内容。</div>
 
         <div class="text-center">
-          <h1>{{currentFile.title}}</h1>
+          <div class="title-and-creator">
+            <h1 class="doc-title">{{currentFile.title}}</h1>
+
+            <span>by</span>
+            <!-- <el-avatar class="creator-avatar" v-if="creator" :size="45" :src="creator.avatarUrl"></el-avatar> -->
+            <el-link
+              class="creator-link"
+              v-if="creator"
+              @click="jmp('/getUser/'+creator.id)"
+            >{{creator.username}}</el-link>
+          </div>
+
+          <el-popover placement="bottom" width="400" trigger="click">
+            <share :share-url="shareUrl"></share>
+          </el-popover>
         </div>
 
-        <HR style="margin-top:2.5rem; margin-bottom:2.5rem;" />
+        <div v-if="currentFile" class="doc-info">
+          <img
+            class="info-badge"
+            :src="`https://badgen.net/badge/创建时间/${moment(currentFile.createdAt)}/cyan`"
+          />
+          <img
+            class="info-badge"
+            :src="`https://badgen.net/badge/上次更新/${moment(currentFile.updatedAt)}/yellow`"
+          />
 
-        <div>创建者：{{currentFile.creatorId}}</div>
-        <div>团队ID：{{currentFile.teamId}}</div>
-        <div>创建时间：{{currentFile.createdAt | moment}}</div>
-        <div>编辑次数：{{currentFile.modifyCount}}</div>
-        <div>上次更新时间：{{currentFile.updatedAt | moment}}</div>
-        <div>上次更新者：{{currentFile.lastModifierId}}</div>
-        <div>文件描述：{{currentFile.description}}</div>
-
-        <HR style="margin-top:2.5rem; margin-bottom:2.5rem;" />
-
-        <el-button type="warning" :icon="favorite.favoriteIcon" @click="favoriteFile" circle></el-button>
-
-        <div>
-          <el-link @click="jmp('/editFile/'+documentId)" type="primary">编辑文档</el-link>
-        </div>
-        <div>
-          <el-link @click="jmp('/createFile/'+documentId)" type="primary">基于此模板</el-link>
-        </div>
-        <div>
-          <el-link @click="jmp('/docmange/'+documentId)" type="primary">管理</el-link>
+          <img
+            class="info-badge"
+            :src="`https://badgen.net/badge/编辑次数/${currentFile.modifyCount}/red`"
+          />
+          <!-- 创建时间：{{currentFile.createdAt | moment}} |
+          编辑次数：{{currentFile.modifyCount}} |
+          上次更新时间：{{currentFile.updatedAt | moment}} |-->
         </div>
 
-        <el-popover placement="bottom" width="400" trigger="click">
-          <share :share-url="shareUrl"></share>
+        <div class="doc-actions">
+          <!-- 编辑按钮 -->
+          <el-button
+            @click="jmp('/editFile/'+documentId)"
+            type="primary"
+            icon="el-icon-edit"
+            circle
+          ></el-button>
+          <!-- 收藏按钮 -->
+          <el-button type="warning" :icon="favorite.favoriteIcon" @click="favoriteFile" circle></el-button>
+
           <el-button
             slot="reference"
             type="success"
             :disabled="!userPermissions.document.canShare"
           >分享文档</el-button>
-        </el-popover>
+
+          <el-button @click="jmp('/createFile/'+documentId)" type="primary">基于此模板</el-button>
+          <el-button @click="jmp('/docmange/'+documentId)" type="primary">管理</el-button>
+        </div>
+
+        <div></div>
+        <div></div>
 
         <HR style="margin-top:2.5rem; margin-bottom:2.5rem;" />
 
@@ -68,13 +92,15 @@
             <div :key="refreshCommentKey">
               <div v-for="item in comments" :key="item.id">
                 <div class="comment-each">
-                  <div class="comment-user-info">
+                  <div class="comment-avatar">
                     <el-avatar :size="45" :src="item.user.avatarUrl"></el-avatar>
-                    <div class="comment-username">{{item.user.username}}</div>
                   </div>
+                  <div class="comment-username-and-content">
+                    <div class="comment-username">{{item.user.username}}</div>
 
-                  <div class="comment-content">
-                    <div class="grid-content" v-html="item.content"></div>
+                    <div class="comment-content">
+                      <div class="grid-content" v-html="item.content"></div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -136,6 +162,13 @@ export default {
             .then((response) => {
               console.log(response);
               this.currentFile = response.data;
+
+              axios
+                .get("/api/users/" + this.currentFile.creatorId)
+                .then((res) => {
+                  this.creator = res.data;
+                })
+                .catch((p) => this.err(p));
             })
             .catch(function (error) {
               console.log(error);
@@ -224,6 +257,7 @@ export default {
         },
       },
       refreshCommentKey: 0,
+      creator: null,
     };
   },
   methods: {
@@ -338,6 +372,7 @@ export default {
   padding: 30px 80px;
   word-break: break-word;
   min-height: 450px;
+  background-color: whitesmoke;
 }
 
 #comment-big-box {
@@ -352,27 +387,28 @@ export default {
   padding: 15px 15px;
 }
 
-.comment-user-info {
+/* .comment-user-info {
   display: flex;
   align-items: center;
   background-color: lightblue;
   width: fit-content;
   padding: 8px 25px;
   border-radius: 4px;
-}
+} */
 
 .comment-username {
   margin-left: 15px;
 }
 
 .comment-content {
-  background-color: lightgrey;
+  background-color: whitesmoke;
   padding: 8px 25px;
   margin-top: 10px;
   border-radius: 6px;
   width: fit-content;
   min-width: 160px;
   margin-left: 15px;
+  word-break: break-word;
 }
 
 .comment-each {
@@ -380,5 +416,37 @@ export default {
   border-bottom-width: 2px;
   border-bottom-color: #dcdfe6;
   padding: 20px 0;
+  display: flex;
+}
+
+.comment-username-and-content {
+  /* flex-shrink: 1; */
+}
+
+.title-and-creator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.doc-title {
+  margin-right: 30px;
+}
+
+.creator-avatar {
+  margin-right: 8px;
+  margin-left: 8px;
+}
+
+.doc-actions {
+  margin: 8px 0;
+}
+
+.creator-link {
+  margin-left: 5px;
+}
+
+.info-badge {
+  margin: 0 5px;
 }
 </style>
