@@ -51,6 +51,10 @@ Vue.mixin({
                 this.global.me = res.data;
             });
             this.$router.go(0);
+        },
+        moment(t){
+            var formatString = 'YYYY-MM-DD HH:mm:ss';
+            return moment.unix(t / 1000).format(formatString); // 这是时间戳转时间
         }
     }
 })
