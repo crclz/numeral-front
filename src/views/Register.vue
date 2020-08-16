@@ -39,7 +39,7 @@
 
 <script>
 export default {
-  name: "register",
+  name: "Register",
   data() {
     var checkDescpt = (rule, value, callback) => {
       if (value.length > 32) {

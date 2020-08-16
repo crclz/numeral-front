@@ -7,7 +7,8 @@
       label-width="100px"
       class="SetDucPermission_form"
     >
-      <div class="permisEveryone" v-if="isCreator"> <!-- 所有人的权限设置 -->
+      <div class="permisEveryone" v-if="isCreator">
+        <!-- 所有人的权限设置 -->
         <tr>
           <td>所有人是否可分享：</td>
           <td>
@@ -38,7 +39,8 @@
           </td>
         </tr>
       </div>
-      <div class="permisTeam"><!-- 团队的权限设置 -->
+      <div class="permisTeam">
+        <!-- 团队的权限设置 -->
         <tr>
           <td>团队人员是否可分享：</td>
           <td>
@@ -85,6 +87,7 @@
 
 <script>
 export default {
+  name: "SetDocPermission",
   created() {
     this.documentId = this.$route.params.id;
     // 获取原本的权限
@@ -95,15 +98,14 @@ export default {
         this.currentFile = response.data;
 
         // 验证是否为Creator
-        if(this.currentFile.creatorId == this.global.me.id)
-            this.isCreator = true;
+        if (this.currentFile.creatorId == this.global.me.id)
+          this.isCreator = true;
 
         this.ret = true;
       })
       .catch((error) => {
         console.log(error);
       });
-      
   },
   data() {
     return {
@@ -124,36 +126,35 @@ export default {
   methods: {
     // 点击重置按钮，重置登录表单
     submit() {
-      if(this.isCreator){
-          this.$axios
-              .patch("/api/documents/" + this.documentId, {
-                  publicCanShare: this.currentFile.publicCanShare,
-                  publicCommentAccess: this.currentFile.publicCommentAccess,
-                  publicDocumentAccess: this.currentFile.publicDocumentAccess,
-                  teamCanShare: this.currentFile.teamCanShare,
-                  teamCommentAccess: this.currentFile.teamCommentAccess,
-                  teamDocumentAccess: this.currentFile.teamDocumentAccess,
-              })
-              .then((response) => {
-                  this.success("权限修改成功");
-                  console.log(response.data);
-                  this.$router.go(-1);
-              })
-              .catch((p) => this.err(p));
-      }
-      else{
-          this.$axios
-              .patch("/api/documents/" + this.documentId, {
-                  teamCanShare: this.currentFile.teamCanShare,
-                  teamCommentAccess: this.currentFile.teamCommentAccess,
-                  teamDocumentAccess: this.currentFile.teamDocumentAccess,
-              })
-              .then((response) => {
-                  this.success("权限修改成功");
-                  console.log(response.data);
-                  this.$router.go(-1);
-              })
-              .catch((p) => this.err(p));
+      if (this.isCreator) {
+        this.$axios
+          .patch("/api/documents/" + this.documentId, {
+            publicCanShare: this.currentFile.publicCanShare,
+            publicCommentAccess: this.currentFile.publicCommentAccess,
+            publicDocumentAccess: this.currentFile.publicDocumentAccess,
+            teamCanShare: this.currentFile.teamCanShare,
+            teamCommentAccess: this.currentFile.teamCommentAccess,
+            teamDocumentAccess: this.currentFile.teamDocumentAccess,
+          })
+          .then((response) => {
+            this.success("权限修改成功");
+            console.log(response.data);
+            this.$router.go(-1);
+          })
+          .catch((p) => this.err(p));
+      } else {
+        this.$axios
+          .patch("/api/documents/" + this.documentId, {
+            teamCanShare: this.currentFile.teamCanShare,
+            teamCommentAccess: this.currentFile.teamCommentAccess,
+            teamDocumentAccess: this.currentFile.teamDocumentAccess,
+          })
+          .then((response) => {
+            this.success("权限修改成功");
+            console.log(response.data);
+            this.$router.go(-1);
+          })
+          .catch((p) => this.err(p));
       }
     },
   },
