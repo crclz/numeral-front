@@ -337,6 +337,7 @@ export default {
   border-color: #dcdfe6;
   padding: 30px 80px;
   word-break: break-word;
+  min-height: 450px;
 }
 
 #comment-big-box {

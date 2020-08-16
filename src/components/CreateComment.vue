@@ -1,9 +1,9 @@
 <template>
   <div>
-    <h1>撰写评论</h1>
-    <div>评论内容</div>
     <editor ref="thisEditor"></editor>
-    <el-button type="success" @click="onSubmit">提交评论</el-button>
+    <div class="submit-comment-btn">
+      <el-button type="success" @click="onSubmit">提交评论</el-button>
+    </div>
   </div>
 </template>
 
@@ -59,4 +59,8 @@ export default {
 </script>
 
 <style scoped>
+.submit-comment-btn {
+  margin: 30px auto;
+  width: fit-content;
+}
 </style>
