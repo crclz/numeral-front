@@ -22,14 +22,79 @@
     </div>
 
     <div class="comment-row-two">
+      <!-- 点赞按钮 -->
       <el-button
         @click="thumbButtonClick"
         icon="el-icon-thumb"
         :type="comment.myThumb?'success':''"
       >{{comment.thumbCount}}</el-button>
+
+      <el-button @click="showReplyBox=!showReplyBox">回复...</el-button>
     </div>
+
+    <reply-box v-if="showReplyBox && comment" :comment="comment"></reply-box>
   </div>
 </template>
+
+<script>
+import ReplyBox from "./ReplyBox";
+export default {
+  components: {
+    ReplyBox,
+  },
+  name: "CommentCard",
+  props: ["comment"],
+  data() {
+    return {
+      thumbBusy: false,
+      showReplyBox: false,
+    };
+  },
+  methods: {
+    thumbButtonClick() {
+      // TODO: thumbBusy
+      if (this.thumbBusy) {
+        return;
+      }
+
+      this.thumbBusy = true;
+      if (this.comment.myThumb) {
+        // already have my thumb, delete the thumb
+        this.$axios
+          .delete("/api/thumbs/" + this.comment.myThumb.id)
+          .then(() => {
+            this.success("取消点赞成功");
+            this.thumbBusy = false;
+            this.comment.myThumb = null;
+            this.comment.thumbCount--;
+          })
+          .catch((p) => {
+            this.err(p);
+            this.thumbBusy = false;
+          });
+      } else {
+        // add the thumb
+        this.$axios
+          .post("/api/thumbs", {
+            targetId: this.comment.id,
+            targetType: "Comment",
+          })
+          .then((res) => {
+            this.success("点赞成功");
+            this.thumbBusy = false;
+            this.comment.myThumb = { id: res.data.id };
+            this.comment.thumbCount++;
+          })
+          .catch((p) => {
+            this.err(p);
+            this.thumbBusy = false;
+          });
+      }
+    },
+  },
+};
+</script>
+
 
 <style scoped>
 .comment-wrapper {
@@ -74,55 +139,3 @@
   word-break: break-word;
 }
 </style>
-
-<script>
-export default {
-  name: "CommentCard",
-  props: ["comment"],
-  data() {
-    return {
-      thumbBusy: false,
-    };
-  },
-  methods: {
-    thumbButtonClick() {
-      // TODO: thumbBusy
-      if (this.thumbBusy) {
-        return;
-      }
-
-      this.thumbBusy = true;
-      if (this.comment.myThumb) {
-        // already have my thumb, delete the thumb
-        this.$axios
-          .delete("/api/thumbs/" + this.comment.myThumb.id)
-          .then(() => {
-            this.success("取消点赞成功");
-            this.thumbBusy = false;
-            this.comment.myThumb = null;
-          })
-          .catch((p) => {
-            this.err(p);
-            this.thumbBusy = false;
-          });
-      } else {
-        // add the thumb
-        this.$axios
-          .post("/api/thumbs", {
-            targetId: this.comment.id,
-            targetType: "Comment",
-          })
-          .then((res) => {
-            this.success("点赞成功");
-            this.thumbBusy = false;
-            this.comment.myThumb = { id: res.data.id };
-          })
-          .catch((p) => {
-            this.err(p);
-            this.thumbBusy = false;
-          });
-      }
-    },
-  },
-};
-</script>
