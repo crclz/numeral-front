@@ -2,7 +2,8 @@
 <template>
   <div class="user">
     <div class="avatar_box">
-      <img :src="user.avatarUrl" alt="用户头像" class="avatar" />
+      <el-avatar shape="circle" :size="132" fit="cover"  alt="用户头像" :src="user.avatarUrl"></el-avatar>
+      <!--<img :src="user.avatarUrl" size="40px" fit="cover" alt="用户头像" class="avatar" />-->
     </div>
     <div style="display:block" class="el-icon-user-solid">用户名：{{user.username}}</div>
     <div style="display:block" class="el-icon-info">个人简介：{{user.description}}</div>
@@ -43,7 +44,7 @@ export default {
   padding: 10px;
   box-shadow: 0 0 10px #ddd;
   margin: 0 auto;
-  img {
+  el-avatar {
     height: 100%;
     height: 100%;
     border-radius: 50%;
