@@ -85,6 +85,7 @@
                 :isMycreated="false"
                 :isMoveDoc="true"
                 :userId="this.global.me.id"
+                :NeedShortName="true"
                 @get-teamlist="loadTeamlist"
               ></team-list>
             </div>

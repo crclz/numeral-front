@@ -12,8 +12,16 @@
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
         >
-          <p class="el-icon-picture-outline-round">上传头像</p>
-          <img v-if="PatchUserForm.avatarUrl" :src="PatchUserForm.avatarUrl" class="avatar" />
+          <el-avatar
+            v-if="PatchUserForm.avatarUrl"
+            class="avatar"
+            shape="square"
+            :size="120"
+            fit="cover"
+            alt="用户头像"
+            :src="PatchUserForm.avatarUrl"
+          ></el-avatar>
+          <!-- <img v-if="PatchUserForm.avatarUrl" :src="PatchUserForm.avatarUrl" class="avatar" /> -->
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </div>
@@ -35,8 +43,8 @@
           <el-input type="password" v-model="PatchUserForm.checkPass" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item class="btns">
-          <el-button type="primary" @click="submitForm('password')">修改密码</el-button>
-          <el-button type="info" @click="resetPatchUserForm('password')">重置</el-button>
+          <el-button type="primary" @click="submitForm('password')" size="small">修改密码</el-button>
+          <el-button type="info" @click="resetPatchUserForm('password')" size="small">重置</el-button>
         </el-form-item>
       </el-form>
       <!-- 描述信息 -->
@@ -54,8 +62,8 @@
 
         <!-- 按钮区域 -->
         <el-form-item class="btns">
-          <el-button type="primary" @click="submitForm('description')">保存</el-button>
-          <el-button type="info" @click="resetPatchUserForm('description')">重置</el-button>
+          <el-button type="primary" @click="submitForm('description')" size="small">保存</el-button>
+          <el-button type="info" @click="resetPatchUserForm('description')" size="small">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -119,7 +127,7 @@ export default {
           this.success("头像更换成功");
           console.log(response.data);
           // 更新用户信息
-          this.refreshMe();
+          // this.refreshMe();
         })
         .catch((p) => this.err(p));
     },
@@ -198,31 +206,37 @@ export default {
   // text-align: center !important;
 }
 .avatar_box {
-  margin: 0, auto;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 5px;
   // padding-left: 80px !important;
 }
-.avatar-uploader {
-  width: 100%;
+.el-upload {
+  cursor: default;
+  text-align: center;
 }
-.avatar-uploader-icon {
+
+.el-upload--text {
+  text-align: center;
+  cursor: default;
+}
+
+.avatar-uploader-icon,
+.avatar {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
   cursor: pointer;
-  // position: relative;
-  overflow: hidden;
+  overflow: visible;
   font-size: 28px;
   color: #8c939d;
   width: 120px;
   height: 120px;
   line-height: 120px;
-  margin-left: 20px;
   display: inline-block;
+  text-align: center;
 }
 .avatar-uploader-icon:hover {
   border-color: #409eff;
-}
-.avatar {
-  width: 150px;
-  display: block;
 }
 </style>

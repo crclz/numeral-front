@@ -1,13 +1,32 @@
 <template>
   <div>
-    <el-table :data="teamList" style="width: 100%" highlight-current-row v-if="isMycreated==false">
-      <el-table-column prop="teamId" label="团队编号" width="180" v-if="isMoveDoc==false"></el-table-column>
-      <el-table-column label="团队名称" width="150">
+    <el-table
+      :data="teamList"
+      style="width: 100%"
+      highlight-current-row
+      v-if="isMycreated==false&&isMoveDoc==false"
+    >
+      <el-table-column prop="teamId" label="团队编号" width="180"></el-table-column>
+      <el-table-column label="团队名称" width="400">
         <template slot-scope="scope">
           <el-link @click="jmp('/team/'+scope.row.teamId)">{{scope.row.team.name}}</el-link>
         </template>
       </el-table-column>
-      <!-- <el-table-column prop="team.description" label="团队描述"></el-table-column> -->
+      <el-table-column prop="team.description" label="团队描述"></el-table-column>
+    </el-table>
+
+    <el-table
+      :data="teamList"
+      style="width: 100%"
+      highlight-current-row
+      v-if="isMycreated==false&&isMoveDoc==true"
+    >
+      <el-table-column label="团队名称" width="180">
+        <template slot-scope="scope">
+          <el-link @click="jmp('/team/'+scope.row.teamId)">{{scope.row.team.name}}</el-link>
+        </template>
+      </el-table-column>
+      <el-table-column prop="team.description" label="团队描述"></el-table-column>
       <el-table-column label="操作" width="100" v-if="isMoveDoc">
         <template slot-scope="scope">
           <el-button
@@ -17,19 +36,18 @@
             v-if="document.teamId!=scope.row.teamId"
             size="mini"
           >移入</el-button>
-          <!-- <el-button
-            @click="deletefromteam(document)"
-            type="danger"
-            plain
-            v-if="(document.teamId==scope.row.teamId)&&((userId==document.creatorId)||(userId==scope.row.team.leaderId))"
-          >移出</el-button>-->
         </template>
       </el-table-column>
     </el-table>
     <!-- 我创建的团队 -->
-    <el-table :data="teamList" style="width: 100%" highlight-current-row v-if="isMycreated==true">
+    <el-table
+      :data="teamList"
+      style="width: 100%"
+      highlight-current-row
+      v-if="isMycreated==true&&isMoveDoc==false"
+    >
       <el-table-column prop="id" label="团队编号" width="180"></el-table-column>
-      <el-table-column label="团队名称" width="150">
+      <el-table-column label="团队名称" width="400">
         <template slot-scope="scope">
           <el-link @click="jmp('/team/'+scope.row.id)">{{scope.row.name}}</el-link>
         </template>
