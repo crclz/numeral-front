@@ -118,14 +118,16 @@
                     <el-avatar :size="45" :src="item.user.avatarUrl"></el-avatar>
                   </div>
                   <div class="comment-username-and-content">
-                    <div class="comment-username" @click="jmp('/getuser/'+item.user.id)">{{item.user.username}}</div>
+                    <div class="comment-username">
+                      <el-link style="font-size: 18px; margin-right:20px;" @click="jmp('/getuser/'+item.user.id)">{{item.user.username}}</el-link>
+                      <span id="createdAt">{{item.createdAt | moment}}</span>
+                    </div>
 
                     <div class="comment-content">
                       <div class="grid-content">
                         <div v-html="item.content"></div>
                       </div>
                     </div>
-                    <div id="createdAt">{{item.createdAt | moment}}</div>
                   </div>
                 </div>
               </div>
@@ -589,8 +591,8 @@ export default {
   overflow-y: auto;
 }
 
-.comment-username-and-content #createdAt{
-  margin-top:5px;
+.comment-username-and-content #createdAt {
+  margin-top: 5px;
   margin-right: 15px;
   color: darkgray;
   text-align: right;
