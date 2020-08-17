@@ -10,11 +10,11 @@
           <p v-if="isAbandoned">{{scope.row.title}}</p>
         </template>
       </el-table-column>
-      <el-table-column prop="description" label="描述" width="500"></el-table-column>
+      <el-table-column prop="description" label="描述" width="450"></el-table-column>
       <el-table-column label="发布时间" width="200">
         <template slot-scope="scope">{{scope.row.createdAt|moment}}</template>
       </el-table-column>
-      <el-table-column>
+      <el-table-column v-if="NoBtns!=false">
         <template slot-scope="scope">
           <!-- 删除按钮 -->
           <el-popover
@@ -67,7 +67,7 @@
 <script>
 export default {
   name: "DocumentList",
-  props: ["QDocument", "isMyCreated", "isMyFavorite", "isAbandoned"],
+  props: ["QDocument", "isMyCreated", "isMyFavorite", "isAbandoned", "NoBtns"],
   model: {
     event: ["delete-onclick", "abandon-favorite-onclick", "on-recover-click"],
   },

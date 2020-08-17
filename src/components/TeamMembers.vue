@@ -8,7 +8,7 @@
               <!-- 这里显示头像-->
               <div class="avatar_box">
                 <span @click="openUser(item.user.id)" width="100%">
-                   <el-avatar :size="50" :src="item.user.avatarUrl"></el-avatar>
+                  <el-avatar :size="50" :src="item.user.avatarUrl" style="cursor: pointer"></el-avatar>
                 </span>
               </div>
               <!-- 这里显示用户名-->
@@ -77,15 +77,15 @@ export default {
     },
     refreshTeamMembers() {
       this.$axios
-          .get("/api/memberships", {
-            params: { teamId: this.teamId },
-          })
-          .then((response) => {
-            this.memberships = response.data;
-            console.log(this.memberships);
-          })
-          .catch((p) => this.err(p));
-    }
+        .get("/api/memberships", {
+          params: { teamId: this.teamId },
+        })
+        .then((response) => {
+          this.memberships = response.data;
+          console.log(this.memberships);
+        })
+        .catch((p) => this.err(p));
+    },
   },
 };
 </script>
@@ -123,7 +123,7 @@ export default {
   align-items: center;
 }
 
-.username{
+.username {
   margin: 0 8px;
 }
 
