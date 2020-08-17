@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- 我加入的团队 -->
     <el-table
       :data="teamList"
       style="width: 100%"
@@ -14,7 +15,7 @@
       </el-table-column>
       <el-table-column prop="team.description" label="团队描述"></el-table-column>
     </el-table>
-
+    <!-- 将文档移入团队 -->
     <el-table
       :data="teamList"
       style="width: 100%"
@@ -26,7 +27,6 @@
           <el-link @click="jmp('/team/'+scope.row.teamId)">{{scope.row.team.name}}</el-link>
         </template>
       </el-table-column>
-      <el-table-column prop="team.description" label="团队描述"></el-table-column>
       <el-table-column label="操作" width="100" v-if="isMoveDoc">
         <template slot-scope="scope">
           <el-button
