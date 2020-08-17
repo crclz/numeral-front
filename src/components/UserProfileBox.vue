@@ -56,12 +56,14 @@ export default {
   }
 }
 .btns {
-  margin-left: 150px;
+  margin-left: 50px;
 }
 .el-icon-user-solid,
 .el-icon-info {
-  font-size: medium;
+  font-size: 14px;
   margin-top: 20px;
+  width: 500px;
+  line-height: 24px;
 }
 .person-info {
   display: flex;
@@ -69,5 +71,6 @@ export default {
 }
 .user_box {
   margin: 0 20px;
+  width: 400px;
 }
 </style>
