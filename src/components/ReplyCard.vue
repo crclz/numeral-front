@@ -2,12 +2,21 @@
   <div class="reply-card">
     <div class="reply-content">@{{reply.user.username}}: {{reply.content}}</div>
     <div class="reply-actions">
+      <!-- 点赞按钮 -->
       <el-button
         size="mini"
         icon="el-icon-thumb"
         :type="reply.myThumb?'success':''"
         @click="thumbButtonClick"
       >{{reply.thumbCount}}</el-button>
+
+      <el-button icon="el-icon-s-promotion" size="mini" @click="showReplyInput=!showReplyInput"></el-button>
+
+      <!-- 回复按钮 -->
+      <div v-if="showReplyInput" class="send-reply-area">
+        <el-input size="mini" v-model="text"></el-input>
+        <el-button :disabled="text.trim()==''" size="mini" @click="sendReply(text)">回复</el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -22,6 +31,8 @@ export default {
   data() {
     return {
       thumbBusy: false,
+      text: "",
+      showReplyInput: false,
     };
   },
   methods: {
@@ -64,6 +75,18 @@ export default {
             this.thumbBusy = false;
           });
       }
+    },
+    sendReply(content) {
+      this.text = "";
+
+      this.$axios
+        .post("/api/replies", {
+          commentId: this.reply.commentId,
+          content: `回复@${this.reply.user.username}: ${content}`,
+          targetUserId: this.reply.user.id,
+        })
+        .then(() => this.sucess("回复成功"))
+        .catch((p) => this.err(p));
     },
   },
 };
