@@ -132,7 +132,7 @@ export default {
       });
   },
   destroyed() {
-    if (this.timer) clearInterval(this.timer);
+    this.quitPage();
   },
   data() {
     return {
@@ -195,6 +195,7 @@ export default {
         .then((response) => {
           console.log(response);
           this.success("保存成功");
+          this.quitPage();
           this.$router.push({ path: "/readFile/" + this.documentId });
         })
         .catch((error) => {
@@ -205,6 +206,16 @@ export default {
     change(val) {
       this.currentFile.data = val;
     },
+    quitPage() {
+      if (this.timer) clearInterval(this.timer);
+      axios.post("/api/e-lock/release?documentId="+this.documentId)
+        .then((response) => {
+          console.log(response);
+        })
+      .catch((error) => {
+        console.log(error);
+      })
+    }
   },
 };
 </script>
