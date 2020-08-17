@@ -1,6 +1,6 @@
 <template>
   <div class="PatchUser_container">
-    <h3 class="PatchUser_title">修改个人信息</h3>
+    <h1 class="title">修改个人信息</h1>
     <div class="PatchUser_box">
       <!-- 修改个人信息表单区域 -->
       <!-- 上传头像 -->
@@ -33,6 +33,7 @@
         status-icon
         :rules="PatchUserFormRulesPassword"
         label-width="100px"
+        label-position="top"
         class="PatchUser_form"
       >
         <el-form-item label="密码" prop="password">
@@ -55,6 +56,7 @@
         :rules="PatchUserFormRulesDescription"
         label-width="100px"
         class="PatchUser_form"
+        label-position="top"
       >
         <el-form-item label="个人简介" prop="description">
           <el-input type="textarea" v-model="PatchUserForm.description" placeholder="请输入个人简介"></el-input>
@@ -189,10 +191,11 @@ export default {
 <style lang="less" scoped>
 // element ui 中对头像上传的修饰css代码
 .PatchUser_container {
-  margin: 0, auto;
+  max-width: 860px;
+  margin: 0 auto;
 }
-.PatchUser_title {
-  text-align: center;
+.title {
+  text-align: left;
 }
 .btns {
   display: flex;

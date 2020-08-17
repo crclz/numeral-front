@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>我收藏的文件</h1>
     <document-list
       :QDocument="this.documents"
       :isMyFavorite="true"
