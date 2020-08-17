@@ -1,7 +1,7 @@
 
 <template>
   <div class="getuser_container">
-    <h1>用户信息</h1>
+    <h1 class="title">用户信息</h1>
     <div class="info">
       <user-profile-box :user="Info"></user-profile-box>
     </div>
@@ -44,4 +44,7 @@ export default {
 </script>
 
 <style scoped>
+.title {
+  text-align: center;
+}
 </style>
