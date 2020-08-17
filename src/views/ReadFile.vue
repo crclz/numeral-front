@@ -581,7 +581,7 @@ export default {
 }
 
 .popup-wrapper {
-  height: 180px;
+  height: 300px;
   overflow-y: auto;
 }
 </style>
