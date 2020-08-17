@@ -3,7 +3,6 @@
     <document-list
       :QDocument="this.documents"
       :isMyCreated="true"
-      :hiddenCreatorName="true"
       @delete-onclick="abandonDocument"
     ></document-list>
   </div>
