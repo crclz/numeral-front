@@ -90,7 +90,7 @@ export default {
         .then((response) => {
           console.log(response);
           this.success("保存成功");
-          this.$router.push({ path: "/myFiles" });
+          this.$router.push({ path: "/workspace/myFiles" });
         })
         .catch((error) => {
           console.log(error);

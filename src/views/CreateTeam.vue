@@ -55,7 +55,7 @@
                     .then((response) => {
                         console.log(response);
                         this.success("创建成功");
-                        this.$router.push({path: '/myTeams'});
+                        this.$router.push({path: '/workspace/myTeams'});
                     })
                     .catch((error) => {
                         console.log(error);
