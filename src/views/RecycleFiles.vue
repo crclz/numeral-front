@@ -4,6 +4,7 @@
     <document-list
       :QDocument="this.documents"
       :isAbandoned="true"
+      :hiddenCreatorName="true"
       @on-recover-click="recoverDocument"
     ></document-list>
   </div>

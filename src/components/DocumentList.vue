@@ -10,8 +10,16 @@
           <p v-if="isAbandoned">{{scope.row.title}}</p>
         </template>
       </el-table-column>
-      <el-table-column prop="description" label="描述" width="500"></el-table-column>
-      <el-table-column label="发布时间" width="200">
+      <!-- <el-table-column label="作者" width="200" v-if="hiddenCreatorName!=true">
+        <template slot-scope="scope">
+          <el-link
+            @click="jmp('/getUser/'+scope.row.creatorId)"
+            v-if="isAbandoned!=true"
+          >{{this.getCreator(scope.row.creatorId)}}</el-link>
+        </template>
+      </el-table-column>-->
+      <el-table-column prop="description" label="描述" width="400"></el-table-column>
+      <el-table-column label="发布时间">
         <template slot-scope="scope">{{scope.row.createdAt|moment}}</template>
       </el-table-column>
       <el-table-column>
@@ -67,7 +75,13 @@
 <script>
 export default {
   name: "DocumentList",
-  props: ["QDocument", "isMyCreated", "isMyFavorite", "isAbandoned"],
+  props: [
+    "QDocument",
+    "isMyCreated",
+    "isMyFavorite",
+    "isAbandoned",
+    "hiddenCreatorName",
+  ],
   model: {
     event: ["delete-onclick", "abandon-favorite-onclick", "on-recover-click"],
   },
