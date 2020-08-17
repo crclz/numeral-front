@@ -4,7 +4,13 @@
       <div class="messageItem" v-for="item in messageList" :key="item.id" @click="displayMessageInfo(item)">
         <i class="el-icon-message"></i><div class="title">{{item.title}}</div>
         <div v-if="item.sender">
-          <el-avatar :size="35" :src="item.sender.avatarUrl"></el-avatar><div class="username">{{item.sender.username}}</div>
+          <el-avatar :size="35" :src="item.sender.avatarUrl"></el-avatar>
+          <div id="msgInfo">
+            <div class="username">{{item.sender.username}}</div>
+            <div style="flex-grow: 1"></div>
+            <div class="timeCreated">{{currentMessage.createdAt | moment}}</div>
+          </div>
+
         </div>
         <div v-else>
           <div class="username">系统消息</div>
@@ -21,8 +27,9 @@
             :append-to-body=true
             width="40%">
       <div v-if="currentMessage.sender">
-        <el-avatar size="35px" :src="currentMessage.sender.avatarUrl"></el-avatar>
-        <div class="username">{{currentMessage.sender.username}}</div>
+        <el-avatar :size="35" :src="currentMessage.sender.avatarUrl"></el-avatar>
+        <div class="username" @click="gotoSender(currentMessage.senderId)">{{currentMessage.sender.username}}</div>
+        <div class="timeCreated">{{currentMessage.createdAt | moment}}</div>
       </div>
       <div v-else>
         <div class="username">系统消息</div>
@@ -89,6 +96,10 @@
       },
       clearList(){
         this.messageList = [];
+      },
+      gotoSender(senderId){
+        this.displaySwitch.messageInfo = false;
+        this.jmp('/getuser/'+senderId);
       }
     }
   }
@@ -106,7 +117,7 @@
   .messageItem .content{
     width: 100%;
   }
-  .messageItem .username{
+  .username{
     color: #409eff;
     font-weight: bold;
   }
@@ -114,5 +125,12 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+  }
+  #msgInfo{
+    margin-right: 20px;
+    display: flex;
+  }
+  .timeCreated{
+    color: #8c939d;
   }
 </style>
