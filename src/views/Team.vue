@@ -8,6 +8,27 @@
   <div v-if="ret" class="center-wrapper">
     <h1 class="text-center">团队：{{team.name}}</h1>
 
+    <!-- 邀请好友 -->
+    <div class="flex-center">
+      <el-popover placement="bottom" width="400" trigger="click">
+        <!--触发按钮-->
+        <el-button slot="reference" type="primary" :disabled="!isMember">邀请好友</el-button>
+
+        <!--内容-->
+        <div>
+          <div class="el-popover__title">请输入您要邀请用户的用户名：</div>
+          <el-input v-model="invitedUsername" placeholder="请输入用户名" @input="inquireUser"></el-input>
+          <div v-if="invitedUser" class="user">
+            <el-avatar :size="40" :src="invitedUser.avatarUrl"></el-avatar>
+            <div class="username">{{invitedUser.username}}</div>
+            <div style="flex-grow: 1"></div>
+            <div><el-button @click="sendInvitation">邀请</el-button></div>
+          </div>
+        </div>
+
+      </el-popover>
+    </div>
+
     <!-- 分享团队 -->
     <div class="flex-center">
       <el-popover placement="bottom" width="400" trigger="click">
@@ -113,6 +134,8 @@ export default {
       membershipId: 0,
       isCreator: false,
       shareUrl: "",
+      invitedUsername: '',
+      invitedUser: null,
     };
   },
   methods: {
@@ -164,9 +187,40 @@ export default {
     copyOnError() {
       this.$message.error("复制失败");
     },
+    inquireUser() {
+      axios.get('/api/users/find-by-username', {params: {
+        username: this.invitedUsername
+        }})
+      .then((response) => {
+        console.log(response);
+        this.invitedUser = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    },
+    sendInvitation() {
+      axios.post('api/teams/invite?receiverId='+this.invitedUser.id+"&teamId="+this.teamId)
+      .then((response) => {
+        console.log(response);
+        this.success("已发送邀请");
+      })
+      .catch((error) => {
+        console.log(error);
+        this.err(error);
+      })
+    }
   },
 };
 </script>
 
 <style scoped>
+  .user{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+  }
+  .user *{
+    display: flex;
+  }
 </style>
