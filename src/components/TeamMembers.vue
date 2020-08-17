@@ -75,6 +75,17 @@ export default {
         })
         .catch((p) => this.err(p));
     },
+    refreshTeamMembers() {
+      this.$axios
+          .get("/api/memberships", {
+            params: { teamId: this.teamId },
+          })
+          .then((response) => {
+            this.memberships = response.data;
+            console.log(this.memberships);
+          })
+          .catch((p) => this.err(p));
+    }
   },
 };
 </script>

@@ -17,7 +17,7 @@ import MyTeams from "../views/MyTeams";
 import SetDocPermission from "../components/SetDocPermission";
 import SetTeamDocPermis from "../components/SetTeamDocPermis";
 import Team from "../views/Team";
-import ManageApplications from "../views/ManageApplications";
+// import ManageApplications from "../components/ManageApplications";
 import Logout from '../components/Logout.vue';
 import PatchUser from '../views/PatchUser.vue';
 import MoveFileToTeam from "../views/MoveFileToTeam";
@@ -166,11 +166,11 @@ const routes = [
         name: 'Team',
         component: Team
     },
-    {
-        path: '/manageApplications/:id',
-        name: 'ManageApplications',
-        component: ManageApplications
-    },
+    // {
+    //     path: '/manageApplications/:id',
+    //     name: 'ManageApplications',
+    //     component: ManageApplications
+    // },
     {
         path: '/team-manage/:id',
         name: 'TeamManage',
