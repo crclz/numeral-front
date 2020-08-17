@@ -3,7 +3,8 @@
     <h3 class="PatchUser_title">修改个人信息</h3>
     <div class="PatchUser_box">
       <!-- 修改个人信息表单区域 -->
-        <!-- 上传头像 -->
+      <!-- 上传头像 -->
+      <div class="avatar_box">
         <el-upload
           class="avatar-uploader"
           action="/api/blobs"
@@ -11,18 +12,20 @@
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
         >
+          <p class="el-icon-picture-outline-round">上传头像</p>
           <img v-if="PatchUserForm.avatarUrl" :src="PatchUserForm.avatarUrl" class="avatar" />
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
+      </div>
 
-        <!-- 密码 -->
+      <!-- 密码 -->
       <el-form
-              ref="password"
-              :model="PatchUserForm"
-              status-icon
-              :rules="PatchUserFormRulesPassword"
-              label-width="100px"
-              class="PatchUser_form"
+        ref="password"
+        :model="PatchUserForm"
+        status-icon
+        :rules="PatchUserFormRulesPassword"
+        label-width="100px"
+        class="PatchUser_form"
       >
         <el-form-item label="密码" prop="password">
           <el-input type="password" v-model="PatchUserForm.password" autocomplete="off"></el-input>
@@ -36,14 +39,14 @@
           <el-button type="info" @click="resetPatchUserForm('password')">重置</el-button>
         </el-form-item>
       </el-form>
-        <!-- 描述信息 -->
+      <!-- 描述信息 -->
       <el-form
-              ref="description"
-              :model="PatchUserForm"
-              status-icon
-              :rules="PatchUserFormRulesDescription"
-              label-width="100px"
-              class="PatchUser_form"
+        ref="description"
+        :model="PatchUserForm"
+        status-icon
+        :rules="PatchUserFormRulesDescription"
+        label-width="100px"
+        class="PatchUser_form"
       >
         <el-form-item label="个人简介" prop="description">
           <el-input type="textarea" v-model="PatchUserForm.description" placeholder="请输入个人简介"></el-input>
@@ -85,16 +88,16 @@ export default {
         checkPass: null,
       },
       PatchUserFormRulesPassword: {
-          password: [
-              {required: true, message: "请输入密码", trigger: "change"},
-              {
-                  min: 6,
-                  max: 16,
-                  message: "密码长度在 6 到 32 个字符",
-                  trigger: "change",
-              },
-          ],
-          checkPass: [{validator: validatePass2, trigger: "change"}],
+        password: [
+          { required: true, message: "请输入密码", trigger: "change" },
+          {
+            min: 6,
+            max: 16,
+            message: "密码长度在 6 到 32 个字符",
+            trigger: "change",
+          },
+        ],
+        checkPass: [{ validator: validatePass2, trigger: "change" }],
       },
       PatchUserFormRulesDescription: {
         description: [
@@ -116,7 +119,7 @@ export default {
           this.success("头像更换成功");
           console.log(response.data);
           // 更新用户信息
-            this.refreshMe();
+          this.refreshMe();
         })
         .catch((p) => this.err(p));
     },
@@ -138,19 +141,17 @@ export default {
     resetPatchUserForm(formname) {
       this.$refs[formname].resetFields();
     },
-      submitForm(formName) {
-          this.$refs[formName].validate((valid) => {
-              if (valid) {
-                  if(formName == 'password')
-                      this.submitForm_pass();
-                  else
-                      this.submitForm_description();
-              } else {
-                  console.log('error submit!!');
-                  return false;
-              }
-          });
-      },
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          if (formName == "password") this.submitForm_pass();
+          else this.submitForm_description();
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
     submitForm_pass() {
       this.$axios
         .patch("/api/users/" + this.UserId, {
@@ -180,7 +181,10 @@ export default {
 <style lang="less" scoped>
 // element ui 中对头像上传的修饰css代码
 .PatchUser_container {
-  height: 100%;
+  margin: 0, auto;
+}
+.PatchUser_title {
+  text-align: center;
 }
 .btns {
   display: flex;
@@ -189,13 +193,13 @@ export default {
 }
 .PatchUser_box {
   width: 450px;
-  height: 300px;
-  background-color: #fff;
-  border-radius: 3%;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  margin-left: auto;
+  margin-right: auto;
+  // text-align: center !important;
+}
+.avatar_box {
+  margin: 0, auto;
+  // padding-left: 80px !important;
 }
 .avatar-uploader {
   width: 100%;
@@ -204,14 +208,15 @@ export default {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
   cursor: pointer;
-  position: relative;
+  // position: relative;
   overflow: hidden;
   font-size: 28px;
   color: #8c939d;
-  width: 150px;
-  height: 150px;
-  line-height: 150px;
-  text-align: center;
+  width: 120px;
+  height: 120px;
+  line-height: 120px;
+  margin-left: 20px;
+  display: inline-block;
 }
 .avatar-uploader-icon:hover {
   border-color: #409eff;
