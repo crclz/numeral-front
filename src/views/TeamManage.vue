@@ -7,9 +7,19 @@
         <h2>{{team.name}} 团队主页</h2>
       </el-link>
     </div>
-
     <div class="fc-center">
-      <el-link type="primary" @click="jmp('/manageApplications/' + teamId)">处理团队申请</el-link>
+      <el-popover
+              placement="bottom"
+              title="处理团队申请"
+              width="400"
+              trigger="click"
+      >
+        <!--触发按钮-->
+        <el-button type="primary" slot="reference">处理团队申请</el-button>
+
+        <!--内容-->
+        <ManageApplications :team-id="teamId" @refreshTeamList="refreshTeamList"></ManageApplications>
+      </el-popover>
     </div>
 
     <div class="fc-center destroy-team">
@@ -32,7 +42,7 @@
 
       <div>
         <h2>团队成员</h2>
-        <team-members :team="team" :showKick="true" :teamId="teamId"></team-members>
+        <team-members ref="thisMembers" :team="team" :showKick="true" :teamId="teamId"></team-members>
       </div>
     </div>
   </div>
@@ -46,11 +56,13 @@
 <script>
 import axios from "axios";
 import TeamMembers from "@/components/TeamMembers.vue";
+import ManageApplications from "../components/ManageApplications";
 
 export default {
   name: "TeamManage",
   components: {
     TeamMembers,
+    ManageApplications
   },
   created() {
     this.teamId = this.$route.params.id;
@@ -151,6 +163,9 @@ export default {
         })
         .catch((p) => this.err(p));
     },
+    refreshTeamList() {
+      this.$refs.thisMembers.refreshTeamMembers();
+    }
   },
 };
 </script>
