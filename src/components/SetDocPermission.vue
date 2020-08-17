@@ -13,7 +13,7 @@
           <td>所有人是否可分享：</td>
           <td>
             <el-radio-group v-model="currentFile.publicCanShare">
-              <el-radio :label="true">是</el-radio>
+              <el-radio :label="true" :disabled="currentFile.publicDocumentAccess=='None'">是</el-radio>
               <el-radio :label="false">否</el-radio>
             </el-radio-group>
           </td>
@@ -22,9 +22,12 @@
           <td>所有人对评论权限：</td>
           <td>
             <el-radio-group v-model="currentFile.publicCommentAccess">
+              <el-radio
+                :label="'ReadWrite'"
+                :disabled="currentFile.publicDocumentAccess=='None'"
+              >读写权限</el-radio>
+              <el-radio :label="'Read'" :disabled="currentFile.publicDocumentAccess=='None'">只读权限</el-radio>
               <el-radio :label="'None'">无权限</el-radio>
-              <el-radio :label="'Read'">只读权限</el-radio>
-              <el-radio :label="'ReadWrite'">读写权限</el-radio>
             </el-radio-group>
           </td>
         </tr>
@@ -32,9 +35,9 @@
           <td>所有人对文档权限：</td>
           <td>
             <el-radio-group v-model="currentFile.publicDocumentAccess">
-              <el-radio :label="'None'">无权限</el-radio>
-              <el-radio :label="'Read'">只读权限</el-radio>
               <el-radio :label="'ReadWrite'">读写权限</el-radio>
+              <el-radio :label="'Read'">只读权限</el-radio>
+              <el-radio :label="'None'" @change="nopPublicAccess">无权限</el-radio>
             </el-radio-group>
           </td>
         </tr>
@@ -49,7 +52,7 @@
           <td>团队人员是否可分享：</td>
           <td>
             <el-radio-group v-model="currentFile.teamCanShare">
-              <el-radio :label="true">是</el-radio>
+              <el-radio :label="true" :disabled="currentFile.teamDocumentAccess=='None'">是</el-radio>
               <el-radio :label="false">否</el-radio>
             </el-radio-group>
           </td>
@@ -58,9 +61,9 @@
           <td>团队人员对评论权限：</td>
           <td>
             <el-radio-group v-model="currentFile.teamCommentAccess">
+              <el-radio :label="'ReadWrite'" :disabled="currentFile.teamDocumentAccess=='None'">读写权限</el-radio>
+              <el-radio :label="'Read'" :disabled="currentFile.teamDocumentAccess=='None'">只读权限</el-radio>
               <el-radio :label="'None'">无权限</el-radio>
-              <el-radio :label="'Read'">只读权限</el-radio>
-              <el-radio :label="'ReadWrite'">读写权限</el-radio>
             </el-radio-group>
           </td>
         </tr>
@@ -68,9 +71,9 @@
           <td>团队人员对文档权限：</td>
           <td>
             <el-radio-group v-model="currentFile.teamDocumentAccess">
-              <el-radio :label="'None'">无权限</el-radio>
-              <el-radio :label="'Read'">只读权限</el-radio>
               <el-radio :label="'ReadWrite'">读写权限</el-radio>
+              <el-radio :label="'Read'">只读权限</el-radio>
+              <el-radio :label="'None'" @change="nopTeamAccess">无权限</el-radio>
             </el-radio-group>
           </td>
         </tr>
@@ -165,6 +168,14 @@ export default {
           })
           .catch((p) => this.err(p));
       }
+    },
+    nopPublicAccess() {
+      this.currentFile.publicCanShare = false;
+      this.currentFile.publicCommentAccess = "None";
+    },
+    nopTeamAccess() {
+      this.currentFile.teamCanShare = false;
+      this.currentFile.teamCommentAccess = "None";
     },
   },
 };
