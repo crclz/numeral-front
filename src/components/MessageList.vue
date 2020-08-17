@@ -5,10 +5,11 @@
         class="messageItem"
         v-for="item in messageList"
         :key="item.id"
-        @click="displayMessageInfo(item)"
       >
-        <i class="el-icon-message"></i>
-        <div class="title">{{item.title}}</div>
+        <div class="msg-title">
+          <i class="el-icon-message"></i>
+          <div class="title">{{item.title}}</div>
+        </div>
         <div v-if="item.sender">
           <el-avatar :size="35" :src="item.sender.avatarUrl"></el-avatar>
           <div id="msgInfo">
@@ -21,33 +22,12 @@
         <div v-else>
           <div class="username">系统消息</div>
         </div>
-        <div class="content" id="content-wrap">
+        <div class="content">
           {{item.content}}
           <el-link v-if="item.link" type="primary" @click="jmp(item.link)">详情</el-link>
         </div>
       </div>
     </div>
-
-    <el-dialog
-      :title="currentMessage.title"
-      :visible.sync="displaySwitch.messageInfo"
-      :append-to-body="true"
-      width="40%"
-    >
-      <div v-if="currentMessage.sender">
-        <el-avatar :size="35" :src="currentMessage.sender.avatarUrl"></el-avatar>
-        <div class="username" @click="gotoSender(currentMessage.senderId)">{{currentMessage.sender.username}}</div>
-        <div class="timeCreated">{{currentMessage.createdAt | moment}}</div>
-      </div>
-      <div v-else>
-        <div class="username">系统消息</div>
-      </div>
-      <div class="content">{{currentMessage.content}}</div>
-      <el-link v-if="currentMessage.link" type="primary" @click="jmp(currentMessage.link)">详情</el-link>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="displaySwitch.messageInfo = false">确 定</el-button>
-      </span>
-    </el-dialog>
   </div>
 </template>
 
@@ -90,22 +70,11 @@ export default {
         haveRead: false,
         sender: null,
       },
-      displaySwitch: {
-        messageInfo: false,
-      },
     };
   },
   methods: {
-    displayMessageInfo(message) {
-      this.currentMessage = message;
-      this.displaySwitch.messageInfo = true;
-    },
     clearList() {
       this.messageList = [];
-    },
-    gotoSender(senderId){
-      this.displaySwitch.messageInfo = false;
-      this.jmp('/getuser/'+senderId);
     },
   },
 };
@@ -127,16 +96,16 @@ export default {
     color: #409eff;
     font-weight: bold;
   }
-  .messageItem #content-wrap{
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
   #msgInfo{
     margin-right: 20px;
     display: flex;
   }
   .timeCreated{
     color: #8c939d;
+  }
+  .msg-title{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: baseline;
   }
 </style>
