@@ -118,11 +118,14 @@
                     <el-avatar :size="45" :src="item.user.avatarUrl"></el-avatar>
                   </div>
                   <div class="comment-username-and-content">
-                    <div class="comment-username">{{item.user.username}}</div>
+                    <div class="comment-username" @click="jmp('/getuser/'+item.user.id)">{{item.user.username}}</div>
 
                     <div class="comment-content">
-                      <div class="grid-content" v-html="item.content"></div>
+                      <div class="grid-content">
+                        <div v-html="item.content"></div>
+                      </div>
                     </div>
+                    <div id="createdAt">{{item.createdAt | moment}}</div>
                   </div>
                 </div>
               </div>
@@ -584,5 +587,12 @@ export default {
 .popup-wrapper {
   height: 300px;
   overflow-y: auto;
+}
+
+.comment-username-and-content #createdAt{
+  margin-top:5px;
+  margin-right: 15px;
+  color: darkgray;
+  text-align: right;
 }
 </style>
