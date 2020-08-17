@@ -113,23 +113,9 @@
             <!-- TODO refresh?? -->
             <div :key="refreshCommentKey">
               <div v-for="item in comments" :key="item.id">
-                <div class="comment-each">
-                  <div class="comment-avatar">
-                    <el-avatar :size="45" :src="item.user.avatarUrl"></el-avatar>
-                  </div>
-                  <div class="comment-username-and-content">
-                    <div class="comment-username">
-                      <el-link style="font-size: 18px; margin-right:20px;" @click="jmp('/getuser/'+item.user.id)">{{item.user.username}}</el-link>
-                      <span id="createdAt">{{item.createdAt | moment}}</span>
-                    </div>
+                <comment-card :comment="item">
 
-                    <div class="comment-content">
-                      <div class="grid-content">
-                        <div v-html="item.content"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                </comment-card>
               </div>
             </div>
           </div>
@@ -147,6 +133,7 @@ import CreateComment from "../components/CreateComment";
 import Share from "../components/Share";
 import TeamList from "@/components/TeamList.vue";
 import SetDocPermission from "@/components/SetDocPermission.vue";
+import CommentCard from "@/components/CommentCard";
 
 export default {
   name: "ReadFile",
@@ -155,6 +142,7 @@ export default {
     CreateComment,
     TeamList,
     SetDocPermission,
+    CommentCard,
   },
   created() {
     this.documentId = this.$route.params.id;
@@ -483,10 +471,7 @@ export default {
 .bg-purple-light {
   background: #e5e9f2;
 }
-.grid-content {
-  border-radius: 4px;
-  min-height: 36px;
-}
+
 .row-bg {
   padding: 10px 0;
   background-color: #f9fafc;
@@ -524,32 +509,6 @@ export default {
   border-radius: 4px;
 } */
 
-.comment-username {
-  margin-left: 15px;
-}
-
-.comment-content {
-  background-color: whitesmoke;
-  padding: 8px 25px;
-  margin-top: 10px;
-  border-radius: 6px;
-  width: fit-content;
-  min-width: 160px;
-  margin-left: 15px;
-  word-break: break-word;
-}
-
-.comment-each {
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  border-bottom-color: #dcdfe6;
-  padding: 20px 0;
-  display: flex;
-}
-
-.comment-username-and-content {
-  /* flex-shrink: 1; */
-}
 
 .title-and-creator {
   display: flex;
@@ -589,12 +548,5 @@ export default {
 .popup-wrapper {
   height: 300px;
   overflow-y: auto;
-}
-
-.comment-username-and-content #createdAt {
-  margin-top: 5px;
-  margin-right: 15px;
-  color: darkgray;
-  text-align: right;
 }
 </style>
