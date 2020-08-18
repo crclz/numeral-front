@@ -57,7 +57,7 @@
           </el-popover>
 
           <el-button type="primary" @click="jmp('/createFile/'+documentId)">基于此模板</el-button>
-          <el-button type="primary" @click="jmp('/docmange/'+documentId)">管理</el-button>
+          <!-- <el-button type="primary" @click="jmp('/docmange/'+documentId)">管理</el-button> -->
           <!-- 设置文档权限弹出框 -->
           <el-popover placement="right" trigger="click" v-model="visible">
             <div class="popup-set-permission" style="text-align: center; margin: 0">
@@ -476,14 +476,16 @@ export default {
 }
 
 #doc-content {
-  border-style: dashed;
+  /*border-style: dashed;*/
+  box-shadow: 0px 0px 15px 0px gray;
   border-width: 2px;
-  border-radius: 30px;
+  /*border-radius: 30px;*/
   border-color: #dcdfe6;
   padding: 30px 80px;
   word-break: break-word;
   min-height: 450px;
-  background-color: whitesmoke;
+  background-color: #fbfbfb;
+  /*background-color: whitesmoke;*/
 }
 
 #comment-big-box {
