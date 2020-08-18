@@ -8,7 +8,7 @@ import moment from 'moment'
 import VueClipboard from 'vue-clipboard2';
 
 
-Vue.filter('moment', function (value, formatString) {
+Vue.filter('moment', function(value, formatString) {
     formatString = formatString || 'YYYY-MM-DD HH:mm:ss';
     // return moment(value).format(formatString); // value可以是普通日期 20170723
     return moment.unix(value / 1000).format(formatString); // 这是时间戳转时间
@@ -21,6 +21,13 @@ Vue.prototype.global = {
     me: null
 }
 
+// 设置浏览器标题
+Vue.directive('title', {
+    inserted: function(el, binding) {
+        document.title = el.dataset.title;
+        console.log(binding);
+    }
+})
 
 Vue.mixin({
     methods: {
@@ -52,7 +59,7 @@ Vue.mixin({
             });
             this.$router.go(0);
         },
-        moment(t){
+        moment(t) {
             var formatString = 'YYYY-MM-DD HH:mm:ss';
             return moment.unix(t / 1000).format(formatString); // 这是时间戳转时间
         }
@@ -82,4 +89,11 @@ Access.ReadWrite = new Access('readWrite');
 
 Object.freeze(Access); // 冻结对象，防止修改
 
+router.beforeEach((to, from, next) => {
+    /* 路由发生变化修改页面title */
+    if (to.meta.title) {
+        document.title = to.meta.title
+    }
+    next()
+})
 export { Access }

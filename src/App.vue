@@ -1,5 +1,5 @@
 <template>
-  <div id="app" v-if="this.meReturned">
+  <div id="app" v-if="this.meReturned" v-title data-title="首页_numeral">
     <el-container>
       <el-header id="head-nav">
         <div v-if="this.global.me">

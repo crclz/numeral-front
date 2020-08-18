@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class="doclist_box">
-      <h1 class="title">用户文档列表</h1>
+      <h1 class="title">用户公开的文档</h1>
       <div class="doclist">
         <document-list :QDocument="this.documents" :NoBtns="false"></document-list>
       </div>

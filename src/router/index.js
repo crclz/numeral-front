@@ -15,21 +15,18 @@ import RecentFiles from "../views/RecentFiles";
 import CreateTeam from "../views/CreateTeam";
 import MyTeams from "../views/MyTeams";
 import SetDocPermission from "../components/SetDocPermission";
-import SetTeamDocPermis from "../components/SetTeamDocPermis";
+
 import Team from "../views/Team";
-// import ManageApplications from "../components/ManageApplications";
-import Logout from '../components/Logout.vue';
 import PatchUser from '../views/PatchUser.vue';
-import MoveFileToTeam from "../views/MoveFileToTeam";
+
 import Register from "../views/Register";
-import DocMange from "../views/DocMange";
+
 import MyCreatedTeams from "../views/MyCreatedTeams";
 import HelloWorld from "../components/HelloWorld";
 
 Vue.use(VueRouter)
 
-const routes = [
-    {
+const routes = [{
         path: '/',
         redirect: { path: '/welcome' }
     },
@@ -37,110 +34,166 @@ const routes = [
         path: '/workspace',
         name: 'workspace',
         component: Home,
-        children: [
-            { path: '', redirect: { path: 'myfiles' } },
-            { path: 'recentfiles', component: RecentFiles },
-            { path: 'myfiles', component: MyFiles },
-            { path: 'favorite', component: FavoriteFiles },
-            { path: 'my-teams', component: MyTeams },
-            { path: 'trash', component: RecycleFiles },
-            { path: 'my-created-teams', component: MyCreatedTeams },
+        children: [{
+                path: '',
+                redirect: { path: 'myfiles' },
+                meta: {
+                    title: '我的文档_numeral'
+                }
+            },
+            {
+                path: 'recentfiles',
+                component: RecentFiles,
+                meta: {
+                    title: '最近文档_numeral'
+                }
+            },
+            {
+                path: 'myfiles',
+                component: MyFiles,
+                meta: {
+                    title: '我的文档_numeral'
+                }
+            },
+            {
+                path: 'favorite',
+                component: FavoriteFiles,
+                meta: {
+                    title: '收藏文档_numeral'
+                }
+            },
+            {
+                path: 'my-teams',
+                component: MyTeams,
+                meta: {
+                    title: '我加入的团队_numeral'
+                }
+            },
+            {
+                path: 'trash',
+                component: RecycleFiles,
+                meta: {
+                    title: '回收站_numeral'
+                }
+            },
+            {
+                path: 'my-created-teams',
+                component: MyCreatedTeams,
+                meta: {
+                    title: '我创建的团队_numeral'
+                }
+            },
         ]
     },
     {
-        path: '/about',
-        name: 'About',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () =>
-            import( /* webpackChunkName: "about" */ '../views/About.vue')
+        path: '/welcome',
+        name: 'Welcome',
+        component: HelloWorld,
+        meta: {
+            title: '首页_numeral'
+        }
     },
-
     {
         path: '/login',
         name: 'Login',
-        component: Login
+        component: Login,
+        meta: {
+            title: '登录_numeral'
+        }
     },
     {
         path: '/recentfiles',
         name: 'RecentFiles',
-        component: RecentFiles
+        component: RecentFiles,
+        meta: {
+            title: '最近文档_numeral'
+        }
     },
     {
         path: '/register',
         name: 'Register',
-        component: Register
-    },
-    {
-        path: '/logout',
-        name: 'Logout',
-        component: Logout
+        component: Register,
+        meta: {
+            title: '注册_numeral'
+        }
     },
     {
         path: '/setdocpermission/:id',
         name: 'SetDocPermission',
-        component: SetDocPermission
-    },
-    {
-        path: '/setteamdocpermis/:id',
-        name: 'SetTeamDocPermis',
-        component: SetTeamDocPermis
+        component: SetDocPermission,
     },
     {
         path: '/getuser/:id',
         name: 'GetUser',
-        component: GetUser
+        component: GetUser,
+        meta: {
+            title: '个人信息_numeral'
+        }
     },
     {
         path: '/patchUser/:id',
         name: 'PatchUser',
-        component: PatchUser
+        component: PatchUser,
+        meta: {
+            title: '修改个人信息_numeral'
+        }
     },
-    {
-        path: '/movefiletoteam/:id',
-        name: 'MoveFileToTeam',
-        component: MoveFileToTeam
-    },
-    {
-        path: '/docmange/:id',
-        name: 'DocMange',
-        component: DocMange
-    },
+
     {
         path: '/createFile',
         name: 'CreateFile',
-        component: CreateFile
+        component: CreateFile,
+        meta: {
+            title: '创建文档_numeral'
+        }
     },
     {
         path: '/createFile/:id',
         name: 'CreateFromTemplate',
-        component: CreateFile
+        component: CreateFile,
+        meta: {
+            title: '创建文档_numeral'
+        }
     },
     {
         path: '/editFile/:id',
         name: 'EditFile',
-        component: EditFile
+        component: EditFile,
+        meta: {
+            title: '编辑文档_numeral'
+        }
     },
     {
         path: '/myFiles',
         name: 'MyFiles',
-        component: MyFiles
+        component: MyFiles,
+        meta: {
+            title: '我的文档_numeral'
+        }
     },
     {
         path: '/favoriteFiles',
         name: 'FavoriteFiles',
-        component: FavoriteFiles
+        component: FavoriteFiles,
+        meta: {
+            title: '收藏文档_numeral'
+        }
     },
     {
         path: '/recycleFiles',
         name: 'RecycleFiles',
-        component: RecycleFiles
+        component: RecycleFiles,
+        meta: {
+            title: '回收站_numeral'
+        }
     },
     {
         path: '/readFile/:id',
         name: 'ReadFile',
-        component: ReadFile
+        component: ReadFile,
+        meta: {
+            title: '查看文档_numeral'
+        }
     },
     // {
     //     path: '/createFromTemplate/:id',
@@ -150,22 +203,34 @@ const routes = [
     {
         path: '/createTeam',
         name: 'CreateTeam',
-        component: CreateTeam
+        component: CreateTeam,
+        meta: {
+            title: '创建团队_numeral'
+        }
     },
     {
         path: '/myTeams',
         name: 'MyTeams',
-        component: MyTeams
+        component: MyTeams,
+        meta: {
+            title: '我加入的团队_numeral'
+        }
     },
     {
         path: '/mycreatedteams',
         name: 'MyCreatedTeams',
-        component: MyCreatedTeams
+        component: MyCreatedTeams,
+        meta: {
+            title: '我创建的团队_numeral'
+        }
     },
     {
         path: '/team/:id',
         name: 'Team',
-        component: Team
+        component: Team,
+        meta: {
+            title: '团队主页_numeral'
+        }
     },
     // {
     //     path: '/manageApplications/:id',
@@ -175,20 +240,22 @@ const routes = [
     {
         path: '/team-manage/:id',
         name: 'TeamManage',
+        meta: {
+            title: '团队管理_numeral'
+        },
         component: () =>
-            import('../views/TeamManage.vue')
+            import ('../views/TeamManage.vue')
     },
     {
         path: '/team-files/:id',
         name: 'TeamFiles',
+        meta: {
+            title: '团队文档_numeral'
+        },
         component: () =>
-            import('../components/TeamFiles.vue')
+            import ('../components/TeamFiles.vue')
     },
-    {
-        path: '/welcome',
-        name: 'Welcome',
-        component: HelloWorld,
-    }
+
 ]
 
 const router = new VueRouter({
