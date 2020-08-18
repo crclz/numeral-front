@@ -478,14 +478,16 @@ export default {
 }
 
 #doc-content {
-  border-style: dashed;
+  /*border-style: dashed;*/
+  box-shadow: 0px 0px 15px 0px gray;
   border-width: 2px;
-  border-radius: 30px;
+  /*border-radius: 30px;*/
   border-color: #dcdfe6;
   padding: 30px 80px;
   word-break: break-word;
   min-height: 450px;
-  background-color: whitesmoke;
+  background-color: #fbfbfb;
+  /*background-color: whitesmoke;*/
 }
 
 #comment-big-box {
