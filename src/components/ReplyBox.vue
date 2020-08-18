@@ -13,7 +13,7 @@
     </div>
     <div id="reply-list">
       <div v-for="reply in replies" :key="reply.id">
-        <reply-card :reply="reply" @load-replies-onclick="loadReplies"></reply-card>
+        <reply-card class="reply-card" :reply="reply" @load-replies-onclick="loadReplies"></reply-card>
       </div>
     </div>
   </div>
@@ -69,4 +69,7 @@ export default {
 </script>
 
 <style scoped>
+.reply-card {
+  padding: 5px;
+}
 </style>
