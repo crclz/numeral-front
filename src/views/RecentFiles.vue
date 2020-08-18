@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>最近浏览的文件</h1>
     <document-list :QDocument="this.documents"></document-list>
   </div>
 </template>
