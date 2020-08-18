@@ -24,13 +24,14 @@ import MoveFileToTeam from "../views/MoveFileToTeam";
 import Register from "../views/Register";
 import DocMange from "../views/DocMange";
 import MyCreatedTeams from "../views/MyCreatedTeams";
+import HelloWorld from "../components/HelloWorld";
 
 Vue.use(VueRouter)
 
 const routes = [
     {
         path: '/',
-        redirect: { path: '/workspace' }
+        redirect: { path: '/welcome' }
     },
     {
         path: '/workspace',
@@ -182,6 +183,11 @@ const routes = [
         name: 'TeamFiles',
         component: () =>
             import('../components/TeamFiles.vue')
+    },
+    {
+        path: '/welcome',
+        name: 'Welcome',
+        component: HelloWorld,
     }
 ]
 

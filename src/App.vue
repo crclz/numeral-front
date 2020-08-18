@@ -104,8 +104,10 @@ export default {
         .post("/api/access/logout", {})
         .then(() => {
           this.success("登出成功");
-          this.$router.push({ path: "/login" });
-          this.$router.go(0);
+          setTimeout(() => {
+            this.$router.push({ path: "/" });
+            this.$router.go(0); // 刷新global.me
+          }, 500);
         })
         .catch((p) => this.err(p));
     },
