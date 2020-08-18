@@ -2,14 +2,16 @@
   <div id="app" v-if="this.meReturned" v-title data-title="首页_numeral">
     <el-container>
       <el-header id="head-nav">
-        <div v-if="this.global.me">
+        <img id="banner" src="@/assets/banner.png" @click="jmpBanner()">
+        <div class="menu-bar" v-if="this.global.me">
           <el-menu
             :default-active="activeIndex"
-            class="el-menu-demo"
             mode="horizontal"
             @select="handleSelect"
+            style="border: none"
           >
             <div style="display: flex;">
+
               <el-menu-item index="/workspace">工作台</el-menu-item>
               <el-menu-item index="/createFile">创建新的文档</el-menu-item>
               <el-menu-item index="/createTeam">创建新的团队</el-menu-item>
@@ -38,7 +40,7 @@
         </div>
 
         <!-- 未登录 -->
-        <div v-if="!this.global.me">
+        <div class="menu-bar" v-if="!this.global.me">
           <el-menu
             :default-active="activeIndex"
             class="el-menu-demo"
@@ -95,6 +97,14 @@ export default {
   },
   mounted() {},
   methods: {
+    jmpBanner() {
+      if(this.global.me){
+        this.jmp('/workspace/myfiles');
+      }
+      else{
+        this.jmp('/');
+      }
+    },
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
       this.$router.push({ path: key });
@@ -143,7 +153,21 @@ export default {
   top: 0;
   width: 100%;
   z-index: 553;
+  display: flex;
+  flex-flow: row nowrap;
+  left: 0;
+  right: 0;
 }
+
+#head-nav .menu-bar{
+  flex-grow: 1;
+}
+
+#head-nav #banner{
+  height: 56px;
+  width: auto;
+}
+
 #main-content {
   margin-top: 63px;
 }
@@ -188,4 +212,7 @@ export default {
   margin-top: 10px;
   margin-right: 40px;
 }
+
+
+
 </style>

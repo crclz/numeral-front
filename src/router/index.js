@@ -17,12 +17,12 @@ import MyTeams from "../views/MyTeams";
 import SetDocPermission from "../components/SetDocPermission";
 
 import Team from "../views/Team";
+// import ManageApplications from "../components/ManageApplications";
 import PatchUser from '../views/PatchUser.vue';
-
 import Register from "../views/Register";
 
 import MyCreatedTeams from "../views/MyCreatedTeams";
-import HelloWorld from "../components/HelloWorld";
+import HelloWorld from "../views/HelloWorld";
 
 Vue.use(VueRouter)
 
@@ -253,7 +253,7 @@ const routes = [{
             title: '团队文档_numeral'
         },
         component: () =>
-            import ('../components/TeamFiles.vue')
+            import ('../views/TeamFiles.vue')
     },
 
 ]
