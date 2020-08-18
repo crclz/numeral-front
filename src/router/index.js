@@ -15,16 +15,13 @@ import RecentFiles from "../views/RecentFiles";
 import CreateTeam from "../views/CreateTeam";
 import MyTeams from "../views/MyTeams";
 import SetDocPermission from "../components/SetDocPermission";
-import SetTeamDocPermis from "../components/SetTeamDocPermis";
 import Team from "../views/Team";
 // import ManageApplications from "../components/ManageApplications";
-import Logout from '../components/Logout.vue';
 import PatchUser from '../views/PatchUser.vue';
-import MoveFileToTeam from "../views/MoveFileToTeam";
 import Register from "../views/Register";
-import DocMange from "../views/DocMange";
+
 import MyCreatedTeams from "../views/MyCreatedTeams";
-import HelloWorld from "../components/HelloWorld";
+import HelloWorld from "../views/HelloWorld";
 
 Vue.use(VueRouter)
 
@@ -48,16 +45,6 @@ const routes = [
         ]
     },
     {
-        path: '/about',
-        name: 'About',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () =>
-            import( /* webpackChunkName: "about" */ '../views/About.vue')
-    },
-
-    {
         path: '/login',
         name: 'Login',
         component: Login
@@ -73,19 +60,9 @@ const routes = [
         component: Register
     },
     {
-        path: '/logout',
-        name: 'Logout',
-        component: Logout
-    },
-    {
         path: '/setdocpermission/:id',
         name: 'SetDocPermission',
         component: SetDocPermission
-    },
-    {
-        path: '/setteamdocpermis/:id',
-        name: 'SetTeamDocPermis',
-        component: SetTeamDocPermis
     },
     {
         path: '/getuser/:id',
@@ -96,16 +73,6 @@ const routes = [
         path: '/patchUser/:id',
         name: 'PatchUser',
         component: PatchUser
-    },
-    {
-        path: '/movefiletoteam/:id',
-        name: 'MoveFileToTeam',
-        component: MoveFileToTeam
-    },
-    {
-        path: '/docmange/:id',
-        name: 'DocMange',
-        component: DocMange
     },
     {
         path: '/createFile',
@@ -182,7 +149,7 @@ const routes = [
         path: '/team-files/:id',
         name: 'TeamFiles',
         component: () =>
-            import('../components/TeamFiles.vue')
+            import('../views/TeamFiles.vue')
     },
     {
         path: '/welcome',
