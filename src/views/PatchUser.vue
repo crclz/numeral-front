@@ -247,18 +247,20 @@ export default {
   text-align: center;
 }
 .el-upload {
-  cursor: default;
   text-align: center;
 }
 .el-upload--text {
   text-align: center;
   cursor: default;
 }
+.el-avatar {
+  cursor: default;
+}
 .avatar-uploader-icon,
 .avatar {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
-  cursor: pointer;
+  cursor: default;
   overflow: visible;
   font-size: 28px;
   color: #8c939d;
