@@ -196,6 +196,7 @@ export default {
         .then((response) => {
           this.success("修改成功");
           console.log(response.data);
+          this.$router.go(-1);
         })
         .catch((p) => this.err(p));
     },
@@ -207,6 +208,7 @@ export default {
         .then((response) => {
           this.success("修改成功");
           console.log(response.data);
+          this.$router.go(-1);
         })
         .catch((p) => this.err(p));
     },

@@ -1,10 +1,16 @@
 <template>
   <div class="comment-wrapper">
+    <!-- 评论第一行 -->
     <div class="comment-row-one">
+      <!-- 评论头像 -->
       <div class="comment-avatar">
-        <el-avatar :size="45" :src="comment.user.avatarUrl"></el-avatar>
+        <a @click="jmp('/getuser/'+comment.user.id)" style="cursor:pointer">
+          <el-avatar :size="45" :src="comment.user.avatarUrl"></el-avatar>
+        </a>
       </div>
+      <!-- 评论用户姓名和内容 -->
       <div class="comment-username-and-content">
+        <!-- 评论用户姓名 -->
         <div class="comment-username">
           <el-link
             style="font-size: 18px; margin-right:20px;"
@@ -12,7 +18,7 @@
           >{{comment.user.username}}</el-link>
           <span id="createdAt">{{comment.createdAt | moment}}</span>
         </div>
-
+        <!-- 评论内容 -->
         <div class="comment-content">
           <div class="grid-content">
             <div v-html="comment.content"></div>
@@ -20,7 +26,7 @@
         </div>
       </div>
     </div>
-
+    <!-- 评论第二行 -->
     <div class="comment-row-two">
       <!-- 点赞按钮 -->
       <el-button
@@ -28,7 +34,6 @@
         icon="el-icon-thumb"
         :type="comment.myThumb?'success':''"
       >{{comment.thumbCount}}</el-button>
-
       <el-button @click="showReplyBox=!showReplyBox">回复...</el-button>
     </div>
 
@@ -130,8 +135,10 @@ export default {
 
 .comment-content {
   background-color: whitesmoke;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
   padding: 8px 25px;
   margin-top: 10px;
+  margin-bottom: 2px;
   border-radius: 6px;
   width: fit-content;
   min-width: 160px;

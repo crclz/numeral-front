@@ -113,9 +113,7 @@
             <!-- TODO refresh?? -->
             <div :key="refreshCommentKey">
               <div v-for="item in comments" :key="item.id">
-                <comment-card :comment="item">
-
-                </comment-card>
+                <comment-card :comment="item"></comment-card>
               </div>
             </div>
           </div>
@@ -508,7 +506,6 @@ export default {
   padding: 8px 25px;
   border-radius: 4px;
 } */
-
 
 .title-and-creator {
   display: flex;

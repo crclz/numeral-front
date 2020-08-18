@@ -1,6 +1,17 @@
 <template>
   <div class="reply-card">
-    <div class="reply-content">@{{reply.user.username}}: {{reply.content}}</div>
+    <!-- 回复“评论回复”的回复内容 -->
+    <!-- <div class="reply-content">@{{reply.user.username}}: {{reply.content}}</div> -->
+
+    <div class="reply-username">
+      <span>@</span>
+      <el-link
+        style="font-size: 14px; margin-right:2px;"
+        @click="jmp('/getuser/'+reply.user.id)"
+      >{{reply.user.username}}</el-link>
+      <span>:{{reply.content}}</span>
+    </div>
+
     <div class="reply-actions">
       <!-- 点赞按钮 -->
       <el-button
@@ -9,13 +20,29 @@
         :type="reply.myThumb?'success':''"
         @click="thumbButtonClick"
       >{{reply.thumbCount}}</el-button>
-
-      <el-button icon="el-icon-s-promotion" size="mini" @click="showReplyInput=!showReplyInput"></el-button>
-
+      <!-- 小飞机图案回复按钮 -->
+      <el-button
+        icon="el-icon-s-promotion"
+        size="mini"
+        @click="showReplyInput=!showReplyInput"
+        type="primary"
+        plain
+      ></el-button>
+      <!-- 回复日期 -->
+      <span id="createdAt">{{reply.createdAt | moment}}</span>
       <!-- 回复按钮 -->
       <div v-if="showReplyInput" class="send-reply-area">
         <el-input size="mini" v-model="text"></el-input>
-        <el-button :disabled="text.trim()==''" size="mini" @click="sendReply(text)">回复</el-button>
+        <el-button
+          :disabled="text.trim()==''"
+          size="mini"
+          type="primary"
+          plain
+          @click="sendReply(text)"
+          v-if="text.length<=140"
+          style="margin-left:2px"
+        >回复</el-button>
+        <el-button disabled type="danger" v-if="text.length>140" size="mini">已经超过140字</el-button>
       </div>
     </div>
   </div>
@@ -28,6 +55,9 @@
 export default {
   name: "ReplyCard",
   props: ["reply"],
+  model: {
+    event: ["load-replies-onclick"],
+  },
   data() {
     return {
       thumbBusy: false,
@@ -85,16 +115,35 @@ export default {
           content: `回复@${this.reply.user.username}: ${content}`,
           targetUserId: this.reply.user.id,
         })
-        .then(() => this.sucess("回复成功"))
+        .then((res) => {
+          console.log(res);
+          this.success("回复成功");
+          this.showReplyInput = !this.showReplyInput;
+          this.$emit("load-replies-onclick");
+        })
         .catch((p) => this.err(p));
     },
   },
 };
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .reply-card {
   margin: 3px 5px;
-  background-color: skyblue;
+
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
 }
+#createdAt {
+  // display: flex;
+  float: right;
+  font-size: 10px;
+  color: #99a2aa;
+  line-height: 28px;
+  margin-right: 20px;
+  // justify-content: flex-end;
+}
+// .reply-username {
+//   width: fit-content;
+//   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+// }
 </style>
