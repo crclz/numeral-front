@@ -1,12 +1,19 @@
 <template>
   <div>
     <div class="root-reply-sender">
-      <el-input v-model="text"></el-input>
-      <el-button :disabled="text.trim()==''" @click="sendReply(text)">发送</el-button>
+      <el-input type="textarea" v-model="text"></el-input>
+      <el-button
+        :disabled="text.trim()==''||text.length>140"
+        @click="sendReply(text)"
+        v-if="text.length<=140"
+        type="primary"
+        plain
+      >发送</el-button>
+      <el-button disabled type="danger" v-if="text.length>140">已经超过140字</el-button>
     </div>
     <div id="reply-list">
       <div v-for="reply in replies" :key="reply.id">
-        <reply-card :reply="reply"></reply-card>
+        <reply-card :reply="reply" @load-replies-onclick="loadReplies"></reply-card>
       </div>
     </div>
   </div>
@@ -35,6 +42,12 @@ export default {
       .catch((p) => this.err(p));
   },
   methods: {
+    loadReplies() {
+      this.$axios
+        .get("/api/replies", { params: { commentId: this.comment.id } })
+        .then((res) => (this.replies = res.data))
+        .catch((p) => this.err(p));
+    },
     sendReply(content) {
       this.text = "";
 
@@ -44,7 +57,11 @@ export default {
           content: content,
           targetUserId: this.comment.userId,
         })
-        .then(() => this.sucess("回复成功"))
+        .then((res) => {
+          console.log(res);
+          this.success("回复成功");
+          this.loadReplies();
+        })
         .catch((p) => this.err(p));
     },
   },
