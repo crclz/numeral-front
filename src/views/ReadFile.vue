@@ -104,7 +104,7 @@
         <h1 class="text-center">文档内容</h1>
 
         <div id="doc-content" class="flex-center">
-          <div v-html="currentFile.data"></div>
+          <div class="real-content" v-html="currentFile.data"></div>
         </div>
 
         <div id="comment-big-box">
@@ -486,6 +486,11 @@ export default {
   min-height: 450px;
   background-color: #fbfbfb;
   /*background-color: whitesmoke;*/
+}
+
+.real-content{
+  width: 100%;
+  justify-content: unset;
 }
 
 #comment-big-box {
