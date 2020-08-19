@@ -345,6 +345,7 @@ export default {
               .then((response) => {
                 this.currentTeam = response.data;
                 this.teamName = response.data.name;
+                this.$refs.setPermission.loadData();
               })
               .catch((error) => {
                 console.log(error);
@@ -371,6 +372,7 @@ export default {
           console.log(response.data);
           this.loadTeamlist();
           this.teamName = "暂无团队";
+          this.$refs.setPermission.loadData();
           this.document.teamId = null;
         })
         .catch((p) => this.err(p));

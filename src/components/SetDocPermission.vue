@@ -169,6 +169,23 @@ export default {
           .catch((p) => this.err(p));
       }
     },
+    loadData() {
+      this.$axios
+        .get("/api/documents/" + this.documentId)
+        .then((response) => {
+          console.log(response);
+          this.currentFile = response.data;
+
+          // 验证是否为Creator
+          if (this.currentFile.creatorId == this.global.me.id)
+            this.isCreator = true;
+
+          this.ret = true;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     nopPublicAccess() {
       this.currentFile.publicCanShare = false;
       this.currentFile.publicCommentAccess = "None";
