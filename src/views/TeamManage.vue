@@ -47,11 +47,6 @@
     </div>
   </div>
 </template>
-<!--Todo:
-1. 实现团队成员列表
-5. 展示团队文档
-6. 实现管理团队成员
--->
 
 <script>
 import axios from "axios";
@@ -138,7 +133,7 @@ export default {
         .then((response) => {
           console.log(response);
           this.success("解散成功");
-          this.jmp("/myTeams");
+          this.jmp("/workspace/myTeams");
         })
         .catch((p) => this.err(p));
     },

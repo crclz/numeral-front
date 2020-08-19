@@ -48,7 +48,7 @@
           </div>
 
           <div id="submit-wrapper">
-            <el-button type="success" @click="onSubmit">保存文件</el-button>
+            <el-button type="success" @click="submitForm('ruleForm')">保存文件</el-button>
           </div>
         </div>
       </div>
@@ -173,6 +173,16 @@ export default {
     };
   },
   methods: {
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.onSubmit();
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
+    },
     SetPermissionOnclick() {
       this.$refs.setPermission.submit();
       this.visible = false;
