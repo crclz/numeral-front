@@ -5,10 +5,10 @@
       <h1>Sorry, but you have no permission to edit this document.</h1>
     </div>
     <div v-else>
-      <div v-if="!haveLock">该文件正在被{{this.lockOwner.username}}编辑，您暂时无法编辑该文档。</div>
+      <div v-if="!haveLock">该文档正在被{{this.lockOwner.username}}编辑，您暂时无法编辑该文档。</div>
       <div v-if="haveLock">
         <div class="center-wrapper">
-          <h1 class="text-center">修改文件</h1>
+          <h1 class="text-center">修改文档</h1>
           <h2
             style="color:red;"
             v-if="this.currentFile.isAbandoned"
@@ -48,7 +48,7 @@
           </div>
 
           <div id="submit-wrapper">
-            <el-button type="success" @click="submitForm('ruleForm')">保存文件</el-button>
+            <el-button type="success" @click="submitForm('ruleForm')">保存文档</el-button>
           </div>
         </div>
       </div>
@@ -218,14 +218,15 @@ export default {
     },
     quitPage() {
       if (this.timer) clearInterval(this.timer);
-      axios.post("/api/e-lock/release?documentId="+this.documentId)
+      axios
+        .post("/api/e-lock/release?documentId=" + this.documentId)
         .then((response) => {
           console.log(response);
         })
-      .catch((error) => {
-        console.log(error);
-      })
-    }
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 };
 </script>
