@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="center-wrapper">
-      <h1>创建文件</h1>
+      <h1>创建文档</h1>
       <el-form :model="newFile" :rules="rules" ref="ruleForm" label-position="top">
         <el-form-item label="标题" prop="title">
           <el-input v-model="newFile.title" placeholder="请输入标题"></el-input>
@@ -15,7 +15,7 @@
         <editor ref="thisEditor" :initial-content="initialContent"></editor>
       </div>
       <div id="submit-wrapper">
-        <el-button type="success" @click="submitForm('ruleForm')">保存文件</el-button>
+        <el-button type="success" @click="submitForm('ruleForm')">保存文档</el-button>
       </div>
     </div>
   </div>

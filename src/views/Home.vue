@@ -10,15 +10,15 @@
       >
         <el-menu-item index="/workspace/recentfiles">
           <i class="el-icon-document"></i>
-          <span slot="title">最近文件</span>
+          <span slot="title">最近文档</span>
         </el-menu-item>
         <el-menu-item index="/workspace/myfiles">
           <i class="el-icon-document"></i>
-          <span slot="title">我创建的文件</span>
+          <span slot="title">我创建的文档</span>
         </el-menu-item>
         <el-menu-item index="/workspace/favorite">
           <i class="el-icon-star-off"></i>
-          <span slot="title">收藏的文件</span>
+          <span slot="title">收藏的文档</span>
         </el-menu-item>
         <el-menu-item index="/workspace/my-teams">
           <i class="el-icon-user-solid"></i>
