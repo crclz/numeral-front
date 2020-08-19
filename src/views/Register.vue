@@ -23,6 +23,16 @@
             type="password"
           ></el-input>
         </el-form-item>
+        <!--确认密码-->
+        <el-form-item prop="checkPass">
+          <el-input
+                  type="password"
+                  v-model="registerForm.checkPass"
+                  autocomplete="off"
+                  prefix-icon="el-icon-lock"
+                  placeholder="请再次输入密码"
+          ></el-input>
+        </el-form-item>
         <!-- 描述信息 -->
         <el-form-item label="个人简介" prop="description">
           <el-input type="textarea" v-model="registerForm.description" placeholder="请输入个人简介"></el-input>
@@ -41,6 +51,15 @@
 export default {
   name: "Register",
   data() {
+    var validatePass2 = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请再次输入密码"));
+      } else if (value !== this.registerForm.password) {
+        callback(new Error("两次输入密码不一致!"));
+      } else {
+        callback();
+      }
+    };
     var checkDescpt = (rule, value, callback) => {
       if (value.length > 32) {
         callback(new Error("最多输入32个字符，字数超出限制"));
@@ -53,6 +72,7 @@ export default {
       registerForm: {
         username: "",
         password: "",
+        checkPass: "",
         description: "",
       },
       // 这是表单验证规则对象
@@ -78,6 +98,7 @@ export default {
             trigger: "change",
           },
         ],
+        checkPass: [{ validator: validatePass2, trigger: "change" }],
         description: [{ validator: checkDescpt, trigger: "change" }],
       },
     };
