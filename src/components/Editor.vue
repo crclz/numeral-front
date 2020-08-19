@@ -103,7 +103,7 @@ export default {
         var url = "";
         for (let i = 0; i < result.data.length; i++) {
           url = result.data[i];
-          insertImg("http://47.95.230.65" + url);
+          insertImg("http://47.95.230.65:8087" + url);
         }
 
         //
