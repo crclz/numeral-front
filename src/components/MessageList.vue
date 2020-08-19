@@ -17,7 +17,7 @@
           <div v-else>
             <div class="username">系统消息</div>
           </div>
-          <div class="timeCreated">{{currentMessage.createdAt | moment}}</div>
+          <div class="timeCreated">{{item.createdAt | moment}}</div>
 
           <div class="content">{{item.content}}</div>
           <div class="operations">
@@ -59,18 +59,6 @@ export default {
   data() {
     return {
       messageList: [],
-      currentMessage: {
-        id: 80895917768704,
-        createdAt: 1597557979924,
-        updatedAt: 1597557979924,
-        senderId: 0,
-        receiverId: 79609690185728,
-        title: "string",
-        content: "叭叭叭叭叭叭叭叭叭",
-        link: null,
-        haveRead: false,
-        sender: null,
-      },
     };
   },
   methods: {
