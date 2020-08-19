@@ -42,6 +42,7 @@
             type="primary"
             icon="el-icon-edit"
             circle
+            :disabled="!userPermissions.document.canWrite"
           ></el-button>
           <!-- 收藏按钮 -->
           <el-button type="warning" :icon="favorite.favoriteIcon" @click="favoriteFile" circle></el-button>
@@ -99,6 +100,11 @@
           <!-- 当前文档所在团队名，点击可移动文档至团队 -->
         </div>
         <HR style="margin-top:2.5rem; margin-bottom:2.5rem;" />
+        <!--描述-->
+        <div class="description">
+          <div style="font-weight: bold">基础信息：</div>{{this.document.description}}
+        </div>
+        <HR style="margin-top:2.5rem; margin-bottom:2.5rem;" />
 
         <!-- 正文 -->
         <h1 class="text-center">文档内容</h1>
@@ -106,8 +112,7 @@
         <div id="doc-content" class="flex-center">
           <div class="real-content" v-html="currentFile.data"></div>
         </div>
-
-        <div id="comment-big-box">
+        <div id="comment-big-box" v-if="userPermissions.comment.canRead">
           <h1 class="text-center">评论列表</h1>
           <div id="comment-list-box">
             <!-- TODO refresh?? -->
@@ -118,8 +123,11 @@
             </div>
           </div>
         </div>
-        <HR />
-        <create-comment ref="createComment" :documentId="documentId" @submit-comment="loadComments"></create-comment>
+        <div id="comment-creator" v-if="userPermissions.comment.canWrite">
+          <HR />
+          <create-comment ref="createComment" :documentId="documentId" @submit-comment="loadComments"></create-comment>
+        </div>
+
       </div>
     </div>
   </div>
