@@ -94,7 +94,7 @@ export default {
           {
             min: 6,
             max: 16,
-            message: "用户名长度在 6 到 32 个字符",
+            message: "密码长度在 6 到 32 个字符",
             trigger: "change",
           },
         ],
