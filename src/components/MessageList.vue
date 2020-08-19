@@ -18,10 +18,10 @@
           <div v-else>
             <div class="username">系统消息</div>
           </div>
-          <div class="content">
-            {{item.content}}
-            <el-link v-if="item.link" type="primary" @click="jmp(item.link)">详情</el-link> | 
-            <el-link v-if="item.link" type="primary" @click="markRead(item)">已读</el-link>
+          <div class="content">{{item.content}}</div>
+          <div class="operations">
+            <el-link v-if="item.link" type="primary" @click="jmp(item.link)">详情 | </el-link>
+            <el-link type="success" @click="markRead(item)">已读</el-link>
           </div>
         </div>
       </div>
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import Vue from "vue";
+// import Vue from "vue";
 
 export default {
   name: "MessageList",
@@ -84,7 +84,13 @@ export default {
         .then((res) => {
           console.log(res);
           this.success("已标记为已读");
-          Vue.set(message, "hide", true);
+          // Vue.set(message, "hide", true);
+          for (let i = 0; i < this.messageList.length; i++) {
+            if (this.messageList[i].id == message.id) {
+              this.messageList.splice(i, 1);
+            }
+          }
+          this.$emit("messageCntChange", this.messageList.length);
           // this.$forceUpdate();
         })
         .catch((p) => this.err(p));

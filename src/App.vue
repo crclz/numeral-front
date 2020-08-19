@@ -2,7 +2,7 @@
   <div id="app" v-if="this.meReturned" v-title data-title="首页_numeral">
     <el-container>
       <el-header id="head-nav">
-        <img id="banner" src="@/assets/banner.png" @click="jmpBanner()">
+        <img id="banner" src="@/assets/banner.png" @click="jmpBanner()" />
         <div class="menu-bar" v-if="this.global.me">
           <el-menu
             :default-active="activeIndex"
@@ -11,7 +11,6 @@
             style="border: none"
           >
             <div style="display: flex;">
-
               <el-menu-item index="/workspace">工作台</el-menu-item>
               <el-menu-item index="/createFile">创建新的文档</el-menu-item>
               <el-menu-item index="/createTeam">创建新的团队</el-menu-item>
@@ -90,6 +89,7 @@ export default {
     };
   },
   created() {
+    this.global.app = this;
     this.axios.get("/api/access/me").then((res) => {
       this.meReturned = true;
       this.global.me = res.data;
@@ -98,11 +98,10 @@ export default {
   mounted() {},
   methods: {
     jmpBanner() {
-      if(this.global.me){
-        this.jmp('/workspace/myfiles');
-      }
-      else{
-        this.jmp('/');
+      if (this.global.me) {
+        this.jmp("/workspace/myfiles");
+      } else {
+        this.jmp("/");
       }
     },
     handleSelect(key, keyPath) {
@@ -115,8 +114,9 @@ export default {
         .then(() => {
           this.success("登出成功");
           setTimeout(() => {
+            this.global.me = null;
+            this.$forceUpdate();
             this.$router.push({ path: "/" });
-            this.$router.go(0); // 刷新global.me
           }, 500);
         })
         .catch((p) => this.err(p));
@@ -159,11 +159,11 @@ export default {
   right: 0;
 }
 
-#head-nav .menu-bar{
+#head-nav .menu-bar {
   flex-grow: 1;
 }
 
-#head-nav #banner{
+#head-nav #banner {
   height: 56px;
   width: auto;
 }
@@ -212,7 +212,4 @@ export default {
   margin-top: 10px;
   margin-right: 40px;
 }
-
-
-
 </style>

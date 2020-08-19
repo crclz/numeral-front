@@ -83,8 +83,14 @@ export default {
               this.success("登录成功，正在跳转..."); // success消息示例
 
               setTimeout(() => {
-                this.$router.push({ path: "/workspace/myfiles" });
-                this.$router.go(0); // 刷新global.me
+                this.$axios
+                  .get("/api/access/me")
+                  .then((res) => {
+                    this.global.me = res.data;
+                    this.global.app.$forceUpdate(); // update navbar and global.me
+                    this.$router.push({ path: "/workspace/myfiles" });
+                  })
+                  .catch((p) => this.err(p));
               }, 500);
             })
             .catch((p) => this.err(p)); // error消息示例
