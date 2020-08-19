@@ -12,15 +12,16 @@
             <div id="msgInfo">
               <div class="username">{{item.sender.username}}</div>
               <div style="flex-grow: 1"></div>
-              <div class="timeCreated">{{currentMessage.createdAt | moment}}</div>
             </div>
           </div>
           <div v-else>
             <div class="username">系统消息</div>
           </div>
+          <div class="timeCreated">{{currentMessage.createdAt | moment}}</div>
+
           <div class="content">{{item.content}}</div>
           <div class="operations">
-            <el-link v-if="item.link" type="primary" @click="jmp(item.link)">详情 | </el-link>
+            <el-link v-if="item.link" type="primary" @click="jmp(item.link)">详情 |</el-link>
             <el-link type="success" @click="markRead(item)">已读</el-link>
           </div>
         </div>
